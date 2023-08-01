@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group = 'net.slqmy'
@@ -8,8 +9,7 @@ version = '0.1'
 repositories {
     mavenCentral()
     maven {
-        name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
+        url "https://repo.purpurmc.org/snapshots"
     }
     maven {
         name = "sonatype"
@@ -18,7 +18,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
+    compileOnly "org.purpurmc.purpur:purpur-api:1.19.4-R0.1-SNAPSHOT"
+
+    implementation 'org.mongodb:mongodb-driver-sync:4.10.2'
 }
 
 def targetJavaVersion = 17
@@ -44,4 +46,10 @@ processResources {
     filesMatching('paper-plugin.yml') {
         expand props
     }
+}
+
+shadowJar {
+    exclude 'META-INF/*.DSA', 'META-INF/*.SF', 'META-INF/*.RSA'
+    relocate 'org.mongodb', 'net.slqmy.tss_core.shaded.org.mongodb'
+    mergeServiceFiles()
 }
