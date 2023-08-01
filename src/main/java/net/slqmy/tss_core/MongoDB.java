@@ -35,10 +35,11 @@ public class MongoDB {
 		                                      .version(ServerApiVersion.V1)
 		                                      .build();
 
-		mongoDBClientSettings = MongoClientSettings.builder()
-		                                           .applyConnectionString(new ConnectionString(connectionString))
-		                                           .serverApi(mongoDBServerAPI)
-		                                           .build();
+		clientSettings = MongoClientSettings.builder()
+		                                    .applyConnectionString(new ConnectionString(connectionString))
+		                                    .serverApi(mongoDBServerAPI)
+		                                    .uuidRepresentation(UuidRepresentation.STANDARD)
+		                                    .build();
 
 		try (MongoClient mongoClient = MongoClients.create(mongoDBClientSettings)) {
 			MongoDatabase database = mongoClient.getDatabase(DatabaseNames.PLAYERS.getName());
