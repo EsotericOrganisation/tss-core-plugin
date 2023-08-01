@@ -29,7 +29,7 @@ public class ConnectionListener implements Listener {
 			PlayerProfile profile = new PlayerProfile(player, plugin);
 			plugin.getPlayerManager().addProfile(player, profile);
 		} catch (Exception exception) {
-			player.kick(Component.text("Sorry, the server was unable to load your data!", TextColor.color(Color.RED.asRGB())));
+			player.kick(plugin.getMessageManager().getPlayerMessage(Message.UNABLE_TO_LOAD_DATA, player));
 
 			DebugUtil.handleException(exception, "An unexpected error occurred while saving the player profile for player " + player.getName() + "! (UUID: " + player.getUniqueId() + ")");
 		}
