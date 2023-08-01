@@ -13,6 +13,8 @@ public class LogUtil {
 	}
 
 	public static void error(@NotNull Object message) {
-		LOGGER.severe(message.toString());
+		String finalMessage = message.toString();
+
+		LOGGER.severe(finalMessage);
 	}
 }
