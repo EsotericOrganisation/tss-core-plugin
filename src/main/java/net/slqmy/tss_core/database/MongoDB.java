@@ -8,7 +8,7 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import net.slqmy.tss_core.database.DatabaseName;
+import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.LogUtil;
 import org.bson.Document;

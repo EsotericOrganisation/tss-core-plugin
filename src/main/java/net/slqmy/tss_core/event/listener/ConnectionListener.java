@@ -1,8 +1,7 @@
 package net.slqmy.tss_core.event.listener;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import net.slqmy.tss_core.TSSCore;
+import net.slqmy.tss_core.TSSCorePlugin;
+import net.slqmy.tss_core.data.Message;
 import net.slqmy.tss_core.type.PlayerProfile;
 import net.slqmy.tss_core.util.DebugUtil;
 import org.bukkit.Color;
@@ -15,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class ConnectionListener implements Listener {
 
-	private final TSSCore plugin;
+	private final TSSCorePlugin plugin;
 
-	public ConnectionListener(TSSCore plugin) {
+	public ConnectionListener(TSSCorePlugin plugin) {
 		this.plugin = plugin;
 	}
 

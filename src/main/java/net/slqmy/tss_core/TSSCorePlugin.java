@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class TSSCore extends JavaPlugin {
+public final class TSSCorePlugin extends JavaPlugin {
 
 	private MongoDB database;
 

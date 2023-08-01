@@ -1,6 +1,6 @@
 name: TSS-Core
 version: '${version}'
-main: net.slqmy.tss_core.TSSCore
+main: net.slqmy.tss_core.TSSCorePlugin
 api-version: '1.20'
 prefix: TSS-Core
 author: slqmy
