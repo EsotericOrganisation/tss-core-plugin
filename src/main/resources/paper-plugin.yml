@@ -1,0 +1,7 @@
+name: TSS-Core
+version: '${version}'
+main: net.slqmy.tss_core.TSSCore
+api-version: '1.20'
+prefix: TSS-Core
+author: slqmy
+description: The core plugin of The Slimy Swamp Minecraft server. This plugin manages the connection to the database, player profiles and utility methods.
