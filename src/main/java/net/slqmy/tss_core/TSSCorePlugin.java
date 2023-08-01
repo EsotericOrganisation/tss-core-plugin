@@ -1,8 +1,11 @@
 package net.slqmy.tss_core;
 
+import net.slqmy.tss_core.data.type.Lang;
+import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.manager.MessageManager;
 import net.slqmy.tss_core.manager.PlayerManager;
+import net.slqmy.tss_core.util.FileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,6 +38,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 		config.options().copyDefaults();
 		saveDefaultConfig();
+
+		for (Lang lang : Lang.values()) {
+			FileUtil.initiateFile("lang/" + lang.getCode() + ".yml", this);
+		}
 
 		database = new MongoDB(this);
 		playerManager = new PlayerManager();
