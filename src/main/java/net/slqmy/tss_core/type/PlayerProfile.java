@@ -47,8 +47,4 @@ public class PlayerProfile extends PlayerData {
 	private PlayerProfile(UUID uuid) {
 		this.uuid = uuid;
 	}
-
-	public UUID getUUID() {
-		return uuid;
-	}
 }
