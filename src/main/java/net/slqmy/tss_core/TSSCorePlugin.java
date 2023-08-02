@@ -1,11 +1,9 @@
 package net.slqmy.tss_core;
 
-import net.slqmy.tss_core.data.type.Lang;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.manager.MessageManager;
 import net.slqmy.tss_core.manager.PlayerManager;
-import net.slqmy.tss_core.util.FileUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +25,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 	}
 
 	public MessageManager getMessageManager() {
-		return  messageManager;
+		return messageManager;
 	}
 
 	@Override

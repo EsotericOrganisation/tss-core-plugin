@@ -1,10 +1,6 @@
-package net.slqmy.tss_core;
+package net.slqmy.tss_core.database;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoException;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
+import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -18,6 +14,8 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -42,43 +40,40 @@ public class MongoDB {
 		PASSWORD = config.getString("mongodb-password");
 
 		String connectionString = "mongodb+srv://" +
-		                          USERNAME +
-		                          ":" +
-		                          PASSWORD +
-		                          "@" +
-		                          CLUSTER_ADDRESS +
-		                          ".ld5uece.mongodb.net/?retryWrites=true&w=majority";
+						USERNAME +
+						":" +
+						PASSWORD +
+						"@" +
+						CLUSTER_ADDRESS +
+						".ld5uece.mongodb.net/?retryWrites=true&w=majority";
 
 		ServerApi mongoDBServerAPI = ServerApi.builder()
-		                                      .version(ServerApiVersion.V1)
-		                                      .build();
+						.version(ServerApiVersion.V1)
+						.build();
 
 		clientSettings = MongoClientSettings.builder()
-		                                    .applyConnectionString(new ConnectionString(connectionString))
-		                                    .serverApi(mongoDBServerAPI)
-		                                    .uuidRepresentation(UuidRepresentation.STANDARD)
-		                                    .build();
+						.applyConnectionString(new ConnectionString(connectionString))
+						.serverApi(mongoDBServerAPI)
+						.uuidRepresentation(UuidRepresentation.STANDARD)
+						.build();
 
 		getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
 			database.runCommand(new Document("ping", 1));
+
 			LogUtil.log("Pinged the database deployment. Successfully connected to MongoDB!");
 		});
 	}
 
-	public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull MongoDatabaseCallback lambda) {
+	public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull Consumer<MongoDatabase> lambda) {
 		try (MongoClient client = MongoClients.create(clientSettings)) {
-			lambda.execute(client.getDatabase(databaseName.getName()).withCodecRegistry(pojoCodecRegistry));
+			lambda.accept(client.getDatabase(databaseName.getName()).withCodecRegistry(pojoCodecRegistry));
 		} catch (MongoException exception) {
-			DebugUtil.handleException(exception, "An unexpected error occurred while connecting to the database!");
+			DebugUtil.handleException("An unexpected error occurred while connecting to the database!", exception);
 			throw new RuntimeException(exception);
 		}
 	}
 
 	public MongoClientSettings getClientSettings() {
 		return clientSettings;
-	}
-
-	public interface MongoDatabaseCallback {
-		void execute(MongoDatabase database);
 	}
 }

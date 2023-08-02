@@ -32,9 +32,9 @@ public class PlayerProfile extends PlayerData {
 
 					preferences = profile.getPreferences();
 				} else {
-					PlayerProfile playerProfile = new PlayerProfile(uuid);
+					PlayerProfile profile = new PlayerProfile(uuid);
 
-					playerProfiles.insertOne(playerProfile);
+					playerProfiles.insertOne(profile);
 				}
 			}
 		});

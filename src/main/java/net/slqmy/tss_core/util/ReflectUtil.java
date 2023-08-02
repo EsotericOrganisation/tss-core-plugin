@@ -16,7 +16,7 @@ public class ReflectUtil {
 			DebugUtil.handleException(exception);
 		}
 
-		return  null;
+		return null;
 	}
 
 	public static Object getStaticFieldValue(@NotNull Object object, String fieldName) {

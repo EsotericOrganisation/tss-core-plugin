@@ -49,7 +49,7 @@ public class MessageManager {
 		}
 	}
 
-	public TextComponent getMessage(Message messageKey, Lang lang, Component ... placeHolderValues) {
+	public TextComponent getMessage(Message messageKey, Lang lang, Component... placeHolderValues) {
 		final TextComponent cachedMessage = messageCaches.get(lang).asMap().get(messageKey);
 
 		if (cachedMessage != null) {
@@ -68,11 +68,11 @@ public class MessageManager {
 		return finalMessage;
 	}
 
-	public TextComponent getMessage(Message messageKey, Component ... placeHolderValues) {
+	public TextComponent getMessage(Message messageKey, Component... placeHolderValues) {
 		return getMessage(messageKey, Lang.DEFAULT_LANG, placeHolderValues);
 	}
 
-	public TextComponent getMessage(Message messageKey, String ... placeHolderValues) {
+	public TextComponent getMessage(Message messageKey, String... placeHolderValues) {
 		return getMessage(
 						messageKey,
 						Lang.DEFAULT_LANG,
