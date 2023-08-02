@@ -26,9 +26,11 @@ public class PlayerProfile extends PlayerData {
 		plugin.getDatabase().getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
 			MongoCollection<PlayerProfile> playerProfiles = database.getCollection(PlayersCollectionName.PLAYER_PROFILES.getName(), PlayerProfile.class);
 
-			try (MongoCursor<PlayerProfile> matches = playerProfiles.find(Filters.eq("uuid", uuid.toString())).cursor()) {
+			try (MongoCursor<PlayerProfile> matches = playerProfiles.find(Filters.eq("uuid", uuid)).cursor()) {
 				if (matches.hasNext()) {
-					// Load needed data from the database.
+					PlayerProfile profile = matches.next();
+
+					preferences = profile.getPreferences();
 				} else {
 					PlayerProfile playerProfile = new PlayerProfile(uuid);
 
