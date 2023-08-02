@@ -1,10 +1,16 @@
 package net.slqmy.tss_core.event.listener;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.ClickEvent.Action;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.Message;
+import net.slqmy.tss_core.type.Colour;
 import net.slqmy.tss_core.type.PlayerProfile;
 import net.slqmy.tss_core.util.DebugUtil;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,9 +35,21 @@ public class ConnectionListener implements Listener {
 			PlayerProfile profile = new PlayerProfile(player, plugin);
 			plugin.getPlayerManager().addProfile(player, profile);
 		} catch (Exception exception) {
-			player.kick(plugin.getMessageManager().getPlayerMessage(Message.UNABLE_TO_LOAD_DATA, player));
+			String discordLink = "discord.gg/" + plugin.getConfig().getString("discord-server-invite-code");
 
-			DebugUtil.handleException(exception, "An unexpected error occurred while saving the player profile for player " + player.getName() + "! (UUID: " + player.getUniqueId() + ")");
+			TextComponent discordLinkComponent = Component.text(discordLink, Colour.BLURPLE.asTextColour(), TextDecoration.UNDERLINED);
+
+			discordLinkComponent = discordLinkComponent.clickEvent(ClickEvent.clickEvent(Action.OPEN_URL, "https://www." + discordLink));
+			discordLinkComponent = discordLinkComponent.hoverEvent(
+							HoverEvent.hoverEvent(
+											HoverEvent.Action.SHOW_TEXT,
+											plugin.getMessageManager().getPlayerMessage(Message.CLICK_TO_JOIN, player)
+							)
+			);
+
+			event.disallow(Result.KICK_OTHER, plugin.getMessageManager().getPlayerMessage(Message.UNABLE_TO_LOAD_DATA, player, discordLinkComponent));
+
+			DebugUtil.handleException("An unexpected error occurred while loading the player profile for player " + player + "!", exception);
 		}
 	}
 
