@@ -6,12 +6,14 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class FileUtil {
-	public static void initiateFile(String path, @NotNull TSSCorePlugin plugin) {
+	public static @NotNull File initiateFile(String path, @NotNull TSSCorePlugin plugin) {
 		File dataFolder = plugin.getDataFolder();
 		File file = new File(dataFolder, path);
 
 		if (!file.exists()) {
 			plugin.saveResource(path, false);
 		}
+
+		return file;
 	}
 }
