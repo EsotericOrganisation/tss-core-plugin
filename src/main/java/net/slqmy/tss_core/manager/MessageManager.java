@@ -23,7 +23,7 @@ public class MessageManager {
 		this.plugin = plugin;
 
 		for (Lang lang : Lang.values()) {
-			File langFile = new File(plugin.getDataFolder() + "/lang/" + lang.getCode() + ".yml");
+			File langFile = FileUtil.initiateFile("lang/" + lang.getCode() + ".yml", plugin);
 			YamlConfiguration langConfig = YamlConfiguration.loadConfiguration(langFile);
 
 			langConfigs.put(lang, langConfig);

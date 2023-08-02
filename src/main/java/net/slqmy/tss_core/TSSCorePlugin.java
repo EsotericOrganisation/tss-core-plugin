@@ -39,10 +39,6 @@ public final class TSSCorePlugin extends JavaPlugin {
 		config.options().copyDefaults();
 		saveDefaultConfig();
 
-		for (Lang lang : Lang.values()) {
-			FileUtil.initiateFile("lang/" + lang.getCode() + ".yml", this);
-		}
-
 		database = new MongoDB(this);
 		playerManager = new PlayerManager();
 		messageManager = new MessageManager(this);
