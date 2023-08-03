@@ -1,1 +1,12 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+
+        maven {
+            name = "eldonexus"
+            url = uri("https://eldonexus.de/repository/maven-releases/")
+        }
+    }
+}
+
 rootProject.name = 'tss_core'
