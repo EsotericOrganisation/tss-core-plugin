@@ -1,5 +1,7 @@
 package net.slqmy.tss_core;
 
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.manager.MessageManager;
@@ -30,6 +32,12 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		CommandAPIBukkitConfig commandConfig = new CommandAPIBukkitConfig(this)
+						.shouldHookPaperReload(true);
+
+		CommandAPI.onLoad(commandConfig);
+		CommandAPI.onEnable();
+
 		getDataFolder().mkdir();
 
 		YamlConfiguration config = (YamlConfiguration) getConfig();
@@ -42,5 +50,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 		messageManager = new MessageManager(this);
 
 		Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
+	}
+
+	@Override
+	public void onDisable() {
+		CommandAPI.onDisable();
 	}
 }

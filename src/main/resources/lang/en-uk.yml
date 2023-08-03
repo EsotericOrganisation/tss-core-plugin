@@ -1,11 +1,2 @@
 # {0} - Link to Discord.
 unable-to-load-data: "&c&l!&c Sorry, the server was unable to load your data!\n&ePlease contact an admin on &9{0}&e."
-
-not-player-command: "&cThis command can't be used by players."
-not-console-command: "&cThis command can't be used by the console."
-not-command-block-command: "&cThis command can't be used by command blocks."
-
-# {0} - Valid command usage.
-invalid-command-usage: "&cIncorrect command usage! Please use &n{0}&c!"
-
-click-to-join: "&eClick to join!"
