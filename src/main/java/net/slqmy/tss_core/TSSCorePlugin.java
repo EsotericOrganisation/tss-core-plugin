@@ -5,6 +5,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.manager.MessageManager;
+import net.slqmy.tss_core.manager.PacketManager;
 import net.slqmy.tss_core.manager.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,6 +19,8 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	private MessageManager messageManager;
 
+	private PacketManager packetManager;
+
 	public MongoDB getDatabase() {
 		return database;
 	}
@@ -28,6 +31,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	public MessageManager getMessageManager() {
 		return messageManager;
+	}
+
+	public PacketManager getPacketManager() {
+		return packetManager;
 	}
 
 	@Override
@@ -48,6 +55,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 		database = new MongoDB(this);
 		playerManager = new PlayerManager();
 		messageManager = new MessageManager(this);
+		packetManager = new PacketManager();
 
 		Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
 	}

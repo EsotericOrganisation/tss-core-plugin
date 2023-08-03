@@ -14,6 +14,7 @@ import net.slqmy.tss_core.util.DebugUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -54,7 +55,15 @@ public class ConnectionListener implements Listener {
 	}
 
 	@EventHandler
+	public void onJoin(@NotNull PlayerJoinEvent event) {
+		plugin.getPacketManager().injectPacketListener(event.getPlayer());
+	}
+
+	@EventHandler
 	public void onQuit(@NotNull PlayerQuitEvent event) {
-		plugin.getPlayerManager().removeProfile(event.getPlayer());
+		Player player = event.getPlayer();
+
+		plugin.getPlayerManager().removeProfile(player);
+		plugin.getPacketManager().ejectPacketListener(player);
 	}
 }
