@@ -1,8 +1,7 @@
 package net.slqmy.tss_core.data;
 
 public enum Message {
-	UNABLE_TO_LOAD_DATA,
-	CLICK_TO_JOIN;
+	UNABLE_TO_LOAD_DATA;
 
 	private final String key;
 
