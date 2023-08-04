@@ -9,8 +9,13 @@ public class MessageUtil {
 	public static TextComponent format(Object value) {
 		return value == null
 						? Component.text("null", Colour.PINK.asTextColour())
+						: value instanceof Boolean ? (boolean) value ?
+						Component.text("true", Colour.SLIME.asTextColour())
+						: Component.text("false", Colour.RED.asTextColour())
+						: value instanceof Integer || value instanceof Float || value instanceof Double
+						? Component.text(value.toString(), Colour.SKY_BLUE.asTextColour())
 						: value instanceof String
-						? LegacyComponentSerializer.legacySection().deserialize((String) value)
+						? LegacyComponentSerializer.legacyAmpersand().deserialize((String) value)
 						: Component.text(value.toString());
 	}
 }

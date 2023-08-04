@@ -1,9 +1,7 @@
 package net.slqmy.tss_core.database;
 
 import com.mongodb.*;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.LogUtil;
@@ -12,6 +10,7 @@ import org.bson.UuidRepresentation;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,9 +63,9 @@ public class MongoDB {
 		});
 	}
 
-	public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull Consumer<MongoDatabase> lambda) {
+	public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull Consumer<MongoDatabase> consumer) {
 		try (MongoClient client = MongoClients.create(clientSettings)) {
-			lambda.accept(client.getDatabase(databaseName.getName()).withCodecRegistry(pojoCodecRegistry));
+			consumer.accept(client.getDatabase(databaseName.getName()).withCodecRegistry(pojoCodecRegistry));
 		} catch (MongoException exception) {
 			DebugUtil.handleException("An unexpected error occurred while connecting to the database!", exception);
 		}

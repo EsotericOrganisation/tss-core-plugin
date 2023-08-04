@@ -9,7 +9,6 @@ import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.Message;
 import net.slqmy.tss_core.data.type.Lang;
 import net.slqmy.tss_core.type.PlayerProfile;
-import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.FileUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -50,7 +50,8 @@ public class MessageManager {
 	}
 
 	public TextComponent getMessage(Message messageKey, Lang lang, Component... placeHolderValues) {
-		final TextComponent cachedMessage = messageCaches.get(lang).asMap().get(messageKey);
+		ConcurrentMap<Message, TextComponent> messageCacheMap = messageCaches.get(lang).asMap();
+		final TextComponent cachedMessage = messageCacheMap.get(messageKey);
 
 		if (cachedMessage != null) {
 			return cachedMessage;
@@ -64,6 +65,8 @@ public class MessageManager {
 		for (int i = 0; i < placeHolderValues.length; i++) {
 			finalMessage = finalMessage.append(placeHolderValues[i]).append(LegacyComponentSerializer.legacyAmpersand().deserialize(splitMessage[i + 1]));
 		}
+
+		messageCacheMap.put(messageKey, finalMessage);
 
 		return finalMessage;
 	}
@@ -91,10 +94,10 @@ public class MessageManager {
 		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
 		Lang lang = profile == null ||
-						profile.getPreferences() == null ||
-						profile.getPreferences().getLang() == null
+						profile.getPlayerPreferences() == null ||
+						profile.getPlayerPreferences().getLang() == null
 						? Lang.DEFAULT_LANG
-						: profile.getPreferences().getLang();
+						: profile.getPlayerPreferences().getLang();
 
 		return getMessage(messageKey, lang, placeHolderValues);
 	}
@@ -112,8 +115,6 @@ public class MessageManager {
 	}
 
 	private String getRawMessage(@NotNull Message messageKey, Lang lang) {
-		DebugUtil.log(langConfigs, langConfigs.get(lang), langConfigs.get(lang).getString(messageKey.getKey()), messageKey, messageKey.getKey());
-
 		return langConfigs.get(lang).getString(messageKey.getKey());
 	}
 

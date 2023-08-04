@@ -1,6 +1,6 @@
 package net.slqmy.tss_core.data.type;
 
-public class Preferences {
+public class PlayerPreferences {
 
 	private Lang lang;
 

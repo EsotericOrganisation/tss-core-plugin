@@ -44,7 +44,7 @@ public class ConnectionListener implements Listener {
 
 	@EventHandler
 	public void onJoin(@NotNull PlayerJoinEvent event) {
-		plugin.getPacketManager().injectPacketListener(event.getPlayer());
+		plugin.getPacketManager().injectPlayer(event.getPlayer());
 	}
 
 	@EventHandler
@@ -52,6 +52,6 @@ public class ConnectionListener implements Listener {
 		Player player = event.getPlayer();
 
 		plugin.getPlayerManager().removeProfile(player);
-		plugin.getPacketManager().ejectPacketListener(player);
+		plugin.getPacketManager().ejectPlayer(player);
 	}
 }
