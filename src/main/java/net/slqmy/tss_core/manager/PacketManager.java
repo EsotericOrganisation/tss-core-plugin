@@ -2,14 +2,12 @@ package net.slqmy.tss_core.manager;
 
 import io.netty.channel.*;
 import net.minecraft.network.Connection;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.slqmy.tss_core.util.DebugUtil;
+import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.ReflectUtil;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class PacketManager {
 
@@ -29,7 +27,7 @@ public class PacketManager {
 		};
 	}
 
-	public void injectPacketListener(@NotNull Player player) {
+	public void injectPlayer(@NotNull Player player) {
 		Connection connection = getPlayerConnection(player);
 		ChannelPipeline pipeline = connection.channel.pipeline();
 
@@ -40,7 +38,7 @@ public class PacketManager {
 		);
 	}
 
-	public void ejectPacketListener(@NotNull Player player) {
+	public void ejectPlayer(@NotNull Player player) {
 		Connection connection = getPlayerConnection(player);
 		ChannelPipeline pipeline = connection.channel.pipeline();
 
@@ -52,25 +50,15 @@ public class PacketManager {
 	}
 
 	private Connection getPlayerConnection(@NotNull Player player) {
-		Connection connection = null;
+		ServerPlayer serverPlayer = NMSUtil.getServerPlayer(player);
+		assert serverPlayer != null;
 
-		try {
-			Method getHandle = ReflectUtil.getAccessibleMethod(player, "getHandle");
-			assert getHandle != null;
+		ServerGamePacketListenerImpl serverPlayerConnection = (ServerGamePacketListenerImpl) ReflectUtil.getFieldValue(serverPlayer, "c");
+		assert serverPlayerConnection != null;
 
-			Object serverPlayer = getHandle.invoke(player);
-
-			ServerGamePacketListenerImpl serverPlayerConnection = (ServerGamePacketListenerImpl) ReflectUtil.getFieldValue(serverPlayer, "c");
-			assert serverPlayerConnection != null;
-
-			connection = (Connection) ReflectUtil.getFieldValue(
-							serverPlayerConnection,
-							"h"
-			);
-		} catch (IllegalAccessException | InvocationTargetException exception) {
-			DebugUtil.handleException("Reflection Failure: failed to get field 'connection' of player object of player " + player + "!", exception);
-		}
-
-		return connection;
+		return (Connection) ReflectUtil.getFieldValue(
+						serverPlayerConnection,
+						"h"
+		);
 	}
 }
