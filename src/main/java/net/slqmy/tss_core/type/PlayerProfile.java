@@ -23,20 +23,23 @@ public class PlayerProfile extends PlayerData {
 	public PlayerProfile(UUID uuid, @NotNull TSSCorePlugin plugin) throws MongoException {
 		this.uuid = uuid;
 
-		plugin.getDatabase().getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
-			MongoCollection<PlayerProfile> playerProfiles = database.getCollection(PlayersCollectionName.PLAYER_PROFILES.getName(), PlayerProfile.class);
+		MongoDB mongoDB = plugin.getDatabase();
 
-			try (MongoCursor<PlayerProfile> matches = playerProfiles.find(Filters.eq("uuid", uuid)).cursor()) {
-				if (matches.hasNext()) {
-					PlayerProfile profile = matches.next();
+		mongoDB.getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
+			MongoCollection<PlayerProfile> playerProfiles = database
+							.getCollection(PlayersCollectionName.PLAYER_PROFILES.getName(), PlayerProfile.class);
 
-					preferences = profile.getPreferences();
+			mongoDB.getCursor(playerProfiles, Filters.eq("uuid", uuid), (MongoCursor<PlayerProfile> cursor) -> {
+				if (cursor.hasNext()) {
+					PlayerProfile profile = cursor.next();
+
+					playerPreferences = profile.getPlayerPreferences();
 				} else {
 					PlayerProfile profile = new PlayerProfile(uuid);
 
 					playerProfiles.insertOne(profile);
 				}
-			}
+			});
 		});
 	}
 

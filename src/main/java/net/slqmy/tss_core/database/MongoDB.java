@@ -69,7 +69,12 @@ public class MongoDB {
 			lambda.accept(client.getDatabase(databaseName.getName()).withCodecRegistry(pojoCodecRegistry));
 		} catch (MongoException exception) {
 			DebugUtil.handleException("An unexpected error occurred while connecting to the database!", exception);
-			throw new RuntimeException(exception);
+		}
+	}
+
+	public <C> void getCursor(@NotNull MongoCollection<C> collection, Bson filter, @NotNull Consumer<MongoCursor<C>> consumer) {
+		try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
+			consumer.accept(cursor);
 		}
 	}
 
