@@ -17,13 +17,17 @@ public class NMSUtil {
 	}
 
 	public static @Nullable ServerPlayer getServerPlayer(Player player) {
-		Method getHandle = ReflectUtil.getAccessibleMethod(player, "getHandle");
+		return (ServerPlayer) invokeHandle(player);
+	}
+
+	public static @Nullable Object invokeHandle(Object spigotObject) {
+		Method getHandle = ReflectUtil.getAccessibleMethod(spigotObject, "getHandle");
 		assert getHandle != null;
 
 		try {
-			return (ServerPlayer) getHandle.invoke(player);
+			return getHandle.invoke(spigotObject);
 		} catch (IllegalAccessException | InvocationTargetException exception) {
-			DebugUtil.handleException("An unexpected error occurred while invoking the 'getHandle' method of player object of player '" + player + "'!", exception);
+			DebugUtil.handleException("An unexpected error occurred while invoking the 'getHandle' method of Spigot object '" + spigotObject + "'!", exception);
 		}
 
 		return null;
