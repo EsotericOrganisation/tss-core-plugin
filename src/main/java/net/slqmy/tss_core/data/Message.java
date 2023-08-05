@@ -1,7 +1,19 @@
 package net.slqmy.tss_core.data;
 
 public enum Message {
-	UNABLE_TO_LOAD_DATA;
+	// TSS-Core
+	UNABLE_TO_LOAD_DATA,
+	// TSS-SlimeLabs
+	ACTIVE_LAUNCH_ANALYSIS_TASK,
+	LAUNCH,
+	VIEW_LAUNCH_STATISTICS,
+	STOP_LAUNCH_ANALYSIS,
+	ENTITY,
+	TIME,
+	ON_GROUND,
+
+	NO_ANALYSIS_TASK,
+	LAUNCH_STATISTICS;
 
 	private final String key;
 

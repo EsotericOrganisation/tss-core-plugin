@@ -1,2 +1,16 @@
+## TSS-Core
+
 # {0} - Link to Discord.
 unable-to-load-data: "&c&l!&c Sorry, the server was unable to load your data!\n&ePlease contact an admin on {0}&e."
+
+## TSS-SlimeLabs
+active-launch-analysis-task: "&cThere is already a launch analysis task active!"
+launch: "&a&nLaunch"
+view-launch-statistics: "&eClick here to finish launch and view statistics"
+stop-launch-analysis: "&eClick to stop analysis task!"
+entity: "&eEntity"
+time: "Time"
+on-ground: "&7On ground"
+
+no-analysis-task: "There is no analysis task active!"
+launch-statistics: "&e&nLaunch Statistics"
