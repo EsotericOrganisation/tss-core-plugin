@@ -34,7 +34,7 @@ public class ConnectionListener implements Listener {
 			plugin.getPlayerManager().addProfile(player, profile);
 		} catch (Exception exception) {
 			String discordLink = "discord.gg/" + plugin.getConfig().getString("discord-server-invite-code");
-			TextComponent discordLinkComponent = Component.text(discordLink, Colour.BLURPLE.asTextColour(), TextDecoration.UNDERLINED);
+			TextComponent discordLinkComponent = Component.text(discordLink, Colour.BLURPLE, TextDecoration.UNDERLINED);
 
 			event.disallow(Result.KICK_OTHER, plugin.getMessageManager().getPlayerMessage(Message.UNABLE_TO_LOAD_DATA, player, discordLinkComponent));
 
