@@ -6,10 +6,13 @@ public enum Colour {
 
 	RED("ff0000"),
 	ORANGE("f7a52a"),
+	YELLOW("cfcf55"),
 	SLIME("51f54e"),
 	SKY_BLUE("5ea8f2"),
 	BLURPLE("5865F2"),
-	PINK("ca6cd8");
+	PINK("ca6cd8"),
+	GREY("404040"),
+	LIGHT_GREY("909090");
 
 	private final String hexString;
 
