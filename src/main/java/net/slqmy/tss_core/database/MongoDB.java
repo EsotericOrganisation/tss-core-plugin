@@ -71,13 +71,13 @@ public class MongoDB {
 		}
 	}
 
-	public <C> void getCursor(@NotNull MongoCollection<C> collection, Bson filter, @NotNull Consumer<MongoCursor<C>> consumer) {
-		try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
-			consumer.accept(cursor);
-		}
-	}
+	public <C> void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<C>, MongoCollection<C>> consumer, Class<C> documentClass) {
+		getMongoDatabase(collectionName.getDatabase(), (MongoDatabase database) -> {
+			MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
 
-	public MongoClientSettings getClientSettings() {
-		return clientSettings;
+			try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
+				consumer.accept(cursor, collection);
+			}
+		});
 	}
 }
