@@ -1,6 +1,9 @@
-package net.slqmy.tss_core.data.type;
+package net.slqmy.tss_core.data.type.npc;
 
-public class NPC {
+import net.slqmy.tss_core.data.type.SimpleLocation;
+import net.slqmy.tss_core.data.type.Skin;
+
+public class NPCData {
 	private int id;
 	private Skin skin;
 	private SimpleLocation location;
