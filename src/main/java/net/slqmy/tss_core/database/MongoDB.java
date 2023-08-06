@@ -3,7 +3,6 @@ package net.slqmy.tss_core.database;
 import com.mongodb.*;
 import com.mongodb.client.*;
 import net.slqmy.tss_core.TSSCorePlugin;
-import net.slqmy.tss_core.data.Message;
 import net.slqmy.tss_core.database.collection_name.CollectionName;
 import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.LogUtil;
@@ -60,7 +59,7 @@ public class MongoDB {
 
 		getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
 			database.runCommand(new Document("ping", 1));
-			LogUtil.log(plugin.getMessageManager().getMessage(Message.SUCCESSFUL_DATABASE_CONNECTION));
+			LogUtil.log("Pinged database " + database.getName() + ", Successfully connected to MongoDB!");
 		});
 	}
 
@@ -70,7 +69,7 @@ public class MongoDB {
 		try (MongoClient client = MongoClients.create(clientSettings)) {
 			consumer.accept(client.getDatabase(name).withCodecRegistry(pojoCodecRegistry));
 		} catch (MongoException exception) {
-			DebugUtil.handleException(plugin.getMessageManager().getMessage(Message.DATABASE_CONNECTION_FAILED, name), exception);
+			DebugUtil.handleException("An unexpected error occurred while connecting to database " + databaseName + "!", exception);
 		}
 	}
 

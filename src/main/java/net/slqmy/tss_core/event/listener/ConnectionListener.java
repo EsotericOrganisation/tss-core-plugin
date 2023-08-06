@@ -32,7 +32,7 @@ public class ConnectionListener implements Listener {
 			String discordLink = "discord.gg/" + plugin.getConfig().getString("discord-server-invite-code");
 			event.disallow(Result.KICK_OTHER, plugin.getMessageManager().getPlayerMessage(Message.UNABLE_TO_LOAD_DATA, player, discordLink));
 
-			DebugUtil.handleException(plugin.getMessageManager().getMessage(Message.ERROR_LOADING_PLAYER_PROFILE, player.getName(), player.getUniqueId().toString()), exception);
+			DebugUtil.handleException("An unexpected error occurred while loading the player profile for player " + player.getName() + "! (UUID: " + player.getUniqueId() + ")", exception);
 		}
 	}
 

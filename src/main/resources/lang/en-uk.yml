@@ -28,15 +28,3 @@ launch-statistics: "<yellow><underlined>Launch Statistics"
 
 welcome-subtitle: "<yellow>Thank you for joining!"
 welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
-
-### Errors and In-Plugin Messages
-
-## TSS-Core
-
-# {0} - Name of database.
-database-connection-failed: "An unexpected error occurred while connecting to database {0}!"
-successful-database-connection: "Pinged the database deployment. Successfully connected to MongoDB!"
-
-# {0} - Name of player.
-# {1} - UUID of player.
-error-loading-player-profile: "An unexpected error occurred while loading the player profile for player <0>! (UUID: <1>)"

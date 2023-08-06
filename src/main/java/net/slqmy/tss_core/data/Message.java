@@ -25,15 +25,7 @@ public enum Message {
 	// TSS-Lobby
 
 	WELCOME_SUBTITLE,
-	WELCOME_CHAT_MESSAGE,
-
-	// - Errors and In-Plugin Messages
-
-	// TSS-Core
-	SUCCESSFUL_DATABASE_CONNECTION,
-	DATABASE_CONNECTION_FAILED,
-
-	ERROR_LOADING_PLAYER_PROFILE;
+	WELCOME_CHAT_MESSAGE;
 
 	private final String key;
 
