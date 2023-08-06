@@ -1,11 +1,10 @@
-package net.slqmy.tss_core.type;
+package net.slqmy.tss_core.data.type.player;
 
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import net.slqmy.tss_core.TSSCorePlugin;
-import net.slqmy.tss_core.data.type.PlayerData;
 import net.slqmy.tss_core.database.collection_name.PlayersCollectionName;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
@@ -29,6 +28,7 @@ public class PlayerProfile extends PlayerData {
 				PlayerProfile profile = cursor.next();
 
 				playerPreferences = profile.getPlayerPreferences();
+				playerStats = profile.getPlayerStats();
 			} else {
 				PlayerProfile profile = new PlayerProfile(uuid);
 				playerProfiles.insertOne(profile);
