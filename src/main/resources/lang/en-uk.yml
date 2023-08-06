@@ -1,16 +1,42 @@
+### The Slimy Swamp Message Translations - English (United Kingdom)
+
+# \n = new line.
+
+## General
+
+the-slimy-swamp: "<green>The Slimy Swamp"
+
 ## TSS-Core
 
-# {0} - Link to Discord.
-unable-to-load-data: "&c&l!&c Sorry, the server was unable to load your data!\n&ePlease contact an admin on {0}&e."
+# <0> - Link to Discord.
+unable-to-load-data: "<red><bold>!</bold> Sorry, the server was unable to load your data!\n<yellow>Please contact an admin on <light_purple><underlined><0></underlined><yellow>."
 
 ## TSS-SlimeLabs
-active-launch-analysis-task: "&cThere is already a launch analysis task active!"
-launch: "&a&nLaunch"
-view-launch-statistics: "&eClick here to finish launch and view statistics"
-stop-launch-analysis: "&eClick to stop analysis task!"
-entity: "&eEntity"
-time: "Time"
-on-ground: "&7On ground"
 
-no-analysis-task: "There is no analysis task active!"
-launch-statistics: "&e&nLaunch Statistics"
+active-launch-analysis-task: "<red>There is already a launch analysis task active!"
+launch: "<green><underlined>Launch"
+view-launch-statistics: "<yellow>Click here to finish launch and view statistics"
+stop-launch-analysis: "<yellow>Click to stop analysis task!"
+entity: "<yellow>Entity"
+time: "Time"
+on-ground: "<grey>On ground"
+
+no-analysis-task: "<red>There is no analysis task active!"
+launch-statistics: "<yellow><underlined>Launch Statistics"
+
+## TSS-Lobby
+
+welcome-subtitle: "<yellow>Thank you for joining!"
+welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
+
+### Errors and In-Plugin Messages
+
+## TSS-Core
+
+# {0} - Name of database.
+database-connection-failed: "An unexpected error occurred while connecting to database {0}!"
+successful-database-connection: "Pinged the database deployment. Successfully connected to MongoDB!"
+
+# {0} - Name of player.
+# {1} - UUID of player.
+error-loading-player-profile: "An unexpected error occurred while loading the player profile for player <0>! (UUID: <1>)"
