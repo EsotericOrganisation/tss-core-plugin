@@ -1,15 +1,18 @@
 package net.slqmy.tss_core.manager;
 
 import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.Message;
 import net.slqmy.tss_core.data.type.Lang;
 import net.slqmy.tss_core.type.PlayerProfile;
+import net.slqmy.tss_core.util.CacheUtil;
 import net.slqmy.tss_core.util.FileUtil;
+import net.slqmy.tss_core.util.type.Triplet;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -17,80 +20,96 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 public class MessageManager {
 
-	private final static Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\{\\d+}");
-
 	private final TSSCorePlugin plugin;
 
-	private final HashMap<Lang, YamlConfiguration> langConfigs = new HashMap<>();
+	private final HashMap<
+					Lang,
+					Triplet<
+									YamlConfiguration,
+									Cache<Message, String>,
+									Cache<Message, TextComponent>
+									>
+					> langData = new HashMap<>();
 
-	private final HashMap<Lang, Cache<Message, TextComponent>> messageCaches = new HashMap<>();
 
 	public MessageManager(@NotNull TSSCorePlugin plugin) {
 		this.plugin = plugin;
 
 		for (Lang lang : Lang.values()) {
-			File langFile = FileUtil.initiateFile("lang/" + lang.getCode() + ".yml", plugin);
+			File langFile = FileUtil.initiateYamlFile("lang/" + lang.getCode(), true, plugin);
 			YamlConfiguration langConfig = YamlConfiguration.loadConfiguration(langFile);
 
-			langConfigs.put(lang, langConfig);
-
-			messageCaches.put(
+			langData.put(
 							lang,
-							CacheBuilder.newBuilder()
-											.expireAfterWrite(2, TimeUnit.MINUTES)
-											.build()
+							new Triplet<>(
+											langConfig,
+											CacheUtil.getNewCache(),
+											CacheUtil.getNewCache()
+							)
 			);
 		}
 	}
 
-	public TextComponent getMessage(Message messageKey, Lang lang, Component... placeHolderValues) {
-		ConcurrentMap<Message, TextComponent> messageCacheMap = messageCaches.get(lang).asMap();
-		final TextComponent cachedMessage = messageCacheMap.get(messageKey);
+	private String getRawMessage(Lang lang, Message messageKey) {
+		Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = langData.get(lang);
 
-		if (cachedMessage != null) {
-			return cachedMessage;
+		if (triplet == null) {
+			triplet = langData.get(Lang.DEFAULT_LANG);
 		}
 
-		String rawMessage = getRawMessage(messageKey, lang);
-		String[] splitMessage = PLACEHOLDER_PATTERN.split(rawMessage, placeHolderValues.length + 1);
+		Cache<Message, String> cache = triplet.getSecond();
+		String message = cache.asMap().get(messageKey);
 
-		TextComponent finalMessage = LegacyComponentSerializer.legacyAmpersand().deserialize(splitMessage[0]);
-
-		for (int i = 0; i < placeHolderValues.length; i++) {
-			finalMessage = finalMessage.append(placeHolderValues[i]).append(LegacyComponentSerializer.legacyAmpersand().deserialize(splitMessage[i + 1]));
+		if (message == null) {
+			message = (String) triplet.getFirst().get(messageKey.getKey());
 		}
 
-		messageCacheMap.put(messageKey, finalMessage);
-
-		return finalMessage;
+		CacheUtil.refreshExpiryTimer(cache, messageKey, message);
+		return message;
 	}
 
-	public TextComponent getMessage(Message messageKey, Component... placeHolderValues) {
-		return getMessage(messageKey, Lang.DEFAULT_LANG, placeHolderValues);
+	public TextComponent getMessage(Message messageKey, Lang lang, TextComponent @NotNull ... placeholderValues) {
+		if (placeholderValues.length == 0) {
+			Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = langData.get(lang);
+
+			if (triplet == null) {
+				triplet = langData.get(Lang.DEFAULT_LANG);
+			}
+
+			Cache<Message, TextComponent> cache = triplet.getThird();
+
+			TextComponent message = cache.asMap().get(messageKey);
+
+			if (message == null) {
+				message = (TextComponent) MiniMessage.miniMessage().deserialize((String) triplet.getFirst().get(messageKey.getKey()));
+			}
+
+			CacheUtil.refreshExpiryTimer(cache, messageKey, message);
+			return message;
+		}
+
+		String rawMessage = getRawMessage(lang, messageKey);
+
+		TagResolver[] tagResolvers = new TagResolver[placeholderValues.length];
+		for (int i = 0; i < placeholderValues.length; i++) {
+			tagResolvers[i] = Placeholder.component(String.valueOf(i), placeholderValues[i]);
+		}
+
+		return (TextComponent) MiniMessage.miniMessage().deserialize(rawMessage, tagResolvers);
 	}
 
-	public TextComponent getMessage(Message messageKey, String... placeHolderValues) {
-		return getMessage(
-						messageKey,
-						Lang.DEFAULT_LANG,
-						Arrays.stream(placeHolderValues).map((String placeHolderValue) -> LegacyComponentSerializer.legacyAmpersand().deserialize(placeHolderValue)).toArray(TextComponent[]::new)
-		);
+	public TextComponent getMessage(Message messageKey, String... placeholderValues) {
+		return getMessage(messageKey, Lang.DEFAULT_LANG, toTextComponentArray(placeholderValues));
 	}
 
 	public TextComponent getMessage(Message messageKey) {
-		return getMessage(
-						messageKey,
-						Lang.DEFAULT_LANG
-		);
+		return getMessage(messageKey, Lang.DEFAULT_LANG);
 	}
 
-	public TextComponent getPlayerMessage(Message messageKey, Player player, Component... placeHolderValues) {
+	public TextComponent getPlayerMessage(Message messageKey, Player player, TextComponent @NotNull ... placeholderValues) {
 		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
 		Lang lang = profile == null ||
@@ -99,26 +118,18 @@ public class MessageManager {
 						? Lang.DEFAULT_LANG
 						: profile.getPlayerPreferences().getLang();
 
-		return getMessage(messageKey, lang, placeHolderValues);
+		return getMessage(messageKey, lang, placeholderValues);
 	}
 
-	public TextComponent getPlayerMessage(Message messageKey, Player player, String... placeHolderValues) {
-		return getPlayerMessage(
-						messageKey,
-						player,
-						Arrays.stream(placeHolderValues).map((String placeHolderValue) -> LegacyComponentSerializer.legacyAmpersand().deserialize(placeHolderValue)).toArray(TextComponent[]::new)
-		);
+	public TextComponent getPlayerMessage(Message messageKey, Player player, String @NotNull ... placeholderValues) {
+		return getPlayerMessage(messageKey, player, toTextComponentArray(placeholderValues));
 	}
 
 	public TextComponent getPlayerMessage(Message messageKey, Player player) {
-		return getPlayerMessage(messageKey, player, new Component[]{});
+		return getPlayerMessage(messageKey, player, new TextComponent[]{});
 	}
 
-	private String getRawMessage(@NotNull Message messageKey, Lang lang) {
-		return langConfigs.get(lang).getString(messageKey.getKey());
-	}
-
-	private String getRawMessage(@NotNull Message messageKey) {
-		return getRawMessage(messageKey, Lang.DEFAULT_LANG);
+	private TextComponent @NotNull [] toTextComponentArray(String[] strings) {
+		return Arrays.stream(strings).map(Component::text).toArray(TextComponent[]::new);
 	}
 }
