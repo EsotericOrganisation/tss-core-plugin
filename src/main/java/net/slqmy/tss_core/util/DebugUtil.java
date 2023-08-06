@@ -26,9 +26,9 @@ public class DebugUtil {
 		);
 	}
 
-	public static void handleException(String message, @NotNull Exception exception) {
+	public static void handleException(TextComponent message, @NotNull Exception exception) {
 		if (message != null) {
-			error(LegacyComponentSerializer.legacyAmpersand().deserialize("&c" + message));
+			error(message);
 		}
 
 		error(exception.getMessage());
@@ -37,7 +37,11 @@ public class DebugUtil {
 		exception.printStackTrace();
 	}
 
+	public static void handleException(String message, @NotNull Exception exception) {
+		handleException(Component.text(message), exception);
+	}
+
 	public static void handleException(@NotNull Exception exception) {
-		handleException(null, exception);
+		handleException((TextComponent) null, exception);
 	}
 }
