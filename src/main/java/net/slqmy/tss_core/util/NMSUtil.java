@@ -17,10 +17,10 @@ public class NMSUtil {
 	}
 
 	public static @Nullable ServerPlayer getServerPlayer(Player player) {
-		return (ServerPlayer) invokeHandle(player);
+		return (ServerPlayer) invokeGetHandle(player);
 	}
 
-	public static @Nullable Object invokeHandle(Object spigotObject) {
+	public static @Nullable Object invokeGetHandle(Object spigotObject) {
 		Method getHandle = ReflectUtil.getAccessibleMethod(spigotObject, "getHandle");
 		assert getHandle != null;
 

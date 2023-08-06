@@ -18,7 +18,7 @@ public enum PlayersCollectionName implements CollectionName {
 	}
 
 	@Override
-	public DatabaseName getDatabase() {
+	public DatabaseName getDatabaseName() {
 		return database;
 	}
 }

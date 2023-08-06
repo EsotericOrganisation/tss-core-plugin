@@ -5,5 +5,5 @@ import net.slqmy.tss_core.database.DatabaseName;
 public interface CollectionName {
 	String getName();
 
-	DatabaseName getDatabase();
+	DatabaseName getDatabaseName();
 }
