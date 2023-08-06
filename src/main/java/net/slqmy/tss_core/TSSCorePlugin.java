@@ -5,6 +5,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.manager.MessageManager;
+import net.slqmy.tss_core.manager.NPCManager;
 import net.slqmy.tss_core.manager.PacketManager;
 import net.slqmy.tss_core.manager.PlayerManager;
 import org.bukkit.Bukkit;
@@ -13,13 +14,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TSSCorePlugin extends JavaPlugin {
 
-	private MongoDB database;
-
-	private PlayerManager playerManager;
-
 	private MessageManager messageManager;
-
+	private MongoDB database;
+	private PlayerManager playerManager;
 	private PacketManager packetManager;
+	private NPCManager npcManager;
+
+	public MessageManager getMessageManager() {
+		return messageManager;
+	}
 
 	public MongoDB getDatabase() {
 		return database;
@@ -29,22 +32,16 @@ public final class TSSCorePlugin extends JavaPlugin {
 		return playerManager;
 	}
 
-	public MessageManager getMessageManager() {
-		return messageManager;
-	}
-
 	public PacketManager getPacketManager() {
 		return packetManager;
 	}
 
+	public NPCManager getNpcManager() {
+		return npcManager;
+	}
+
 	@Override
 	public void onEnable() {
-		CommandAPIBukkitConfig commandConfig = new CommandAPIBukkitConfig(this)
-						.shouldHookPaperReload(true);
-
-		CommandAPI.onLoad(commandConfig);
-		CommandAPI.onEnable();
-
 		getDataFolder().mkdir();
 
 		YamlConfiguration config = (YamlConfiguration) getConfig();
@@ -52,12 +49,19 @@ public final class TSSCorePlugin extends JavaPlugin {
 		config.options().copyDefaults();
 		saveDefaultConfig();
 
+		messageManager = new MessageManager(this);
 		database = new MongoDB(this);
 		playerManager = new PlayerManager();
-		messageManager = new MessageManager(this);
-		packetManager = new PacketManager();
+		npcManager = new NPCManager(this);
+		packetManager = new PacketManager(this);
 
 		Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
+
+		CommandAPIBukkitConfig commandConfig = new CommandAPIBukkitConfig(this)
+						.shouldHookPaperReload(true);
+
+		CommandAPI.onLoad(commandConfig);
+		CommandAPI.onEnable();
 	}
 
 	@Override
