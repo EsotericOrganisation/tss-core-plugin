@@ -41,7 +41,11 @@ public class ConnectionListener implements Listener {
 		Player player = event.getPlayer();
 
 		plugin.getPacketManager().injectPlayer(player);
-		plugin.getNpcManager().addPlayer(player);
+		plugin.getNpcManager().updateNpcs(player);
+
+		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
+
+		profile.getPlayerStats().incrementJoinCount();
 	}
 
 	@EventHandler
