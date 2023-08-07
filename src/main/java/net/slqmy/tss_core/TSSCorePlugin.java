@@ -2,23 +2,32 @@ package net.slqmy.tss_core;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import net.luckperms.api.LuckPerms;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
+import net.slqmy.tss_core.event.listener.DimensionChangeListener;
 import net.slqmy.tss_core.manager.MessageManager;
 import net.slqmy.tss_core.manager.NPCManager;
 import net.slqmy.tss_core.manager.PacketManager;
 import net.slqmy.tss_core.manager.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TSSCorePlugin extends JavaPlugin {
+
+	private final LuckPerms luckPerms = (LuckPerms) Bukkit.getPluginManager().getPlugin("LuckPerms");
 
 	private MessageManager messageManager;
 	private MongoDB database;
 	private PlayerManager playerManager;
 	private PacketManager packetManager;
 	private NPCManager npcManager;
+
+	public LuckPerms getLuckPerms() {
+		return luckPerms;
+	}
 
 	public MessageManager getMessageManager() {
 		return messageManager;
@@ -55,7 +64,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 		npcManager = new NPCManager(this);
 		packetManager = new PacketManager(this);
 
-		Bukkit.getPluginManager().registerEvents(new ConnectionListener(this), this);
+		PluginManager pluginManager = Bukkit.getPluginManager();
+
+		pluginManager.registerEvents(new ConnectionListener(this), this);
+		pluginManager.registerEvents(new DimensionChangeListener(this), this);
 
 		CommandAPIBukkitConfig commandConfig = new CommandAPIBukkitConfig(this)
 						.shouldHookPaperReload(true);
