@@ -15,6 +15,8 @@ public class NPCClickEvent extends Event {
 
 
 	public NPCClickEvent(NPCPlayer npcPlayer, Player player) {
+		super(true);
+
 		this.npcPlayer = npcPlayer;
 		this.player = player;
 	}
