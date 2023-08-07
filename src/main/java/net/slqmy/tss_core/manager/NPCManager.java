@@ -19,6 +19,7 @@ import net.slqmy.tss_core.util.FileUtil;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.type.Pair;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -88,17 +89,24 @@ public class NPCManager {
 		return new Pair<>(npcPlayer.getId(), npcPlayer);
 	}
 
-	public void addPlayer(Player player) {
+	public void updateNpcs(@NotNull Player player) {
+		World playerWorld = player.getWorld();
+
 		ServerPlayer serverPlayer = NMSUtil.getServerPlayer(player);
 		assert serverPlayer != null;
 
 		ServerGamePacketListenerImpl connection = serverPlayer.connection;
 
 		for (NPCPlayer npc : npcs.values()) {
+			ServerPlayer nmsEntity = npc.getNmsEntity();
+
+			if (!nmsEntity.getBukkitEntity().getWorld().equals(playerWorld)) {
+				continue;
+			}
+
 			NPCData npcData = npc.getNpc();
 			Skin npcSkin = npcData.getSkin();
 
-			ServerPlayer nmsEntity = npc.getNmsEntity();
 			nmsEntity.getGameProfile().getProperties().put("textures", new Property("texture", npcSkin.getValue(), npcSkin.getSignature()));
 
 			connection.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, nmsEntity));
