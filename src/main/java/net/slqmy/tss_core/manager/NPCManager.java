@@ -15,7 +15,6 @@ import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.type.Skin;
 import net.slqmy.tss_core.data.type.npc.NPCData;
 import net.slqmy.tss_core.type.NPCPlayer;
-import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.FileUtil;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.type.Pair;
@@ -63,7 +62,6 @@ public class NPCManager {
 		);
 
 		Skin skin = npcData.getSkin();
-		DebugUtil.log(skin.getValue(), skin.getSignature());
 		npcProfile.getProperties().put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
 
 		MinecraftServer server = MinecraftServer.getServer();
@@ -87,7 +85,7 @@ public class NPCManager {
 						(byte) 125
 		);
 
-		return new Pair<>(npcData.getId(), npcPlayer);
+		return new Pair<>(npcPlayer.getId(), npcPlayer);
 	}
 
 	public void addPlayer(Player player) {
