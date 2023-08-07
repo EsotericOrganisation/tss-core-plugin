@@ -24,15 +24,12 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDB {
 
-	private final TSSCorePlugin plugin;
-
 	private final MongoClientSettings clientSettings;
 
 	private final CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
 	private final CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
 	public MongoDB(@NotNull TSSCorePlugin plugin) {
-		this.plugin = plugin;
 		YamlConfiguration config = (YamlConfiguration) plugin.getConfig();
 
 		String clusterAddress = config.getString("mongodb-cluster-address");
@@ -79,6 +76,26 @@ public class MongoDB {
 
 			try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
 				consumer.accept(cursor, collection);
+			}
+		});
+	}
+
+	public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<Document>, MongoCollection<Document>> consumer) {
+		getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
+			MongoCollection<Document> collection = database.getCollection(collectionName.getName());
+
+			try (MongoCursor<Document> cursor = collection.find(filter).cursor()) {
+				consumer.accept(cursor, collection);
+			}
+		});
+	}
+
+	public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull Consumer<MongoCursor<Document>> consumer) {
+		getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
+			MongoCollection<Document> collection = database.getCollection(collectionName.getName());
+
+			try (MongoCursor<Document> cursor = collection.find(filter).cursor()) {
+				consumer.accept(cursor);
 			}
 		});
 	}
