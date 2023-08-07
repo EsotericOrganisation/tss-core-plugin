@@ -40,9 +40,9 @@ public class ReflectUtil {
 		return targetClass;
 	}
 
-	public static @Nullable Object getStaticFieldValue(Class<?> targetClass, String fieldName) {
+	public static @Nullable Object getStaticFieldValue(Class<?> targetClass, String fieldName, boolean searchSuperClass) {
 		try {
-			Field field = getAccessibleField(targetClass, fieldName);
+			Field field = getAccessibleField(targetClass, fieldName, searchSuperClass);
 
 			if (field != null) {
 				return field.get(null);
@@ -56,13 +56,21 @@ public class ReflectUtil {
 		return null;
 	}
 
-	public static Object getStaticFieldValue(@NotNull Object object, String fieldName) {
-		return getStaticFieldValue(object.getClass(), fieldName);
+	public static @Nullable Object getStaticFieldValue(Class<?> targetClass, String fieldName) {
+		return getStaticFieldValue(targetClass, fieldName, true);
 	}
 
-	private static @Nullable Object getFieldValue(Class<?> targetClass, @NotNull Object object, String fieldName, Class<?> expectedFieldType) {
+	public static Object getStaticFieldValue(@NotNull Object object, String fieldName, boolean searchSuperClass) {
+		return getStaticFieldValue(object.getClass(), fieldName, searchSuperClass);
+	}
+
+	public static Object getStaticFieldValue(@NotNull Object object, String fieldName) {
+		return getStaticFieldValue(object.getClass(), fieldName, true);
+	}
+
+	private static @Nullable Object getFieldValue(Class<?> targetClass, @NotNull Object object, String fieldName, Class<?> expectedFieldType, boolean searchSuperClass) {
 		try {
-			Field field = getAccessibleField(targetClass, fieldName, expectedFieldType);
+			Field field = getAccessibleField(targetClass, fieldName, expectedFieldType, searchSuperClass);
 
 			if (field != null) {
 				return field.get(object);
@@ -76,30 +84,24 @@ public class ReflectUtil {
 		return null;
 	}
 
+	public static @Nullable Object getFieldValue(@NotNull Object object, String fieldName, Class<?> expectedFieldType, boolean searchSuperClass) {
+		return getFieldValue(object.getClass(), object, fieldName, expectedFieldType, searchSuperClass);
+	}
+
+	public static @Nullable Object getFieldValue(@NotNull Object object, String fieldName, boolean searchSuperClass) {
+		return getFieldValue(object.getClass(), object, fieldName, null, searchSuperClass);
+	}
+
 	public static @Nullable Object getFieldValue(@NotNull Object object, String fieldName, Class<?> expectedFieldType) {
-
-		DebugUtil.log("Called getFieldValue.");
-		DebugUtil.log("Object to get the value of: " + object);
-		DebugUtil.log("Name of the field to get: " + fieldName);
-		DebugUtil.log("Expected field type: " + expectedFieldType);
-
-		return getFieldValue(object.getClass(), object, fieldName, expectedFieldType);
+		return getFieldValue(object.getClass(), object, fieldName, expectedFieldType, true);
 	}
 
 	public static @Nullable Object getFieldValue(@NotNull Object object, String fieldName) {
-		return getFieldValue(object.getClass(), object, fieldName, null);
+		return getFieldValue(object.getClass(), object, fieldName, null, true);
 	}
 
-	private static @Nullable Field getAccessibleField(Class<?> targetClass, Class<?> originalClass, String fieldName, Class<?> expectedFieldType) {
-
-		DebugUtil.log("Called main getAccessibleField method.");
-		DebugUtil.log("targetClass: " + targetClass);
-		DebugUtil.log("originalClass: " + originalClass);
-		DebugUtil.log("expectedFieldType: " + expectedFieldType);
-
+	private static @Nullable Field getAccessibleField(Class<?> targetClass, String fieldName, Class<?> expectedFieldType, boolean searchSuperClass) {
 		if (targetClass == null) {
-			DebugUtil.error("Reflection Failure: Couldn't find field '" + fieldName + "' as argument 'targetClass' was &9null&c!");
-			DebugUtil.log("Original target class: " + originalClass);
 			return null;
 		}
 
@@ -117,57 +119,47 @@ public class ReflectUtil {
 		Map<String, Field> classFieldMap = classFieldCache.asMap();
 		Field field = classFieldMap.get(fieldName);
 
-		DebugUtil.log("Cached field: ", field);
-
 		if (field == null || (expectedFieldType != null && !expectedFieldType.equals(field.getType()))) {
 			try {
 				field = targetClass.getDeclaredField(fieldName);
 
-				DebugUtil.log("Found field " + field + ".");
-				DebugUtil.log("Is the field type as expected?", field.getType().equals(expectedFieldType));
-
 				if (expectedFieldType != null && !field.getType().equals(expectedFieldType)) {
-					DebugUtil.log("The field type is not as expected, moving on to searching super class.");
-
 					throw new NoSuchFieldException();
 				}
 
 				field.setAccessible(true);
-
-				classFieldCaches.get(originalClass).put(fieldName, field);
 			} catch (NoSuchFieldException exception) {
-				DebugUtil.log("NoSuchFieldException created, moving on to super class.");
+				if (searchSuperClass) {
+					DebugUtil.log("Correct field not found, searching super class...");
 
-				field = getAccessibleField(targetClass.getSuperclass(), originalClass, fieldName, expectedFieldType);
+					field = getAccessibleField(targetClass.getSuperclass(), fieldName, expectedFieldType, true);
+				}
 			}
 		} else {
 			classFieldCache.invalidate(fieldName);
 		}
 
-		classFieldMap.put(fieldName, field);
+		if (field != null) {
+			classFieldMap.put(fieldName, field);
+		}
+
 		return field;
 	}
 
-	private static @Nullable Field getAccessibleField(Class<?> targetClass, String fieldName, Class<?> expectedFieldType) {
-		return getAccessibleField(targetClass, targetClass, fieldName, expectedFieldType);
+	private static @Nullable Field getAccessibleField(@NotNull Object object, String fieldName, Class<?> expectedFieldType, boolean searchSuperClass) {
+		return getAccessibleField(object.getClass(), fieldName, expectedFieldType, searchSuperClass);
 	}
 
-	private static @Nullable Field getAccessibleField(@NotNull Object object, String fieldName, Class<?> expectedFieldType) {
-		return getAccessibleField(object.getClass(), object.getClass(), fieldName, expectedFieldType);
+	private static @Nullable Field getAccessibleField(Class<?> targetClass, String fieldName, boolean searchSuperClass) {
+		return getAccessibleField(targetClass, fieldName, null, searchSuperClass);
 	}
 
-	private static @Nullable Field getAccessibleField(Class<?> targetClass, String fieldName) {
-		return getAccessibleField(targetClass, targetClass, fieldName, null);
+	private static @Nullable Field getAccessibleField(@NotNull Object object, String fieldName, boolean searchSuperClass) {
+		return getAccessibleField(object.getClass(), fieldName, null, searchSuperClass);
 	}
 
-	private static @Nullable Field getAccessibleField(@NotNull Object object, String fieldName) {
-		return getAccessibleField(object.getClass(), object.getClass(), fieldName, null);
-	}
-
-	public static @Nullable Method getAccessibleMethod(Class<?> targetClass, Class<?> originalClass, String methodName) {
+	public static @Nullable Method getAccessibleMethod(Class<?> targetClass, String methodName) {
 		if (targetClass == null) {
-			DebugUtil.error("Reflection Failure: Couldn't find method '" + methodName + "' as argument 'targetClass' was &9null&c!");
-			DebugUtil.log("Original target class: " + originalClass);
 			return null;
 		}
 
@@ -189,10 +181,8 @@ public class ReflectUtil {
 			try {
 				method = targetClass.getDeclaredMethod(methodName);
 				method.setAccessible(true);
-
-				classMethodCaches.get(originalClass).put(methodName, method);
 			} catch (NoSuchMethodException exception) {
-				method = getAccessibleMethod(targetClass.getSuperclass(), originalClass, methodName);
+				method = getAccessibleMethod(targetClass.getSuperclass(), methodName);
 			}
 		} else {
 			classMethodCache.invalidate(methodName);
@@ -202,11 +192,7 @@ public class ReflectUtil {
 		return method;
 	}
 
-	public static @Nullable Method getAccessibleMethod(Class<?> targetClass, String methodName) {
-		return getAccessibleMethod(targetClass, targetClass, methodName);
-	}
-
 	public static @Nullable Method getAccessibleMethod(@NotNull Object object, String methodName) {
-		return getAccessibleMethod(object.getClass(), object.getClass(), methodName);
+		return getAccessibleMethod(object.getClass(), methodName);
 	}
 }
