@@ -8,11 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class NPCClickEvent extends Event {
 
-	private static final HandlerList handlerList = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 
 	private final NPCPlayer npcPlayer;
 	private final Player player;
-
 
 	public NPCClickEvent(NPCPlayer npcPlayer, Player player) {
 		super(true);
@@ -29,12 +28,12 @@ public class NPCClickEvent extends Event {
 		return player;
 	}
 
-	public HandlerList getHandlerList() {
-		return handlerList;
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
 	}
 
 	@Override
 	public @NotNull HandlerList getHandlers() {
-		return handlerList;
+		return HANDLERS;
 	}
 }
