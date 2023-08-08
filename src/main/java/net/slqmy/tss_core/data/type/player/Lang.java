@@ -1,9 +1,9 @@
 package net.slqmy.tss_core.data.type.player;
 
 public enum Lang {
-	ENGLISH_UK("en-uk");
+	ENGLISH_UK("en-gb");
 
-	public static final Lang DEFAULT_LANG = Lang.ENGLISH_UK;
+	public static final Lang DEFAULT_LANG = ENGLISH_UK;
 
 	private final String code;
 
