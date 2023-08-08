@@ -6,8 +6,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.database.collection_name.PlayersCollectionName;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,14 +13,13 @@ import java.util.UUID;
 
 public class PlayerProfile {
 
-	private final UUID uuid;
+	private UUID uuid;
 
 	private PlayerPreferences playerPreferences;
 	private PlayerStats playerStats;
 
-	@BsonCreator
-	public PlayerProfile(@BsonProperty UUID uuid) {
-		this.uuid = uuid;
+	public PlayerProfile() {
+
 	}
 
 	public PlayerProfile(UUID uuid, @NotNull TSSCorePlugin plugin) throws MongoException {
@@ -35,14 +32,20 @@ public class PlayerProfile {
 				playerPreferences = profile.getPlayerPreferences();
 				playerStats = profile.getPlayerStats();
 			} else {
-				PlayerProfile profile = new PlayerProfile(uuid);
-				playerProfiles.insertOne(profile);
+				playerPreferences = new PlayerPreferences();
+				playerStats = new PlayerStats();
+
+				playerProfiles.insertOne(this);
 			}
 		}, PlayerProfile.class);
 	}
 
 	public PlayerProfile(@NotNull Player player, TSSCorePlugin plugin) throws MongoException {
 		this(player.getUniqueId(), plugin);
+	}
+
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	public PlayerPreferences getPlayerPreferences() {
