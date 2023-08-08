@@ -2,7 +2,6 @@ package net.slqmy.tss_core;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
-import net.luckperms.api.LuckPerms;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.event.listener.DimensionChangeListener;
@@ -17,17 +16,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TSSCorePlugin extends JavaPlugin {
 
-	private final LuckPerms luckPerms = (LuckPerms) Bukkit.getPluginManager().getPlugin("LuckPerms");
-
 	private MessageManager messageManager;
 	private MongoDB database;
 	private PlayerManager playerManager;
 	private PacketManager packetManager;
 	private NPCManager npcManager;
-
-	public LuckPerms getLuckPerms() {
-		return luckPerms;
-	}
 
 	public MessageManager getMessageManager() {
 		return messageManager;

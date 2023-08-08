@@ -26,7 +26,6 @@ dependencies {
     compileOnly("org.purpurmc.purpur", "purpur-api", "1.20.1-R0.1-SNAPSHOT")
 
     implementation("org.mongodb", "mongodb-driver-sync", "4.10.2")
-    compileOnly("net.luckperms", "api", "5.4")
 
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.0.3")
 
