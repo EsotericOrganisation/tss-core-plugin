@@ -16,6 +16,7 @@ public class PlayerProfile {
 	private UUID uuid;
 
 	private String rankName;
+
 	private PlayerPreferences playerPreferences;
 	private PlayerStats playerStats;
 
@@ -59,6 +60,18 @@ public class PlayerProfile {
 
 	public PlayerStats getPlayerStats() {
 		return playerStats;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	public void setPlayerPreferences(PlayerPreferences playerPreferences) {
+		this.playerPreferences = playerPreferences;
+	}
+
+	public void setPlayerStats(PlayerStats playerStats) {
+		this.playerStats = playerStats;
 	}
 
 	public void setRankName(String rankName) {
