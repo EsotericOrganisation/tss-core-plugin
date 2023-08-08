@@ -28,3 +28,24 @@ launch-statistics: "<yellow><underlined>Launch Statistics"
 
 welcome-subtitle: "<yellow>Thank you for joining!"
 welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
+
+## TSS-Ranks
+
+nonexistent-rank: "<red>That rank does not exist in the configuration file!"
+
+# <0> - Display name of previous rank.
+rank-already-set: "<red>Your rank is already set to <0><red>!"
+
+# <0> - The player who's rank was not set.
+# <1> - The player's rank.
+rank-already-set-other: "<0><red>'s rank is already set to <1><red>!"
+
+# <0> - Display name of the set (new) rank.
+rank-successfully-set: "<green>Successfully set your rank to <0><green>!"
+
+# <0> - Player who's rank was set.
+# <1> - Display name of the set (new) rank.
+rank-successfully-set-other: "<green>Successfully set <0><green>'s rank to <1><green>!"
+
+# <0> - Display name of the set (new) rank.
+rank-set-notification: "<green>Your rank has been set to <0><green>!"

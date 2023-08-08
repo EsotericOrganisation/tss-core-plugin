@@ -4,7 +4,6 @@ public enum Message {
 	// - The Slimy Swamp Messages
 
 	// General
-
 	THE_SLIMY_SWAMP,
 
 	// TSS-Core
@@ -23,9 +22,16 @@ public enum Message {
 	LAUNCH_STATISTICS,
 
 	// TSS-Lobby
-
 	WELCOME_SUBTITLE,
-	WELCOME_CHAT_MESSAGE;
+	WELCOME_CHAT_MESSAGE,
+
+	// TSS-Ranks
+	NONEXISTENT_RANK,
+	RANK_ALREADY_SET,
+	RANK_ALREADY_SET_OTHER,
+	RANK_SUCCESSFULLY_SET,
+	RANK_SUCCESSFULLY_SET_OTHER,
+	RANK_SET_NOTIFICATION;
 
 	private final String key;
 
