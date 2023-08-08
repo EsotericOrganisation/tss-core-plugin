@@ -39,15 +39,9 @@ public class FileUtil {
 	public static <T> void saveJsonFile(String path, T data, Class<T> targetClass, boolean replace, @NotNull JavaPlugin plugin) {
 		File jsonFile = initiateJsonFile(path, replace, plugin);
 
-		try {
-			plugin.saveResource(path, true);
-
-			Writer writer = new FileWriter(jsonFile, false);
-
+		try (Writer writer = new FileWriter(jsonFile, false)) {
 			new Gson().toJson(data, writer);
-
 			writer.flush();
-			writer.close();
 		} catch (IOException exception) {
 			DebugUtil.handleException("An unexpected exception occurred while saving JSON file " + jsonFile + " of type " + targetClass + "!", exception);
 			DebugUtil.log("Data: " + data);
