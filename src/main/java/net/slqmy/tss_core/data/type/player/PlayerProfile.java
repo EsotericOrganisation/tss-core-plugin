@@ -13,7 +13,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class PlayerProfile extends PlayerData {
+public class PlayerProfile {
+
+	private final UUID uuid;
+
+	private PlayerPreferences playerPreferences;
+	private PlayerStats playerStats;
 
 	@BsonCreator
 	public PlayerProfile(@BsonProperty UUID uuid) {
@@ -38,5 +43,13 @@ public class PlayerProfile extends PlayerData {
 
 	public PlayerProfile(@NotNull Player player, TSSCorePlugin plugin) throws MongoException {
 		this(player.getUniqueId(), plugin);
+	}
+
+	public PlayerPreferences getPlayerPreferences() {
+		return playerPreferences;
+	}
+
+	public PlayerStats getPlayerStats() {
+		return playerStats;
 	}
 }
