@@ -18,6 +18,10 @@ public class PlayerManager {
 		Bukkit.getScheduler().runTaskTimer(plugin, () -> saveProfiles(), dayInTicks, dayInTicks);
 	}
 
+	public HashMap<UUID, PlayerProfile> getProfiles() {
+		return profiles;
+	}
+
 	public PlayerProfile getProfile(UUID uuid) {
 		return profiles.get(uuid);
 	}
