@@ -52,6 +52,8 @@ public class ConnectionListener implements Listener {
 	public void onQuit(@NotNull PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 
+		plugin.getPlayerManager().getProfile(player).save(true);
+
 		plugin.getPlayerManager().removeProfile(player);
 		plugin.getPacketManager().ejectPlayer(player);
 	}
