@@ -31,6 +31,7 @@ public class Colour implements TextColor {
 	public static Colour PINK = new Colour(0xca6cd8);
 	public static Colour GREY = new Colour(0x404040);
 	public static Colour LIGHT_GREY = new Colour(0x909090);
+	public static Colour WHITE = new Colour(0xffffff);
 
 	private final int hexValue;
 
