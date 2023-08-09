@@ -5,6 +5,7 @@ public enum Message {
 
 	// General
 	THE_SLIMY_SWAMP,
+	NONEXISTENT_PLAYER,
 
 	// TSS-Core
 	UNABLE_TO_LOAD_DATA,
