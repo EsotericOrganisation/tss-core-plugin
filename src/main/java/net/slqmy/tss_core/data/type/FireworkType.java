@@ -3,6 +3,7 @@ package net.slqmy.tss_core.data.type;
 import net.slqmy.tss_core.type.Colour;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.Particle;
 
 import java.util.Arrays;
 
@@ -60,6 +61,7 @@ public enum FireworkType {
 									.withFlicker()
 	),
 	SLIME_KING(
+					Particle.END_ROD,
 					FireworkEffect.builder()
 									.with(FireworkEffect.Type.BALL_LARGE)
 									.withColor(Colour.LIME.asBukkitColour(), Colour.MINT.asBukkitColour(), Colour.SLIME.asBukkitColour(), Colour.LIME.asBukkitColour(), Colour.GREEN.asBukkitColour())
@@ -70,6 +72,19 @@ public enum FireworkType {
 
 	private final FireworkEffect[] effects;
 	private final int power;
+	private Particle spiralParticle;
+
+	FireworkType(int power, Particle spiralParticle, FireworkEffect.Builder... effects) {
+		this.effects = Arrays.stream(effects).map(FireworkEffect.Builder::build).toArray(FireworkEffect[]::new);
+		this.power = power;
+		this.spiralParticle = spiralParticle;
+	}
+
+	FireworkType(Particle spiralParticle, FireworkEffect.Builder... effects) {
+		this.effects = Arrays.stream(effects).map(FireworkEffect.Builder::build).toArray(FireworkEffect[]::new);
+		this.power = 1;
+		this.spiralParticle = spiralParticle;
+	}
 
 	FireworkType(int power, FireworkEffect.Builder... effects) {
 		this.effects = Arrays.stream(effects).map(FireworkEffect.Builder::build).toArray(FireworkEffect[]::new);
@@ -87,5 +102,9 @@ public enum FireworkType {
 
 	public int getPower() {
 		return power;
+	}
+
+	public Particle getSpiralParticle() {
+		return spiralParticle;
 	}
 }
