@@ -25,7 +25,7 @@ public class FileUtil {
 	}
 
 	public static @NotNull File initiateYamlFile(String path, @NotNull JavaPlugin plugin) {
-		return initiateYamlFile(path, false, plugin);
+		return initiateFile(path + ".yml", false, plugin);
 	}
 
 	public static @NotNull File initiateJsonFile(String path, boolean replace, @NotNull JavaPlugin plugin) {
@@ -33,11 +33,11 @@ public class FileUtil {
 	}
 
 	public static @NotNull File initiateJsonFile(String path, @NotNull JavaPlugin plugin) {
-		return initiateJsonFile(path, false, plugin);
+		return initiateFile(path + ".json", false, plugin);
 	}
 
 	public static <T> void saveJsonFile(String path, T data, Class<T> targetClass, boolean replace, @NotNull JavaPlugin plugin) {
-		File jsonFile = initiateJsonFile(path, replace, plugin);
+		File jsonFile = initiateFile(path + ".json", replace, plugin);
 
 		try (Writer writer = new FileWriter(jsonFile, false)) {
 			new Gson().toJson(data, writer);
