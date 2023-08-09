@@ -7,7 +7,7 @@ public class NPCData {
 	private int id;
 	private Skin skin;
 	private SimpleLocation location;
-	String destinationWorldName;
+	private String destinationWorldName;
 
 	public int getId() {
 		return id;

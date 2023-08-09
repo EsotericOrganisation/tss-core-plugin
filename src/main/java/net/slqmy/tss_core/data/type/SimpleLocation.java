@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class SimpleLocation {
+
 	private String worldName;
 
 	private double x;
