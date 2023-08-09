@@ -53,7 +53,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 		messageManager = new MessageManager(this);
 		database = new MongoDB(this);
-		playerManager = new PlayerManager();
+		playerManager = new PlayerManager(this);
 		npcManager = new NPCManager(this);
 		packetManager = new PacketManager(this);
 
@@ -71,6 +71,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		if (playerManager != null) {
+			playerManager.saveProfiles(false);
+		}
+
 		CommandAPI.onDisable();
 	}
 }
