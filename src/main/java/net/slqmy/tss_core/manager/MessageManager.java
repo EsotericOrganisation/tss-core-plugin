@@ -8,7 +8,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.Message;
-import net.slqmy.tss_core.data.type.player.Lang;
+import net.slqmy.tss_core.data.type.player.Language;
 import net.slqmy.tss_core.data.type.player.PlayerProfile;
 import net.slqmy.tss_core.util.CacheUtil;
 import net.slqmy.tss_core.util.FileUtil;
@@ -26,24 +26,24 @@ public class MessageManager {
 	private final TSSCorePlugin plugin;
 
 	private final HashMap<
-					Lang,
+					Language,
 					Triplet<
 									YamlConfiguration,
 									Cache<Message, String>,
 									Cache<Message, TextComponent>
 									>
-					> langData = new HashMap<>();
+					> languageData = new HashMap<>();
 
 
 	public MessageManager(@NotNull TSSCorePlugin plugin) {
 		this.plugin = plugin;
 
-		for (Lang lang : Lang.values()) {
-			File langFile = FileUtil.initiateYamlFile("lang/" + lang.getCode(), true, plugin);
+		for (Language language : Language.values()) {
+			File langFile = FileUtil.initiateYamlFile("lang/" + language.getCode(), true, plugin);
 			YamlConfiguration langConfig = YamlConfiguration.loadConfiguration(langFile);
 
-			langData.put(
-							lang,
+			languageData.put(
+							language,
 							new Triplet<>(
 											langConfig,
 											CacheUtil.getNewCache(),
@@ -53,11 +53,11 @@ public class MessageManager {
 		}
 	}
 
-	private String getRawMessage(Lang lang, Message messageKey) {
-		Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = langData.get(lang);
+	private String getRawMessage(Language language, Message messageKey) {
+		Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = languageData.get(language);
 
 		if (triplet == null) {
-			triplet = langData.get(Lang.DEFAULT_LANG);
+			triplet = languageData.get(Language.DEFAULT_LANGUAGE);
 		}
 
 		Cache<Message, String> cache = triplet.getSecond();
@@ -71,12 +71,12 @@ public class MessageManager {
 		return message;
 	}
 
-	public TextComponent getMessage(Message messageKey, Lang lang, TextComponent @NotNull ... placeholderValues) {
+	public TextComponent getMessage(Message messageKey, Language language, TextComponent @NotNull ... placeholderValues) {
 		if (placeholderValues.length == 0) {
-			Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = langData.get(lang);
+			Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> triplet = languageData.get(language);
 
 			if (triplet == null) {
-				triplet = langData.get(Lang.DEFAULT_LANG);
+				triplet = languageData.get(Language.DEFAULT_LANGUAGE);
 			}
 
 			Cache<Message, TextComponent> cache = triplet.getThird();
@@ -91,7 +91,7 @@ public class MessageManager {
 			return message;
 		}
 
-		String rawMessage = getRawMessage(lang, messageKey);
+		String rawMessage = getRawMessage(language, messageKey);
 
 		TagResolver[] tagResolvers = new TagResolver[placeholderValues.length];
 		for (int i = 0; i < placeholderValues.length; i++) {
@@ -102,23 +102,23 @@ public class MessageManager {
 	}
 
 	public TextComponent getMessage(Message messageKey, String... placeholderValues) {
-		return getMessage(messageKey, Lang.DEFAULT_LANG, toTextComponentArray(placeholderValues));
+		return getMessage(messageKey, Language.DEFAULT_LANGUAGE, toTextComponentArray(placeholderValues));
 	}
 
 	public TextComponent getMessage(Message messageKey) {
-		return getMessage(messageKey, Lang.DEFAULT_LANG);
+		return getMessage(messageKey, Language.DEFAULT_LANGUAGE);
 	}
 
 	public TextComponent getPlayerMessage(Message messageKey, Player player, TextComponent @NotNull ... placeholderValues) {
 		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
-		Lang lang = profile == null ||
+		Language language = profile == null ||
 						profile.getPlayerPreferences() == null ||
-						profile.getPlayerPreferences().getLang() == null
-						? Lang.DEFAULT_LANG
-						: profile.getPlayerPreferences().getLang();
+						profile.getPlayerPreferences().getLanguage() == null
+						? Language.DEFAULT_LANGUAGE
+						: profile.getPlayerPreferences().getLanguage();
 
-		return getMessage(messageKey, lang, placeholderValues);
+		return getMessage(messageKey, language, placeholderValues);
 	}
 
 	public TextComponent getPlayerMessage(Message messageKey, Player player, String @NotNull ... placeholderValues) {

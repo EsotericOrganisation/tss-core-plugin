@@ -2,13 +2,17 @@ package net.slqmy.tss_core.data.type.player;
 
 public class PlayerPreferences {
 
-	private final Lang lang;
+	private Language language;
 
 	public PlayerPreferences() {
-		lang = Lang.DEFAULT_LANG;
+		language = Language.DEFAULT_LANGUAGE;
 	}
 
-	public Lang getLang() {
-		return lang;
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
 	}
 }
