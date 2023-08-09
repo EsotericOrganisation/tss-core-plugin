@@ -10,6 +10,8 @@ import java.util.List;
 
 public final class Rank {
 
+	private int weight;
+
 	private String name;
 	private String displayName;
 	private String namePrefix;
@@ -21,6 +23,10 @@ public final class Rank {
 
 	public Rank() {
 
+	}
+
+	public int getWeight() {
+		return weight;
 	}
 
 	public String getName() {
