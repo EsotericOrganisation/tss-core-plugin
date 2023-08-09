@@ -1,5 +1,6 @@
 package net.slqmy.tss_core.data.type;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +12,8 @@ public final class Rank {
 
 	private String name;
 	private String displayName;
+	private String namePrefix;
+	private String nameSuffix;
 
 	private List<Permission> permissions;
 
@@ -26,6 +29,22 @@ public final class Rank {
 
 	public @NotNull TextComponent getDisplayName() {
 		return (TextComponent) MiniMessage.miniMessage().deserialize(displayName);
+	}
+
+	public @NotNull TextComponent getNamePrefix() {
+		if (namePrefix == null || namePrefix.equals("")) {
+			return Component.empty();
+		}
+
+		return (TextComponent) MiniMessage.miniMessage().deserialize(namePrefix).append(Component.space());
+	}
+
+	public @NotNull TextComponent getNameSuffix() {
+		if (nameSuffix == null || nameSuffix.equals("")) {
+			return Component.empty();
+		}
+
+		return Component.space().append(MiniMessage.miniMessage().deserialize(nameSuffix));
 	}
 
 	public List<Permission> getPermissions() {
