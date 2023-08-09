@@ -73,6 +73,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 	public void onDisable() {
 		if (playerManager != null) {
 			playerManager.saveProfiles(false);
+			playerManager.getProfiles().clear();
 		}
 
 		CommandAPI.onDisable();

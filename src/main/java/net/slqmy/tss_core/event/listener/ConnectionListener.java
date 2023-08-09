@@ -45,15 +45,17 @@ public class ConnectionListener implements Listener {
 		plugin.getNpcManager().updateNpcs(player);
 
 		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
-
 		profile.getPlayerStats().incrementJoinCount();
 	}
 
 	@EventHandler
 	public void onQuit(@NotNull PlayerQuitEvent event) {
 		Player player = event.getPlayer();
+		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
-		plugin.getPlayerManager().getProfile(player).save(true);
+		if (profile != null) {
+			profile.save();
+		}
 
 		plugin.getPlayerManager().removeProfile(player);
 		plugin.getPacketManager().ejectPlayer(player);
