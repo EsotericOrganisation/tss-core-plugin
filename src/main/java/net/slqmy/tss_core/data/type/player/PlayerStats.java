@@ -12,6 +12,10 @@ public class PlayerStats {
 		return joinCount;
 	}
 
+	public void setJoinCount(int joinCount) {
+		this.joinCount = joinCount;
+	}
+
 	public void incrementJoinCount() {
 		joinCount++;
 	}
