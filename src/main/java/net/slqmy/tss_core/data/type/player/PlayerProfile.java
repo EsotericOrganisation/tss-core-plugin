@@ -88,7 +88,6 @@ public class PlayerProfile {
 
 	public void save(boolean async) {
 		PlayerProfile profile = this;
-
 		Runnable save = () -> plugin.getDatabase().getCollection(
 						PlayersCollectionName.PLAYER_PROFILES,
 						(MongoCollection<PlayerProfile> collection) -> collection.replaceOne(Filters.eq("uuid", uuid), profile),
