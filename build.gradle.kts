@@ -28,9 +28,11 @@ dependencies {
     implementation("org.mongodb", "mongodb-driver-sync", "4.10.2")
 
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.0.3")
+    implementation("cloud.commandframework", "cloud-paper", "1.8.3")
+
+    implementation("net.dv8tion", "JDA", "5.0.0-beta.13")
 
     paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
-    implementation("cloud.commandframework", "cloud-paper", "1.8.3")
 }
 
 tasks {
@@ -77,6 +79,7 @@ tasks {
 
         reloc("cloud.commandframework")
         reloc("io.leangen.geantyref")
+        reloc("net.dv8tion")
     }
 }
 
