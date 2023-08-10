@@ -6,7 +6,7 @@ public class PlayerPreferences {
 	private boolean lobbyFireworkEnabled;
 
 	public PlayerPreferences() {
-		language = Language.DEFAULT_LANGUAGE;
+
 	}
 
 	public Language getLanguage() {

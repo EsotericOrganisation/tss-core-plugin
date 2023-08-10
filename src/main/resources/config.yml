@@ -1,3 +1,6 @@
+# General
+default-language: en-GB
+
 # MongoDB
 mongodb-cluster-address:
 
