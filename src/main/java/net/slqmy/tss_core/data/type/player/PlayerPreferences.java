@@ -3,7 +3,7 @@ package net.slqmy.tss_core.data.type.player;
 public class PlayerPreferences {
 
 	private Language language;
-	private boolean lobbyFireworkEnabled;
+	private boolean lobbyFireworkEnabled = true;
 
 	public PlayerPreferences() {
 
