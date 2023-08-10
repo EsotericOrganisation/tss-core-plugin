@@ -7,8 +7,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.InteractionHand;
 import net.slqmy.tss_core.TSSCorePlugin;
+import net.slqmy.tss_core.datatype.npc.NPC;
 import net.slqmy.tss_core.event.custom_event.NPCClickEvent;
-import net.slqmy.tss_core.type.NPCPlayer;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.ReflectUtil;
 import org.bukkit.Bukkit;
@@ -91,10 +91,10 @@ public class PacketManager {
 			return;
 		}
 
-		NPCPlayer npcPlayer = plugin.getNpcManager().getNpcs().get(entityID);
+		NPC npc = plugin.getNpcManager().getNpcs().get(entityID);
 
-		if (npcPlayer != null) {
-			Bukkit.getPluginManager().callEvent(new NPCClickEvent(npcPlayer, player));
+		if (npc != null) {
+			Bukkit.getPluginManager().callEvent(new NPCClickEvent(npc, player));
 		}
 	}
 }

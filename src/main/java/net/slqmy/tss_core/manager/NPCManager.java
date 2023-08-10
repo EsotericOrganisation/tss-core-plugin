@@ -12,9 +12,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.phys.Vec3;
 import net.slqmy.tss_core.TSSCorePlugin;
-import net.slqmy.tss_core.data.type.Skin;
-import net.slqmy.tss_core.data.type.npc.NPCData;
-import net.slqmy.tss_core.type.NPCPlayer;
+import net.slqmy.tss_core.datatype.npc.NPC;
+import net.slqmy.tss_core.datatype.npc.NPCData;
+import net.slqmy.tss_core.datatype.player.Skin;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.type.Pair;
 import org.bukkit.Location;
@@ -32,7 +32,7 @@ public class NPCManager {
 
 	private final TSSCorePlugin plugin;
 
-	private final HashMap<Integer, NPCPlayer> npcs = new HashMap<>();
+	private final HashMap<Integer, NPC> npcs = new HashMap<>();
 
 	public NPCManager(@NotNull TSSCorePlugin plugin) {
 		this.plugin = plugin;
@@ -48,12 +48,12 @@ public class NPCManager {
 
 			npcs.put(
 							npcData.getFirst(),
-							new NPCPlayer(npc, npcData.getSecond())
+							new NPC(npcData.getSecond())
 			);
 		}
 	}
 
-	public HashMap<Integer, NPCPlayer> getNpcs() {
+	public HashMap<Integer, NPC> getNpcs() {
 		return npcs;
 	}
 
@@ -64,7 +64,7 @@ public class NPCManager {
 		);
 
 		Skin skin = npcData.getSkin();
-		npcProfile.getProperties().put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
+		npcProfile.getProperties().put("textures", new Property("textures", skin.getSkinValue(), skin.getSkinSignature()));
 
 		MinecraftServer server = MinecraftServer.getServer();
 		Location location = npcData.getSimpleLocation().asBukkitLocation();
@@ -98,17 +98,16 @@ public class NPCManager {
 
 		ServerGamePacketListenerImpl connection = serverPlayer.connection;
 
-		for (NPCPlayer npc : npcs.values()) {
+		for (NPC npc : npcs.values()) {
 			ServerPlayer nmsEntity = npc.getNmsEntity();
 
 			if (!nmsEntity.getBukkitEntity().getWorld().equals(playerWorld)) {
 				continue;
 			}
 
-			NPCData npcData = npc.getNpc();
-			Skin npcSkin = npcData.getSkin();
+			Skin npcSkin = npc.getSkin();
 
-			nmsEntity.getGameProfile().getProperties().put("textures", new Property("texture", npcSkin.getValue(), npcSkin.getSignature()));
+			nmsEntity.getGameProfile().getProperties().put("textures", new Property("texture", npcSkin.getSkinValue(), npcSkin.getSkinSignature()));
 
 			connection.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, nmsEntity));
 			connection.send(new ClientboundSetEntityDataPacket(nmsEntity.getId(), Collections.singletonList(SynchedEntityData.DataValue.create(

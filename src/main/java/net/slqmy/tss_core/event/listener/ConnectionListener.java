@@ -1,8 +1,8 @@
 package net.slqmy.tss_core.event.listener;
 
 import net.slqmy.tss_core.TSSCorePlugin;
-import net.slqmy.tss_core.data.Message;
-import net.slqmy.tss_core.data.type.player.PlayerProfile;
+import net.slqmy.tss_core.datatype.player.Message;
+import net.slqmy.tss_core.datatype.player.PlayerProfile;
 import net.slqmy.tss_core.util.DebugUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

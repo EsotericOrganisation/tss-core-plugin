@@ -1,6 +1,6 @@
 package net.slqmy.tss_core.event.custom_event;
 
-import net.slqmy.tss_core.type.NPCPlayer;
+import net.slqmy.tss_core.datatype.npc.NPC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -10,13 +10,13 @@ public class NPCClickEvent extends Event {
 
 	private static final HandlerList HANDLERS = new HandlerList();
 
-	private final NPCPlayer npcPlayer;
+	private final NPC npc;
 	private final Player player;
 
-	public NPCClickEvent(NPCPlayer npcPlayer, Player player) {
+	public NPCClickEvent(NPC npc, Player player) {
 		super(true);
 
-		this.npcPlayer = npcPlayer;
+		this.npc = npc;
 		this.player = player;
 	}
 
@@ -29,8 +29,8 @@ public class NPCClickEvent extends Event {
 		return HANDLERS;
 	}
 
-	public NPCPlayer getNpcPlayer() {
-		return npcPlayer;
+	public NPC getNpc() {
+		return npc;
 	}
 
 	public Player getPlayer() {

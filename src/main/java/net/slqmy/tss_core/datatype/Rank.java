@@ -1,4 +1,4 @@
-package net.slqmy.tss_core.data.type;
+package net.slqmy.tss_core.datatype;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

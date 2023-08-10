@@ -1,4 +1,4 @@
-package net.slqmy.tss_core.data;
+package net.slqmy.tss_core.datatype.player;
 
 public enum Message {
 	// - The Slimy Swamp Messages

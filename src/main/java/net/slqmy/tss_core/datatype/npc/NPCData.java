@@ -1,12 +1,12 @@
-package net.slqmy.tss_core.data.type.npc;
+package net.slqmy.tss_core.datatype.npc;
 
-import net.slqmy.tss_core.data.type.SimpleLocation;
-import net.slqmy.tss_core.data.type.Skin;
+import net.slqmy.tss_core.datatype.SimpleLocation;
+import net.slqmy.tss_core.datatype.player.Skin;
 
 public class NPCData {
 	private int id;
 	private Skin skin;
-	private SimpleLocation location;
+	private SimpleLocation simpleLocation;
 	private String destinationWorldName;
 
 	public int getId() {
@@ -18,7 +18,7 @@ public class NPCData {
 	}
 
 	public SimpleLocation getSimpleLocation() {
-		return location;
+		return simpleLocation;
 	}
 
 	public String getDestinationWorldName() {

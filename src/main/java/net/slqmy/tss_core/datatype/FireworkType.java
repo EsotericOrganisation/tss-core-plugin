@@ -1,6 +1,5 @@
-package net.slqmy.tss_core.data.type;
+package net.slqmy.tss_core.datatype;
 
-import net.slqmy.tss_core.type.Colour;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Particle;

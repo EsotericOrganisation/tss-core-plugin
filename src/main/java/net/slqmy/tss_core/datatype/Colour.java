@@ -1,4 +1,4 @@
-package net.slqmy.tss_core.type;
+package net.slqmy.tss_core.datatype;
 
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;

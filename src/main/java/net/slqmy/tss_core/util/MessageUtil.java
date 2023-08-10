@@ -3,7 +3,7 @@ package net.slqmy.tss_core.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.slqmy.tss_core.type.Colour;
+import net.slqmy.tss_core.datatype.Colour;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.RoundingMode;

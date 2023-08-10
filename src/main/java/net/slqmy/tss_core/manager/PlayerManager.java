@@ -1,7 +1,7 @@
 package net.slqmy.tss_core.manager;
 
 import net.slqmy.tss_core.TSSCorePlugin;
-import net.slqmy.tss_core.data.type.player.PlayerProfile;
+import net.slqmy.tss_core.datatype.player.PlayerProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package net.slqmy.tss_core.data.type.player;
+package net.slqmy.tss_core.datatype.player;
 
 public class PlayerPreferences {
 

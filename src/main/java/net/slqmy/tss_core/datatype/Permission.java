@@ -1,4 +1,4 @@
-package net.slqmy.tss_core.data.type;
+package net.slqmy.tss_core.datatype;
 
 public class Permission {
 	private String permissionNode;
