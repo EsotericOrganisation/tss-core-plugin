@@ -6,7 +6,8 @@ public class NPC extends NPCData {
 
 	private final ServerPlayer nmsEntity;
 
-	public NPC(ServerPlayer nmsEntity) {
+	public NPC(NPCData npcData, ServerPlayer nmsEntity) {
+		super(npcData);
 		this.nmsEntity = nmsEntity;
 	}
 

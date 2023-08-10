@@ -1,14 +1,14 @@
 package net.slqmy.tss_core.datatype.player;
 
 public class Skin {
-	private String skinValue;
-	private String skinSignature;
+	private String value;
+	private String signature;
 
-	public String getSkinValue() {
-		return skinValue;
+	public String getValue() {
+		return value;
 	}
 
-	public String getSkinSignature() {
-		return skinSignature;
+	public String getSignature() {
+		return signature;
 	}
 }

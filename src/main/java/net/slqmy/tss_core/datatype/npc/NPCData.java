@@ -2,12 +2,21 @@ package net.slqmy.tss_core.datatype.npc;
 
 import net.slqmy.tss_core.datatype.SimpleLocation;
 import net.slqmy.tss_core.datatype.player.Skin;
+import org.jetbrains.annotations.NotNull;
 
 public class NPCData {
-	private int id;
-	private Skin skin;
-	private SimpleLocation simpleLocation;
-	private String destinationWorldName;
+
+	private final int id;
+	private final Skin skin;
+	private final SimpleLocation location;
+	private final String destinationWorldName;
+
+	protected NPCData(@NotNull NPCData npcData) {
+		this.id = npcData.id;
+		this.skin = npcData.skin;
+		this.location = npcData.location;
+		this.destinationWorldName = npcData.destinationWorldName;
+	}
 
 	public int getId() {
 		return id;
@@ -18,7 +27,7 @@ public class NPCData {
 	}
 
 	public SimpleLocation getSimpleLocation() {
-		return simpleLocation;
+		return location;
 	}
 
 	public String getDestinationWorldName() {

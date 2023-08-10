@@ -48,7 +48,7 @@ public class NPCManager {
 
 			npcs.put(
 							npcData.getFirst(),
-							new NPC(npcData.getSecond())
+							new NPC(npc, npcData.getSecond())
 			);
 		}
 	}
@@ -64,7 +64,7 @@ public class NPCManager {
 		);
 
 		Skin skin = npcData.getSkin();
-		npcProfile.getProperties().put("textures", new Property("textures", skin.getSkinValue(), skin.getSkinSignature()));
+		npcProfile.getProperties().put("textures", new Property("textures", skin.getValue(), skin.getSignature()));
 
 		MinecraftServer server = MinecraftServer.getServer();
 		Location location = npcData.getSimpleLocation().asBukkitLocation();
@@ -107,7 +107,7 @@ public class NPCManager {
 
 			Skin npcSkin = npc.getSkin();
 
-			nmsEntity.getGameProfile().getProperties().put("textures", new Property("texture", npcSkin.getSkinValue(), npcSkin.getSkinSignature()));
+			nmsEntity.getGameProfile().getProperties().put("textures", new Property("texture", npcSkin.getValue(), npcSkin.getSignature()));
 
 			connection.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, nmsEntity));
 			connection.send(new ClientboundSetEntityDataPacket(nmsEntity.getId(), Collections.singletonList(SynchedEntityData.DataValue.create(
