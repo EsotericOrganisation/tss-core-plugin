@@ -15,15 +15,15 @@ unable-to-load-data: "<red><bold>!</bold> Sorry, the server was unable to load y
 ## TSS-SlimeLabs
 
 active-launch-analysis-task: "<red>There is already a launch analysis task active!"
-launch: "<green><underlined>Launch"
-view-launch-statistics: "<yellow>Click here to finish launch and view statistics"
+launch: "<aqua>---- <green><underlined>Launch</underlined> <aqua>----"
+view-launch-statistics: "<grey>[<yellow>Click here to finish launch and view statistics<grey>]"
 stop-launch-analysis: "<yellow>Click to stop analysis task!"
 entity: "<yellow>Entity"
-time: "Time"
-on-ground: "<grey>On ground"
+time: "Time<grey>:"
+on-ground: "<grey>On ground:"
 
 no-analysis-task: "<red>There is no analysis task active!"
-launch-statistics: "<yellow><underlined>Launch Statistics"
+launch-statistics: "<aqua>---- <yellow><underlined>Launch Statistics</underlined> <aqua>----"
 
 ## TSS-Lobby
 
@@ -32,7 +32,7 @@ welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
 
 ## TSS-Ranks
 
-nonexistent-rank: "<red>That rank does not exist in the configuration file!"
+nonexistent-rank: "<red>That rank does not exist in the <underlined>ranks.json</underlined> file!"
 
 # <0> - Display name of previous rank.
 rank-already-set: "<red>Your rank is already set to <0><red>!"
