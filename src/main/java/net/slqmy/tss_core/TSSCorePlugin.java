@@ -5,10 +5,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
 import net.slqmy.tss_core.event.listener.DimensionChangeListener;
-import net.slqmy.tss_core.manager.MessageManager;
-import net.slqmy.tss_core.manager.NPCManager;
-import net.slqmy.tss_core.manager.PacketManager;
-import net.slqmy.tss_core.manager.PlayerManager;
+import net.slqmy.tss_core.manager.*;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -16,11 +13,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TSSCorePlugin extends JavaPlugin {
 
+	private FileManager fileManager;
 	private MessageManager messageManager;
 	private MongoDB database;
 	private PlayerManager playerManager;
 	private PacketManager packetManager;
 	private NPCManager npcManager;
+
+	public FileManager getFileManager() {
+		return fileManager;
+	}
 
 	public MessageManager getMessageManager() {
 		return messageManager;
@@ -51,6 +53,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 		config.options().copyDefaults();
 		saveDefaultConfig();
 
+		fileManager = new FileManager(this);
 		messageManager = new MessageManager(this);
 		database = new MongoDB(this);
 		playerManager = new PlayerManager(this);

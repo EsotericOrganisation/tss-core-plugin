@@ -15,7 +15,6 @@ import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.data.type.Skin;
 import net.slqmy.tss_core.data.type.npc.NPCData;
 import net.slqmy.tss_core.type.NPCPlayer;
-import net.slqmy.tss_core.util.FileUtil;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.type.Pair;
 import org.bukkit.Location;
@@ -35,11 +34,13 @@ public class NPCManager {
 
 	private final HashMap<Integer, NPCPlayer> npcs = new HashMap<>();
 
-	public NPCManager(TSSCorePlugin plugin) {
+	public NPCManager(@NotNull TSSCorePlugin plugin) {
 		this.plugin = plugin;
 
-		File npcFile = FileUtil.initiateJsonFile("npcs", plugin);
-		NPCData[] npcDataFileData = FileUtil.readJsonFile(npcFile, NPCData[].class);
+		FileManager fileManager = plugin.getFileManager();
+
+		File npcFile = fileManager.initiateJsonFile("npcs");
+		NPCData[] npcDataFileData = fileManager.readJsonFile(npcFile, NPCData[].class);
 		assert npcDataFileData != null;
 
 		for (NPCData npc : npcDataFileData) {
