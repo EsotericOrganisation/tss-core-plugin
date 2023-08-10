@@ -34,7 +34,7 @@ public class MessageManager {
 		this.plugin = plugin;
 
 		for (Language language : Language.values()) {
-			File languageFile = plugin.getFileManager().initiateYamlFile("language/" + language.toString().toLowerCase());
+			File languageFile = plugin.getFileManager().initiateYamlFile("language/" + language.getLanguageKey());
 			YamlConfiguration languageConfig = YamlConfiguration.loadConfiguration(languageFile);
 
 			languageData.put(
@@ -70,6 +70,11 @@ public class MessageManager {
 
 	public TextComponent getMessage(Message messageKey, Language language, TextComponent @NotNull ... placeholderValues) {
 		Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data = languageData.get(language);
+
+		if (data == null) {
+			data = languageData.get(defualtLanguage);
+		}
+
 		if (placeholderValues.length == 0) {
 			ConcurrentMap<Message, TextComponent> messageMap = data.getThird().asMap();
 			TextComponent message = messageMap.get(messageKey);
@@ -96,11 +101,18 @@ public class MessageManager {
 	private TextComponent getPlayerMessage(Message messageKey, Player player, TextComponent... placeholderValues) {
 		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
-		Language playerLanguage = profile.getPlayerPreferences().getLanguage();
-		if (playerLanguage == null) {
+		Language playerLanguage;
+
+		try {
+			playerLanguage = profile.getPlayerPreferences().getLanguage();
+
+			if (playerLanguage == null) {
+				throw new NullPointerException();
+			}
+		} catch (NullPointerException nullPointerException) {
 			try {
-				playerLanguage = Language.valueOf(player.locale().toLanguageTag().toUpperCase());
-			} catch (IllegalArgumentException exception) {
+				playerLanguage = Language.getLanguage(player.locale().toLanguageTag());
+			} catch (IllegalArgumentException illegalArgumentException) {
 				playerLanguage = defualtLanguage;
 			}
 		}
