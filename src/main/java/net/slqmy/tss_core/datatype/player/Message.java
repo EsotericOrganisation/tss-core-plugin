@@ -6,7 +6,6 @@ public enum Message {
   // - General
   THE_SLIMY_SWAMP,
   NONEXISTENT_PLAYER,
-  ERROR_LOADING_GUI,
 
   // - TSS-Core
   UNABLE_TO_LOAD_DATA,
@@ -20,8 +19,8 @@ public enum Message {
   TIME,
   ON_GROUND,
 
-	NO_ANALYSIS_TASK,
-	LAUNCH_STATISTICS,
+  NO_ANALYSIS_TASK,
+  LAUNCH_STATISTICS,
 
   // - TSS-Lobby
   WELCOME_SUBTITLE,
@@ -77,13 +76,13 @@ public enum Message {
   RANK_SUCCESSFULLY_SET_OTHER,
   RANK_SET_NOTIFICATION;
 
-	private final String key;
+  private final String key;
 
-	Message() {
-		key = name().toLowerCase().replace('_', '-');
-	}
+  Message() {
+	key = name().toLowerCase().replace('_', '-');
+  }
 
-	public String getKey() {
-		return key;
-	}
+  public String getKey() {
+	return key;
+  }
 }

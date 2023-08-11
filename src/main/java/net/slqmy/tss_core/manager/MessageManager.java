@@ -10,6 +10,7 @@ import net.slqmy.tss_core.datatype.player.Language;
 import net.slqmy.tss_core.datatype.player.Message;
 import net.slqmy.tss_core.datatype.player.PlayerProfile;
 import net.slqmy.tss_core.util.CacheUtil;
+import net.slqmy.tss_core.util.DebugUtil;
 import net.slqmy.tss_core.util.MessageUtil;
 import net.slqmy.tss_core.util.type.Triplet;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,119 +25,134 @@ import java.util.concurrent.ConcurrentMap;
 
 public class MessageManager {
 
-	private final TSSCorePlugin plugin;
+  private final TSSCorePlugin plugin;
 
-	private final Language defualtLanguage;
+  private final Language defualtLanguage;
 
-	private final HashMap<Language, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>>> languageData = new HashMap<>();
+  private final HashMap<Language, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>>> languageData = new HashMap<>();
 
-	public MessageManager(TSSCorePlugin plugin) {
-		this.plugin = plugin;
+  public MessageManager(TSSCorePlugin plugin) {
+	this.plugin = plugin;
 
-		for (Language language : Language.values()) {
-			File languageFile = plugin.getFileManager().initiateYamlFile("language/" + language.getLanguageKey());
-			YamlConfiguration languageConfig = YamlConfiguration.loadConfiguration(languageFile);
+	for (Language language : Language.values()) {
+	  File languageFile = plugin.getFileManager().initiateYamlFile("language/" + language.getLanguageKey(), true);
+	  YamlConfiguration languageConfig = YamlConfiguration.loadConfiguration(languageFile);
 
-			languageData.put(
-							language,
-							new Triplet<>(
-											languageConfig,
-											CacheUtil.getNewCache(),
-											CacheUtil.getNewCache()
-							)
-			);
-		}
-
-		String defaultLanguageString = plugin.getConfig().getString("default-language");
-		assert defaultLanguageString != null;
-
-		defualtLanguage = Language.valueOf(defaultLanguageString.toUpperCase().replace('-', '_'));
+	  languageData.put(
+			  language,
+			  new Triplet<>(
+					  languageConfig,
+					  CacheUtil.getNewCache(),
+					  CacheUtil.getNewCache()
+			  )
+	  );
 	}
 
-	private String getRawMessage(Message messageKey, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data) {
-		if (data == null) {
-			data = languageData.get(defualtLanguage);
-		}
+	String defaultLanguageString = plugin.getConfig().getString("default-language");
+	assert defaultLanguageString != null;
 
-		ConcurrentMap<Message, String> messageMap = data.getSecond().asMap();
-		String message = messageMap.get(messageKey);
+	defualtLanguage = Language.valueOf(defaultLanguageString.toUpperCase().replace('-', '_'));
+  }
+
+  private String getRawMessage(Message messageKey, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data) {
+	if (data == null) {
+	  data = languageData.get(defualtLanguage);
+	}
+
+	ConcurrentMap<Message, String> messageMap = data.getSecond().asMap();
+	String message = messageMap.get(messageKey);
+	if (message == null) {
+	  DebugUtil.log(messageKey.getKey());
+	  DebugUtil.log(data.getFirst().getString(messageKey.getKey()));
+
+	  String key = messageKey.getKey();
+	  message = data.getFirst().getString(key);
+	  if (message == null) {
+		data = languageData.get(defualtLanguage);
+
+		messageMap = data.getSecond().asMap();
+		message = messageMap.get(messageKey);
+
 		if (message == null) {
-			message = data.getFirst().getString(messageKey.getKey());
+		  message = data.getFirst().getString(key);
 		}
-
-		messageMap.put(messageKey, message);
-		return message;
+	  }
 	}
 
-	public TextComponent getMessage(Message messageKey, Language language, TextComponent @NotNull ... placeholderValues) {
-		Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data = languageData.get(language);
+	messageMap.put(messageKey, message);
+	return message;
+  }
 
-		if (data == null) {
-			data = languageData.get(defualtLanguage);
-		}
+  public TextComponent getMessage(Message messageKey, Language language, TextComponent @NotNull ... placeholderValues) {
+	Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data = languageData.get(language);
 
-		if (placeholderValues.length == 0) {
-			ConcurrentMap<Message, TextComponent> messageMap = data.getThird().asMap();
-			TextComponent message = messageMap.get(messageKey);
+	if (data == null) {
+	  data = languageData.get(defualtLanguage);
+	}
 
-			if (message == null) {
-				String rawMessage = getRawMessage(messageKey, data);
-				message = (TextComponent) MiniMessage.miniMessage().deserialize(rawMessage);
-			}
+	if (placeholderValues.length == 0) {
+	  ConcurrentMap<Message, TextComponent> messageMap = data.getThird().asMap();
+	  TextComponent message = messageMap.get(messageKey);
 
-			return message;
-		}
-
+	  if (message == null) {
 		String rawMessage = getRawMessage(messageKey, data);
+		message = (TextComponent) MiniMessage.miniMessage().deserialize(rawMessage);
+	  }
 
-		TagResolver[] tagResolvers = new TagResolver[placeholderValues.length];
-		for (int i = 0; i < placeholderValues.length; i++) {
-			@Subst("0") String componentText = String.valueOf(i);
-			tagResolvers[i] = Placeholder.component(componentText, placeholderValues[i]);
-		}
-
-		return (TextComponent) MiniMessage.miniMessage().deserialize(rawMessage, tagResolvers);
+	  messageMap.put(messageKey, message);
+	  return message;
 	}
 
-	private TextComponent getPlayerMessage(Message messageKey, Player player, TextComponent... placeholderValues) {
-		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
+	String rawMessage = getRawMessage(messageKey, data);
 
-		Language playerLanguage;
-
-		try {
-			playerLanguage = profile.getPlayerPreferences().getLanguage();
-
-			if (playerLanguage == null) {
-				throw new NullPointerException();
-			}
-		} catch (NullPointerException nullPointerException) {
-			try {
-				playerLanguage = Language.getLanguage(player.locale().toLanguageTag());
-			} catch (IllegalArgumentException illegalArgumentException) {
-				playerLanguage = defualtLanguage;
-			}
-		}
-
-		return getMessage(messageKey, playerLanguage, placeholderValues);
+	TagResolver[] tagResolvers = new TagResolver[placeholderValues.length];
+	for (int i = 0; i < placeholderValues.length; i++) {
+	  @Subst("0") String componentText = String.valueOf(i);
+	  tagResolvers[i] = Placeholder.component(componentText, placeholderValues[i]);
 	}
 
-	public TextComponent getPlayerMessage(Message messageKey, Player player, Object... placeholderValues) {
-		return getPlayerMessage(messageKey, player, asTextComponentArray(placeholderValues));
+	return (TextComponent) MiniMessage.miniMessage().deserialize(rawMessage, tagResolvers);
+  }
+
+  private TextComponent getPlayerMessage(Message messageKey, Player player, TextComponent... placeholderValues) {
+	PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
+
+	Language playerLanguage;
+
+	try {
+	  playerLanguage = profile.getPlayerPreferences().getLanguage();
+
+	  if (playerLanguage == null) {
+		throw new NullPointerException();
+	  }
+	} catch (NullPointerException nullPointerException) {
+	  try {
+		playerLanguage = Language.getLanguage(player.locale().toLanguageTag());
+	  } catch (IllegalArgumentException illegalArgumentException) {
+		playerLanguage = defualtLanguage;
+	  }
 	}
 
-	public TextComponent getPlayerMessage(Message messageKey, Player player) {
-		return getPlayerMessage(messageKey, player, new TextComponent[]{});
-	}
+	return getMessage(messageKey, playerLanguage, placeholderValues);
+  }
 
-	public void sendMessage(@NotNull Player player, Message messageKey, TextComponent... placeholderValues) {
-		player.sendMessage(getPlayerMessage(messageKey, player, placeholderValues));
-	}
+  public TextComponent getPlayerMessage(Message messageKey, Player player, Object... placeholderValues) {
+	return getPlayerMessage(messageKey, player, asTextComponentArray(placeholderValues));
+  }
 
-	public void sendMessage(@NotNull Player player, Message messageKey, Object... placeholderValues) {
-		player.sendMessage(getPlayerMessage(messageKey, player, placeholderValues));
-	}
+  public TextComponent getPlayerMessage(Message messageKey, Player player) {
+	return getPlayerMessage(messageKey, player, new TextComponent[]{});
+  }
 
-	private TextComponent @NotNull [] asTextComponentArray(Object... values) {
-		return Arrays.stream(values).map(MessageUtil::format).toArray(TextComponent[]::new);
-	}
+  public void sendMessage(@NotNull Player player, Message messageKey, TextComponent... placeholderValues) {
+	player.sendMessage(getPlayerMessage(messageKey, player, placeholderValues));
+  }
+
+  public void sendMessage(@NotNull Player player, Message messageKey, Object... placeholderValues) {
+	player.sendMessage(getPlayerMessage(messageKey, player, placeholderValues));
+  }
+
+  private TextComponent @NotNull [] asTextComponentArray(Object... values) {
+	return Arrays.stream(values).map(MessageUtil::format).toArray(TextComponent[]::new);
+  }
 }

@@ -7,41 +7,41 @@ import org.jetbrains.annotations.NotNull;
 
 public class DebugUtil {
 
-	private static final Component DEBUG_PREFIX = LegacyComponentSerializer.legacyAmpersand().deserialize("[&eDebug&r]");
-	private final static TextComponent ERROR_PREFIX = LegacyComponentSerializer.legacyAmpersand().deserialize("[&cError&r]");
+  private static final Component DEBUG_PREFIX = LegacyComponentSerializer.legacyAmpersand().deserialize("[&eDebug&r]");
+  private final static TextComponent ERROR_PREFIX = LegacyComponentSerializer.legacyAmpersand().deserialize("[&cError&r]");
 
-	public static void log(Object @NotNull ... values) {
-		for (Object value : values) {
-			LogUtil.log(
-							DEBUG_PREFIX.append(Component.text(" ")).append(MessageUtil.format(value))
-			);
-		}
+  public static void log(Object @NotNull ... values) {
+	for (Object value : values) {
+	  LogUtil.log(
+			  DEBUG_PREFIX.append(Component.text(" ")).append(MessageUtil.format(value))
+	  );
+	}
+  }
+
+  public static void error(@NotNull Object error) {
+	LogUtil.log(
+			ERROR_PREFIX
+					.append(Component.text(" "))
+					.append(MessageUtil.format("&c" + error))
+	);
+  }
+
+  public static void handleException(TextComponent message, @NotNull Exception exception) {
+	if (message != null) {
+	  error(message);
 	}
 
-	public static void error(@NotNull Object error) {
-		LogUtil.log(
-						ERROR_PREFIX
-										.append(Component.text(" "))
-										.append(MessageUtil.format("&c" + error))
-		);
-	}
+	error(exception.getMessage());
+	error(exception);
 
-	public static void handleException(TextComponent message, @NotNull Exception exception) {
-		if (message != null) {
-			error(message);
-		}
+	exception.printStackTrace();
+  }
 
-		error(exception.getMessage());
-		error(exception);
+  public static void handleException(String message, @NotNull Exception exception) {
+	handleException(Component.text(message), exception);
+  }
 
-		exception.printStackTrace();
-	}
-
-	public static void handleException(String message, @NotNull Exception exception) {
-		handleException(Component.text(message), exception);
-	}
-
-	public static void handleException(@NotNull Exception exception) {
-		handleException((TextComponent) null, exception);
-	}
+  public static void handleException(@NotNull Exception exception) {
+	handleException((TextComponent) null, exception);
+  }
 }

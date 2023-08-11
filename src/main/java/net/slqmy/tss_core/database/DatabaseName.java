@@ -1,15 +1,15 @@
 package net.slqmy.tss_core.database;
 
 public enum DatabaseName {
-	PLAYERS;
+  PLAYERS;
 
-	private final String name;
+  private final String name;
 
-	DatabaseName() {
-		name = name().toLowerCase();
-	}
+  DatabaseName() {
+	name = name().toLowerCase();
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+	return name;
+  }
 }

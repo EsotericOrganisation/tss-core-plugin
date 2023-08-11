@@ -24,117 +24,117 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDB {
 
-	private final MongoClientSettings clientSettings;
+  private final MongoClientSettings clientSettings;
 
-	public MongoDB(@NotNull TSSCorePlugin plugin) {
-		YamlConfiguration config = (YamlConfiguration) plugin.getConfig();
+  public MongoDB(@NotNull TSSCorePlugin plugin) {
+	YamlConfiguration config = (YamlConfiguration) plugin.getConfig();
 
-		String clusterAddress = config.getString("mongodb-cluster-address");
-		String username = config.getString("mongodb-username");
-		String password = config.getString("mongodb-password");
+	String clusterAddress = config.getString("mongodb-cluster-address");
+	String username = config.getString("mongodb-username");
+	String password = config.getString("mongodb-password");
 
-		String connectionString = "mongodb+srv://" +
-						username +
-						":" +
-						password +
-						"@" +
-						clusterAddress +
-						".ld5uece.mongodb.net/?retryWrites=true&w=majority";
+	String connectionString = "mongodb+srv://" +
+			username +
+			":" +
+			password +
+			"@" +
+			clusterAddress +
+			".ld5uece.mongodb.net/?retryWrites=true&w=majority";
 
-		ServerApi api = ServerApi.builder()
-						.version(ServerApiVersion.V1)
-						.build();
+	ServerApi api = ServerApi.builder()
+			.version(ServerApiVersion.V1)
+			.build();
 
-		CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
-		CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+	CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
+	CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 
-		clientSettings = MongoClientSettings.builder()
-						.applyConnectionString(new ConnectionString(connectionString))
-						.serverApi(api)
-						.codecRegistry(pojoCodecRegistry)
-						.uuidRepresentation(UuidRepresentation.STANDARD)
-						.build();
+	clientSettings = MongoClientSettings.builder()
+			.applyConnectionString(new ConnectionString(connectionString))
+			.serverApi(api)
+			.codecRegistry(pojoCodecRegistry)
+			.uuidRepresentation(UuidRepresentation.STANDARD)
+			.build();
 
-		getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
-			database.runCommand(new Document("ping", 1));
-			LogUtil.log("Pinged database " + database.getName() + ", Successfully connected to MongoDB!");
-		});
+	getMongoDatabase(DatabaseName.PLAYERS, (MongoDatabase database) -> {
+	  database.runCommand(new Document("ping", 1));
+	  LogUtil.log("Pinged database " + database.getName() + ", Successfully connected to MongoDB!");
+	});
+  }
+
+  public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull Consumer<MongoDatabase> consumer) {
+	String name = databaseName.getName();
+
+	try (MongoClient client = MongoClients.create(clientSettings)) {
+	  consumer.accept(client.getDatabase(name));
+	} catch (MongoException exception) {
+	  DebugUtil.handleException("An unexpected error occurred while connecting to database " + databaseName + "!", exception);
 	}
+  }
 
-	public void getMongoDatabase(@NotNull DatabaseName databaseName, @NotNull Consumer<MongoDatabase> consumer) {
-		String name = databaseName.getName();
+  public <C> void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<C>, MongoCollection<C>> consumer, Class<C> documentClass) {
+	getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
+	  MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
 
-		try (MongoClient client = MongoClients.create(clientSettings)) {
-			consumer.accept(client.getDatabase(name));
-		} catch (MongoException exception) {
-			DebugUtil.handleException("An unexpected error occurred while connecting to database " + databaseName + "!", exception);
+	  if (filter == null) {
+		try (MongoCursor<C> cursor = collection.find().cursor()) {
+		  consumer.accept(cursor, collection);
 		}
-	}
+	  } else {
+		try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
+		  consumer.accept(cursor, collection);
+		}
+	  }
+	});
+  }
 
-	public <C> void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<C>, MongoCollection<C>> consumer, Class<C> documentClass) {
-		getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
-			MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
+  public <C> void getCursor(@NotNull CollectionName collectionName, @NotNull BiConsumer<MongoCursor<C>, MongoCollection<C>> consumer, Class<C> documentClass) {
+	getCursor(collectionName, null, consumer, documentClass);
+  }
 
-			if (filter == null) {
-				try (MongoCursor<C> cursor = collection.find().cursor()) {
-					consumer.accept(cursor, collection);
-				}
-			} else {
-				try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
-					consumer.accept(cursor, collection);
-				}
-			}
-		});
-	}
+  public <C> void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull Consumer<MongoCursor<C>> consumer, Class<C> documentClass) {
+	getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
+	  MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
 
-	public <C> void getCursor(@NotNull CollectionName collectionName, @NotNull BiConsumer<MongoCursor<C>, MongoCollection<C>> consumer, Class<C> documentClass) {
-		getCursor(collectionName, null, consumer, documentClass);
-	}
+	  if (filter == null) {
+		try (MongoCursor<C> cursor = collection.find().cursor()) {
+		  consumer.accept(cursor);
+		}
+	  } else {
+		try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
+		  consumer.accept(cursor);
+		}
+	  }
+	});
+  }
 
-	public <C> void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull Consumer<MongoCursor<C>> consumer, Class<C> documentClass) {
-		getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
-			MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
+  public <C> void getCursor(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCursor<C>> consumer, Class<C> documentClass) {
+	getCursor(collectionName, null, consumer, documentClass);
+  }
 
-			if (filter == null) {
-				try (MongoCursor<C> cursor = collection.find().cursor()) {
-					consumer.accept(cursor);
-				}
-			} else {
-				try (MongoCursor<C> cursor = collection.find(filter).cursor()) {
-					consumer.accept(cursor);
-				}
-			}
-		});
-	}
+  public <C> void getCollection(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCollection<C>> consumer, Class<C> documentClass) {
+	getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
+	  MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
+	  consumer.accept(collection);
+	});
+  }
 
-	public <C> void getCursor(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCursor<C>> consumer, Class<C> documentClass) {
-		getCursor(collectionName, null, consumer, documentClass);
-	}
+  public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<Document>, MongoCollection<Document>> consumer) {
+	getCursor(collectionName, filter, consumer, Document.class);
+  }
 
-	public <C> void getCollection(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCollection<C>> consumer, Class<C> documentClass) {
-		getMongoDatabase(collectionName.getDatabaseName(), (MongoDatabase database) -> {
-			MongoCollection<C> collection = database.getCollection(collectionName.getName(), documentClass);
-			consumer.accept(collection);
-		});
-	}
+  public void getCursor(@NotNull CollectionName collectionName, @NotNull BiConsumer<MongoCursor<Document>, MongoCollection<Document>> consumer) {
+	getCursor(collectionName, null, consumer, Document.class);
+  }
 
-	public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull BiConsumer<MongoCursor<Document>, MongoCollection<Document>> consumer) {
-		getCursor(collectionName, filter, consumer, Document.class);
-	}
+  public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull Consumer<MongoCursor<Document>> consumer) {
+	getCursor(collectionName, filter, consumer, Document.class);
+  }
 
-	public void getCursor(@NotNull CollectionName collectionName, @NotNull BiConsumer<MongoCursor<Document>, MongoCollection<Document>> consumer) {
-		getCursor(collectionName, null, consumer, Document.class);
-	}
+  public void getCursor(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCursor<Document>> consumer) {
+	getCursor(collectionName, null, consumer, Document.class);
+  }
 
-	public void getCursor(@NotNull CollectionName collectionName, Bson filter, @NotNull Consumer<MongoCursor<Document>> consumer) {
-		getCursor(collectionName, filter, consumer, Document.class);
-	}
-
-	public void getCursor(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCursor<Document>> consumer) {
-		getCursor(collectionName, null, consumer, Document.class);
-	}
-
-	public void getCollection(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCollection<Document>> consumer) {
-		getCollection(collectionName, consumer, Document.class);
-	}
+  public void getCollection(@NotNull CollectionName collectionName, @NotNull Consumer<MongoCollection<Document>> consumer) {
+	getCollection(collectionName, consumer, Document.class);
+  }
 }

@@ -11,25 +11,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class DimensionChangeListener implements Listener {
 
-	private final TSSCorePlugin plugin;
+  private final TSSCorePlugin plugin;
 
-	public DimensionChangeListener(TSSCorePlugin plugin) {
-		this.plugin = plugin;
-	}
+  public DimensionChangeListener(TSSCorePlugin plugin) {
+	this.plugin = plugin;
+  }
 
-	@EventHandler
-	public void onTeleport(@NotNull PlayerTeleportEvent event) {
-		updateNpcs(event.getPlayer());
-	}
+  @EventHandler
+  public void onTeleport(@NotNull PlayerTeleportEvent event) {
+	updateNpcs(event.getPlayer());
+  }
 
-	@EventHandler
-	public void onRespawn(@NotNull PlayerRespawnEvent event) {
-		updateNpcs(event.getPlayer());
-	}
+  @EventHandler
+  public void onRespawn(@NotNull PlayerRespawnEvent event) {
+	updateNpcs(event.getPlayer());
+  }
 
-	private void updateNpcs(Player player) {
-		Bukkit.getScheduler().runTaskLater(plugin, () ->
-										plugin.getNpcManager().updateNpcs(player)
-						, 1);
-	}
+  private void updateNpcs(Player player) {
+	Bukkit.getScheduler().runTaskLater(plugin, () ->
+					plugin.getNpcManager().updateNpcs(player)
+			, 1);
+  }
 }

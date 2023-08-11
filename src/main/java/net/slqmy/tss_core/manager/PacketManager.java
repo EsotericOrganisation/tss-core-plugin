@@ -17,84 +17,84 @@ import org.jetbrains.annotations.NotNull;
 
 public class PacketManager {
 
-	private final TSSCorePlugin plugin;
+  private final TSSCorePlugin plugin;
 
-	public PacketManager(TSSCorePlugin plugin) {
-		this.plugin = plugin;
-	}
+  public PacketManager(TSSCorePlugin plugin) {
+	this.plugin = plugin;
+  }
 
-	public void injectPlayer(@NotNull Player player) {
-		ChannelDuplexHandler handler = new ChannelDuplexHandler() {
-			@Override
-			public void channelRead(@NotNull ChannelHandlerContext context, @NotNull Object packet) throws Exception {
-				if (packet instanceof ServerboundInteractPacket) {
-					handleServerboundInteractPacket((ServerboundInteractPacket) packet, player);
-				}
-
-				super.channelRead(context, packet);
-			}
-
-			@Override
-			public void write(ChannelHandlerContext context, Object packet, ChannelPromise promise) throws Exception {
-				super.write(context, packet, promise);
-			}
-		};
-
-		Connection connection = getPlayerConnection(player);
-		ChannelPipeline pipeline = connection.channel.pipeline();
-
-		pipeline.addBefore(
-						"packet_handler",
-						player.getName(),
-						handler
-		);
-	}
-
-	public void ejectPlayer(@NotNull Player player) {
-		Connection connection = getPlayerConnection(player);
-		ChannelPipeline pipeline = connection.channel.pipeline();
-
-		Channel channel = connection.channel;
-		channel.eventLoop().submit(() -> {
-			pipeline.remove(player.getName());
-			return null;
-		});
-	}
-
-	private Connection getPlayerConnection(@NotNull Player player) {
-		ServerPlayer serverPlayer = NMSUtil.getServerPlayer(player);
-		assert serverPlayer != null;
-
-		ServerGamePacketListenerImpl serverPlayerConnection = (ServerGamePacketListenerImpl) ReflectUtil.getFieldValue(serverPlayer, "c");
-		assert serverPlayerConnection != null;
-
-		return (Connection) ReflectUtil.getFieldValue(
-						serverPlayerConnection,
-						"h"
-		);
-	}
-
-	private void handleServerboundInteractPacket(@NotNull ServerboundInteractPacket packet, Player player) {
-		Integer entityID = packet.getEntityId();
-		ServerboundInteractPacket.ActionType actionType = packet.getActionType();
-
-		if (actionType == ServerboundInteractPacket.ActionType.INTERACT_AT) {
-			return;
+  public void injectPlayer(@NotNull Player player) {
+	ChannelDuplexHandler handler = new ChannelDuplexHandler() {
+	  @Override
+	  public void channelRead(@NotNull ChannelHandlerContext context, @NotNull Object packet) throws Exception {
+		if (packet instanceof ServerboundInteractPacket) {
+		  handleServerboundInteractPacket((ServerboundInteractPacket) packet, player);
 		}
 
-		Object action = ReflectUtil.getFieldValue(packet, "b");
-		assert action != null;
+		super.channelRead(context, packet);
+	  }
 
-		InteractionHand hand = (InteractionHand) ReflectUtil.getFieldValue(action, "a", false);
+	  @Override
+	  public void write(ChannelHandlerContext context, Object packet, ChannelPromise promise) throws Exception {
+		super.write(context, packet, promise);
+	  }
+	};
 
-		if (hand == InteractionHand.OFF_HAND) {
-			return;
-		}
+	Connection connection = getPlayerConnection(player);
+	ChannelPipeline pipeline = connection.channel.pipeline();
 
-		NPC npc = plugin.getNpcManager().getNpcs().get(entityID);
+	pipeline.addBefore(
+			"packet_handler",
+			player.getName(),
+			handler
+	);
+  }
 
-		if (npc != null) {
-			Bukkit.getPluginManager().callEvent(new NPCClickEvent(npc, player));
-		}
+  public void ejectPlayer(@NotNull Player player) {
+	Connection connection = getPlayerConnection(player);
+	ChannelPipeline pipeline = connection.channel.pipeline();
+
+	Channel channel = connection.channel;
+	channel.eventLoop().submit(() -> {
+	  pipeline.remove(player.getName());
+	  return null;
+	});
+  }
+
+  private Connection getPlayerConnection(@NotNull Player player) {
+	ServerPlayer serverPlayer = NMSUtil.getServerPlayer(player);
+	assert serverPlayer != null;
+
+	ServerGamePacketListenerImpl serverPlayerConnection = (ServerGamePacketListenerImpl) ReflectUtil.getFieldValue(serverPlayer, "c");
+	assert serverPlayerConnection != null;
+
+	return (Connection) ReflectUtil.getFieldValue(
+			serverPlayerConnection,
+			"h"
+	);
+  }
+
+  private void handleServerboundInteractPacket(@NotNull ServerboundInteractPacket packet, Player player) {
+	Integer entityID = packet.getEntityId();
+	ServerboundInteractPacket.ActionType actionType = packet.getActionType();
+
+	if (actionType == ServerboundInteractPacket.ActionType.INTERACT_AT) {
+	  return;
 	}
+
+	Object action = ReflectUtil.getFieldValue(packet, "b");
+	assert action != null;
+
+	InteractionHand hand = (InteractionHand) ReflectUtil.getFieldValue(action, "a", false);
+
+	if (hand == InteractionHand.OFF_HAND) {
+	  return;
+	}
+
+	NPC npc = plugin.getNpcManager().getNpcs().get(entityID);
+
+	if (npc != null) {
+	  Bukkit.getPluginManager().callEvent(new NPCClickEvent(npc, player));
+	}
+  }
 }
