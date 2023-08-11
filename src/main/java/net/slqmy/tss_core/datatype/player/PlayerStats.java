@@ -5,7 +5,7 @@ public class PlayerStats {
 	private int joinCount;
 
 	public PlayerStats() {
-		joinCount = 0;
+
 	}
 
 	public int getJoinCount() {

@@ -14,9 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ReflectUtil {
 
-	private static final Cache<String, Class<?>> classCache = CacheBuilder.newBuilder()
-					.expireAfterWrite(5, TimeUnit.MINUTES)
-					.build();
+	private static final Cache<String, Class<?>> classCache = CacheUtil.getNewCache();
 
 	private static final HashMap<Class<?>, Cache<String, Field>> classFieldCaches = new HashMap<>();
 	private static final HashMap<Class<?>, Cache<String, Method>> classMethodCaches = new HashMap<>();

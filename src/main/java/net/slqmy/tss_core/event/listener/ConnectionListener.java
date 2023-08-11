@@ -49,15 +49,15 @@ public class ConnectionListener implements Listener {
 	}
 
 	@EventHandler
-	public void onQuit(@NotNull PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
+	public void onDisconnect(@NotNull PlayerQuitEvent event) {
+	  Player player = event.getPlayer();
+	  PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
-		if (profile != null) {
-			profile.save();
-		}
+	  if (profile != null) {
+		profile.save();
+	  }
 
-		plugin.getPlayerManager().removeProfile(player);
-		plugin.getPacketManager().ejectPlayer(player);
+	  plugin.getPlayerManager().removeProfile(player);
+	  plugin.getPacketManager().ejectPlayer(player);
 	}
 }

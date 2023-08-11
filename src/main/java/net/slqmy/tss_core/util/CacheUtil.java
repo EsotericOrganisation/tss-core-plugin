@@ -25,8 +25,4 @@ public class CacheUtil {
 	public static <K, V> @NotNull Cache<K, V> getNewCache() {
 		return getNewCache(DEFAULT_CACHE_DURATION, DEFAULT_CACHE_TIME_UNIT);
 	}
-
-	public static <K, V> void refreshExpiryTimer(@NotNull Cache<K, V> cache, K key, V value) {
-		cache.put(key, value);
-	}
 }

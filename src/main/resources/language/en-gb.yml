@@ -1,18 +1,18 @@
-### The Slimy Swamp Message Translations - English (United Kingdom)
+#### The Slimy Swamp Message Translations - English (United Kingdom)
 
 # \n = new line.
 
-## General
+### General
 
 the-slimy-swamp: "<green>The Slimy Swamp"
 nonexistent-player: "<red>That player does not exist!"
 
-## TSS-Core
+### TSS-Core
 
 # <0> - Link to Discord.
 unable-to-load-data: "<red><bold>!</bold> Sorry, the server was unable to load your data!\n<yellow>Please contact an admin on <light_purple><underlined><0></underlined><yellow>."
 
-## TSS-SlimeLabs
+### TSS-SlimeLabs
 
 active-launch-analysis-task: "<red>There is already a launch analysis task active!"
 launch: "<aqua>---- <green><underlined>Launch</underlined> <aqua>----"
@@ -25,7 +25,9 @@ on-ground: "<grey>On ground:"
 no-analysis-task: "<red>There is no analysis task active!"
 launch-statistics: "<aqua>---- <yellow><underlined>Launch Statistics</underlined> <aqua>----"
 
-## TSS-Lobby
+### TSS-Lobby
+
+## Welcome
 
 welcome-subtitle: "<yellow>Thank you for joining!"
 welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
