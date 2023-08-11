@@ -32,7 +32,54 @@ launch-statistics: "<aqua>---- <yellow><underlined>Launch Statistics</underlined
 welcome-subtitle: "<yellow>Thank you for joining!"
 welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
 
-## TSS-Ranks
+## Cosmetics
+
+cosmetics: "<dark_gray><bold>Cosmetics"
+
+hats: "<aqua><bold>Hats"
+trails: "<dark_green><bold>Trails"
+
+locked: "<grey> - <dark_red>Locked"
+locked-cosmetic: "<red>This cosmetic is locked!"
+
+click-to-equip: "<grey> - <green>Click to equip!"
+click-to-unequip: "<grey> - <red>Click to un-equip!"
+
+# <0> - The name of the cosmetic the player has equipped.
+equipped-cosmetic: "<green>You have equipped <0><green>!"
+unequipped-cosmetic: "<green>You have unequipped <0><green>!"
+
+unknown-hat-display-name: "<grey>Unknown Hat"
+unknown-hat-description: "<dark_grey>| <grey>This is strange..."
+
+top-hat-display-name: "<green>Top Hat"
+top-hat-description: "<dark_grey>| <grey>A very fancy top hat."
+
+tiger-hat-display-name: "<gold>Tiger"
+tiger-hat-description: "<dark_grey>| <grey>A fierce companion from the wild jungle... turned into a hat."
+
+dog-hat-display-name: "<yellow>Dog"
+dog-hat-description: "<dark_grey>| <grey>Man's best friend!"
+
+heart-trail-display-name: "<red>Hearts"
+heart-trail-description: "<dark_grey>| <grey>Spawns heart particles at your feet."
+
+fire-trail-display-name: "<gold>Flame"
+fire-trail-description: "<dark_grey>| <grey>Travel at blanzingly fast speeds with this trail!"
+
+water-trail-display-name: "<blue>Water"
+water-trail-description: "<dark_grey>| <grey>Conquer the waves with this dripped out trail!"
+
+bubble-trail-display-name: "Bubble"
+bubble-trail-description: "<dark_grey>| <grey>The bubbliest trail there is!"
+
+explosive-trail-display-name: "<gold>Explosive"
+explosive-trail-description: "<dark_grey>| <grey>You're about to blow up!"
+
+slime-trail-display-name: "<green>Slime"
+slime-trail-description: "<dark_grey>| <green><bold>Slqmy</bold><grey>'s favourite trail!"
+
+### TSS-Ranks
 
 nonexistent-rank: "<red>That rank does not exist in the <underlined>ranks.json</underlined> file!"
 
