@@ -34,10 +34,20 @@ welcome-chat-message: "<green>Welcome to The Slimy Swamp!"
 
 ## Cosmetics
 
-cosmetics: "<dark_gray><bold>Cosmetics"
+cosmetics: "<dark_grey>Cosmetics"
+
+cosmetics-item-display-name: "Cosmetics"
+cosmetics-item-description: "<grey>Select cosmetics!"
 
 hats: "<aqua><bold>Hats"
+
+hats-item-display-name: "<gold>Hats"
+hats-item-description: "<grey>Equip various hats, helmets and custom skulls onto your head!"
+
 trails: "<dark_green><bold>Trails"
+
+trails-item-display-name: "<green>Trails"
+trails-item-description: "<grey>Trails that spawn at your feet!"
 
 locked: "<grey> - <dark_red>Locked"
 locked-cosmetic: "<red>This cosmetic is locked!"
