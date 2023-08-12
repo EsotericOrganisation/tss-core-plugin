@@ -26,7 +26,7 @@ public class PlayerProfile {
 
   private PlayerPreferences playerPreferences;
   private PlayerStats playerStats;
-  private SurvivalPlayerData survivalData;
+  private SurvivalPlayerData survivalData = new SurvivalPlayerData();
 
   public PlayerProfile() {
 
