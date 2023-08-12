@@ -93,7 +93,9 @@ public enum Message {
   CANT_CLAIM_HERE,
   CANT_INTERACT_BECAUSE_CHUNK_CLAIMED,
   WILDERNESS,
-  PLAYER_CLAIM;
+  PLAYER_CLAIM,
+
+  SKILL_LEVEL_UP;
 
   private final String key;
 

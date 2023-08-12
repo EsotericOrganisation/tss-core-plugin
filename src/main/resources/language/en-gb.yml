@@ -123,3 +123,6 @@ wilderness: "<dark_green>Wilderness"
 
 # <0> - Name of the claim owner.
 player-claim: "<0>'s<yellow> claim"
+
+# <0> - The skill that has been levelled up.
+skill-level-up: "<green>You have levelled up your <0> skill!"
