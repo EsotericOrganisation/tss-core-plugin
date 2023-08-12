@@ -53,9 +53,7 @@ public class ConnectionListener implements Listener {
 	Player player = event.getPlayer();
 	PlayerProfile profile = plugin.getPlayerManager().getProfile(player);
 
-	if (profile != null) {
-	  profile.save();
-	}
+	profile.save();
 
 	plugin.getPlayerManager().removeProfile(player);
 	plugin.getPacketManager().ejectPlayer(player);
