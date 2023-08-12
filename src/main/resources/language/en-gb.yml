@@ -115,3 +115,11 @@ rank-set-notification: "<green>Your rank has been set to <0><green>!"
 
 chunk-already-claimed: "<red>You have already claimed this chunk!"
 chunk-claimed-successfully: "<green>The chunk was successfully claimed!"
+cant-claim-here: "<red>You may not claim chunks here."
+
+# <0> - Name of the user who has claimed the chunk.
+cant-interact-because-chunk-claimed: "<red>You may not interact here because this chunk has been claimed by <0>!"
+wilderness: "<dark_green>Wilderness"
+
+# <0> - Name of the claim owner.
+player-claim: "<0>'s<yellow> claim"
