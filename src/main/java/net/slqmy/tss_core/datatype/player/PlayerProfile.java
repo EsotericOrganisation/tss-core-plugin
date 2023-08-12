@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.database.collection_name.PlayersCollectionName;
+import net.slqmy.tss_core.datatype.player.survival.SurvivalPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -25,6 +26,7 @@ public class PlayerProfile {
 
   private PlayerPreferences playerPreferences;
   private PlayerStats playerStats;
+  private SurvivalPlayerData survivalData;
 
   public PlayerProfile() {
 
@@ -60,40 +62,48 @@ public class PlayerProfile {
 	return uuid;
   }
 
-  public void setUuid(UUID uuid) {
-	this.uuid = uuid;
-  }
-
   public String getRankName() {
 	return rankName;
-  }
-
-  public void setRankName(String rankName) {
-	this.rankName = rankName;
   }
 
   public String getDiscordUserID() {
 	return discordUserID;
   }
 
-  public void setDiscordUserID(String discordUserID) {
-	this.discordUserID = discordUserID;
-  }
-
   public PlayerPreferences getPlayerPreferences() {
 	return playerPreferences;
-  }
-
-  public void setPlayerPreferences(PlayerPreferences playerPreferences) {
-	this.playerPreferences = playerPreferences;
   }
 
   public PlayerStats getPlayerStats() {
 	return playerStats;
   }
 
+  public SurvivalPlayerData getSurvivalData() {
+	return survivalData;
+  }
+
+  public void setUuid(UUID uuid) {
+	this.uuid = uuid;
+  }
+
+  public void setRankName(String rankName) {
+	this.rankName = rankName;
+  }
+
+  public void setDiscordUserID(String discordUserID) {
+	this.discordUserID = discordUserID;
+  }
+
+  public void setPlayerPreferences(PlayerPreferences playerPreferences) {
+	this.playerPreferences = playerPreferences;
+  }
+
   public void setPlayerStats(PlayerStats playerStats) {
 	this.playerStats = playerStats;
+  }
+
+  public void setSurvivalData(SurvivalPlayerData survivalData) {
+	this.survivalData = survivalData;
   }
 
   public void save(boolean async) {
