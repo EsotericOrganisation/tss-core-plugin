@@ -1,17 +1,18 @@
 package net.slqmy.tss_core.datatype.player.survival;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SurvivalPlayerData {
 
-  private ArrayList<int[]> claims = new ArrayList<>();
-  private SkillData skillData;
+  private List<Claim> claims = new ArrayList<>();
+  private SkillData skillData = new SkillData();
 
   public SurvivalPlayerData() {
 
   }
 
-  public ArrayList<int[]> getClaims() {
+  public List<Claim> getClaims() {
     return claims;
   }
 
@@ -19,7 +20,7 @@ public class SurvivalPlayerData {
     return skillData;
   }
 
-  public void setClaims(ArrayList<int[]> claims) {
+  public void setClaims(List<Claim> claims) {
     this.claims = claims;
   }
 
