@@ -6,6 +6,7 @@ public enum Message {
   // - General
   THE_SLIMY_SWAMP,
   NONEXISTENT_PLAYER,
+  RANK_REQUIRED,
 
   // - TSS-Core
   UNABLE_TO_LOAD_DATA,
@@ -84,7 +85,11 @@ public enum Message {
   RANK_ALREADY_SET_OTHER,
   RANK_SUCCESSFULLY_SET,
   RANK_SUCCESSFULLY_SET_OTHER,
-  RANK_SET_NOTIFICATION;
+  RANK_SET_NOTIFICATION,
+
+  // - TSS-Survival
+  CHUNK_ALREADY_CLAIMED,
+  CHUNK_CLAIMED_SUCCESSFULLY;
 
   private final String key;
 

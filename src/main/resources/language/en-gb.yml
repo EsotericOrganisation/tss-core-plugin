@@ -6,6 +6,7 @@
 
 the-slimy-swamp: "<green>The Slimy Swamp"
 nonexistent-player: "<red>That player does not exist!"
+rank-required: "<red>You must have the <0><red> rank or above to use this!"
 
 ### TSS-Core
 
@@ -109,3 +110,8 @@ rank-successfully-set-other: "<green>Successfully set <0><green>'s rank to <1><g
 
 # <0> - Display name of the set (new) rank.
 rank-set-notification: "<green>Your rank has been set to <0><green>!"
+
+### TSS-Survival
+
+chunk-already-claimed: "<red>You have already claimed this chunk!"
+chunk-claimed-successfully: "<green>The chunk was successfully claimed!"
