@@ -75,4 +75,30 @@ public class SkillData {
   public void setForgingSkillExperience(int forgingSkillExperience) {
 	this.forgingSkillExperience = forgingSkillExperience;
   }
+
+  public void incrementCombatSkillExperience(int increaseAmount) {
+	combatSkillExperience += increaseAmount;
+  }
+
+  public void incrementMiningSkillExperience(int increaseAmount) {
+	miningSkillExperience += increaseAmount;
+  }
+  public void incrementForagingSkillExperience(int increaseAmount) {
+	foragingSkillExperience += increaseAmount;
+  }
+  public void incrementFarmingSkillExperience(int increaseAmount) {
+	farmingSkillExperience += increaseAmount;
+  }
+  public void incrementEnchantingSkillExperience(int increaseAmount) {
+	enchantingSkillExperience += increaseAmount;
+  }
+  public void incrementAlchemySkillExperience(int increaseAmount) {
+	alchemySkillExperience += increaseAmount;
+  }
+  public void incrementFishingSkillExperience(int increaseAmount) {
+	fishingSkillExperience += increaseAmount;
+  }
+  public void incrementForgingSkillExperience(int increaseAmount) {
+	forgingSkillExperience += increaseAmount;
+  }
 }
