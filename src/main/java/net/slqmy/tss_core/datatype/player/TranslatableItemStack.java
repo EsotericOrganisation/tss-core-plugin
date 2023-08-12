@@ -1,10 +1,15 @@
 package net.slqmy.tss_core.datatype.player;
 
+import com.google.common.collect.Multimap;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.manager.MessageManager;
+import net.slqmy.tss_core.util.DebugUtil;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +37,12 @@ public class TranslatableItemStack extends ItemStack {
 
 	ItemStack copy = this.clone();
 	ItemMeta meta = copy.getItemMeta();
+
+	meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
 	meta.displayName(messageManager.getPlayerMessage(itemName, player).decoration(TextDecoration.ITALIC, false));
 	meta.lore(List.of(messageManager.getPlayerMessage(itemLore, player).decoration(TextDecoration.ITALIC, false)));
+
 	copy.setItemMeta(meta);
 
 	return copy;
