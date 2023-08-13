@@ -113,7 +113,7 @@ rank-set-notification: "<green>Your rank has been set to <0><green>!"
 
 ### TSS-Survival
 
-chunk-already-claimed: "<red>You have already claimed this chunk!"
+chunk-already-claimed: "<red>This chunk is already claimed!"
 chunk-claimed-successfully: "<green>The chunk was successfully claimed!"
 cant-claim-here: "<red>You may not claim chunks here."
 
