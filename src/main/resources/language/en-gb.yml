@@ -122,6 +122,12 @@ not-your-chunk: "<red>You do not own this chunk!"
 claimed-too-recently: "<red>You have claimed this chunk too recently, please wait!"
 unclaimed-chunk: "<red>Successfully unclaimed this chunk!"
 
+cant-trust-yourself: "<red>You can't trust yourself!"
+player-already-trusted: "<red>That player is already trusted!"
+
+# <0> - The player that was trusted.
+player-successfully-trusted: "<green>You have successfully trusted <0>!"
+
 # <0> - Name of the user who has claimed the chunk.
 cant-interact-because-chunk-claimed: "<red>You may not interact here because this chunk has been claimed by <0>!"
 wilderness: "<dark_green>Wilderness"
