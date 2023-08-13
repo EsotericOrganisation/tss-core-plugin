@@ -9,7 +9,6 @@ import net.slqmy.tss_core.database.collection_name.PlayersCollectionName;
 import net.slqmy.tss_core.datatype.player.survival.SurvivalPlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -26,7 +25,7 @@ public class PlayerProfile {
 
   private PlayerPreferences playerPreferences;
   private PlayerStats playerStats;
-  private SurvivalPlayerData survivalData = new SurvivalPlayerData();
+  private SurvivalPlayerData survivalData;
 
   public PlayerProfile() {
 
@@ -45,9 +44,13 @@ public class PlayerProfile {
 
 		playerPreferences = profile.getPlayerPreferences();
 		playerStats = profile.getPlayerStats();
+
+		survivalData = profile.getSurvivalData();
+		survivalData.setPlayerUuid(uuid);
 	  } else {
 		playerPreferences = new PlayerPreferences();
 		playerStats = new PlayerStats();
+		survivalData = new SurvivalPlayerData(uuid, plugin);
 
 		playerProfiles.insertOne(this);
 	  }
@@ -114,10 +117,8 @@ public class PlayerProfile {
 			PlayerProfile.class
 	);
 
-	BukkitScheduler scheduler = Bukkit.getScheduler();
-
 	if (async) {
-	  scheduler.runTaskAsynchronously(plugin, save);
+	  Bukkit.getScheduler().runTaskAsynchronously(plugin, save);
 	} else {
 	  save.run();
 	}

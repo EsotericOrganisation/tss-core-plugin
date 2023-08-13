@@ -11,6 +11,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public final class TSSCorePlugin extends JavaPlugin {
 
   private FileManager fileManager;
@@ -19,6 +21,8 @@ public final class TSSCorePlugin extends JavaPlugin {
   private PlayerManager playerManager;
   private PacketManager packetManager;
   private NPCManager npcManager;
+
+  private List<String> survivalWorldNames;
 
   public FileManager getFileManager() {
 	return fileManager;
@@ -44,6 +48,10 @@ public final class TSSCorePlugin extends JavaPlugin {
 	return npcManager;
   }
 
+  public List<String> getSurvivalWorldNames() {
+	return survivalWorldNames;
+  }
+
   @Override
   public void onEnable() {
 	getDataFolder().mkdir();
@@ -52,6 +60,8 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	config.options().copyDefaults();
 	saveDefaultConfig();
+
+	survivalWorldNames = config.getStringList("survival-world-names");
 
 	fileManager = new FileManager(this);
 	messageManager = new MessageManager(this);

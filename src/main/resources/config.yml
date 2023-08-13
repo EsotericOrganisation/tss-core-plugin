@@ -9,3 +9,8 @@ mongodb-password:
 
 # Discord
 discord-server-invite-code:
+
+survival-world-names:
+  - world
+  - world_nether
+  - world_the_end
