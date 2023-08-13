@@ -6,18 +6,15 @@ import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SurvivalPlayerData {
 
   @BsonIgnore
   private UUID playerUuid;
 
-  private Map<String, ArrayList<Claim>> claims = new HashMap<>();
-  private Map<String, Integer> skillData = new HashMap<>();
+  private Map<String, ArrayList<List<Integer>>> claims = new HashMap<>();
+  private Map<String, Integer> skillLevels = new HashMap<>();
 
   public SurvivalPlayerData() {
 
@@ -30,7 +27,7 @@ public class SurvivalPlayerData {
     initialiseSkills();
   }
 
-  public Map<String, ArrayList<Claim>> getClaims() {
+  public Map<String, ArrayList<List<Integer>>> getClaims() {
     return claims;
   }
 
@@ -42,7 +39,7 @@ public class SurvivalPlayerData {
     this.playerUuid = playerUuid;
   }
 
-  public void setClaims(Map<String, ArrayList<Claim>> claims) {
+  public void setClaims(Map<String, ArrayList<List<Integer>>> claims) {
     this.claims = claims;
   }
 
