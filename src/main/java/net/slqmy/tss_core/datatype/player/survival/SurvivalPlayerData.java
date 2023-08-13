@@ -13,7 +13,7 @@ public class SurvivalPlayerData {
   @BsonIgnore
   private UUID playerUuid;
 
-  private Map<String, ArrayList<List<Integer>>> claims = new HashMap<>();
+  private Map<String, ArrayList<ClaimedChunk>> claims = new HashMap<>();
   private Map<String, Integer> skillLevels = new HashMap<>();
 
   public SurvivalPlayerData() {
@@ -27,7 +27,7 @@ public class SurvivalPlayerData {
     initialiseSkills();
   }
 
-  public Map<String, ArrayList<List<Integer>>> getClaims() {
+  public Map<String, ArrayList<ClaimedChunk>> getClaims() {
     return claims;
   }
 
@@ -39,7 +39,7 @@ public class SurvivalPlayerData {
     this.playerUuid = playerUuid;
   }
 
-  public void setClaims(Map<String, ArrayList<List<Integer>>> claims) {
+  public void setClaims(Map<String, ArrayList<ClaimedChunk>> claims) {
     this.claims = claims;
   }
 
