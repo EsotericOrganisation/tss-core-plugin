@@ -1,7 +1,6 @@
 package net.slqmy.tss_core.datatype.player.survival;
 
 public class Claim {
-  private String worldName;
 
   private int chunkX;
   private int chunkZ;
@@ -10,14 +9,9 @@ public class Claim {
 
   }
 
-  public Claim(String worldName, int chunkX, int chunkZ) {
-	this.worldName = worldName;
+  public Claim(int chunkX, int chunkZ) {
 	this.chunkX = chunkX;
 	this.chunkZ = chunkZ;
-  }
-
-  public String getWorldName() {
-	return worldName;
   }
 
   public int getChunkX() {
@@ -26,10 +20,6 @@ public class Claim {
 
   public int getChunkZ() {
 	return chunkZ;
-  }
-
-  public void setWorldName(String worldName) {
-	this.worldName = worldName;
   }
 
   public void setChunkX(int chunkX) {
