@@ -117,6 +117,11 @@ chunk-already-claimed: "<red>You have already claimed this chunk!"
 chunk-claimed-successfully: "<green>The chunk was successfully claimed!"
 cant-claim-here: "<red>You may not claim chunks here."
 
+chunk-not-claimed: "<red>This chunk hasn't been claimed yet!"
+not-your-chunk: "<red>You do not own this chunk!"
+claimed-too-recently: "<red>You have claimed this chunk too recently, please wait!"
+unclaimed-chunk: "<red>Successfully unclaimed this chunk!"
+
 # <0> - Name of the user who has claimed the chunk.
 cant-interact-because-chunk-claimed: "<red>You may not interact here because this chunk has been claimed by <0>!"
 wilderness: "<dark_green>Wilderness"
