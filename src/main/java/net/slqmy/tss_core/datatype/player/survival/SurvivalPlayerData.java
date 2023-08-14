@@ -31,8 +31,8 @@ public class SurvivalPlayerData {
     return claims;
   }
 
-  public Map<String, Integer> getSkillData() {
-    return skillData;
+  public Map<String, Integer> getSkillLevels() {
+    return skillLevels;
   }
 
   public void setPlayerUuid(UUID playerUuid) {
@@ -43,16 +43,16 @@ public class SurvivalPlayerData {
     this.claims = claims;
   }
 
-  public void setSkillData(Map<String, Integer> skillData) {
-    this.skillData = skillData;
+  public void setSkillLevels(Map<String, Integer> skillLevels) {
+    this.skillLevels = skillLevels;
   }
 
   public void incrementSkillExperience(@NotNull SkillType skillType, int increaseAmount) {
-    int currentExp = skillData.get(skillType.name());
+    int currentExp = skillLevels.get(skillType.name());
     int oldLevel = getLevel(currentExp);
 
     int newExp = currentExp + increaseAmount;
-    skillData.put(skillType.name(), newExp);
+	skillLevels.put(skillType.name(), newExp);
 
     int newLevel = getLevel(newExp);
     if (oldLevel != newLevel) {
@@ -80,7 +80,7 @@ public class SurvivalPlayerData {
 
   public void initialiseSkills() {
     for (SkillType skillType : SkillType.values()) {
-      skillData.put(skillType.name(), 0);
+	  skillLevels.put(skillType.name(), 0);
     }
   }
 }
