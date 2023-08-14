@@ -133,7 +133,7 @@ player-successfully-trusted: "<green>You have successfully trusted <0><green>!"
 cant-untrust-yourself: "<red>You can't untrust yourself!"
 
 # <0> - The player that was untrusted.
-player-successfully-untrusted: "<green>You have successfully trusted <0><green>!"
+player-successfully-untrusted: "<green>You have successfully untrusted <0><green>!"
 
 # <0> - Name of the user who has claimed the chunk.
 cant-interact-because-chunk-claimed: "<red>You may not interact here because this chunk has been claimed by <0>!"
