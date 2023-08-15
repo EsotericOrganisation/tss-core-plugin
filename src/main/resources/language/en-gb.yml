@@ -138,6 +138,8 @@ player-successfully-untrusted: "<green>You have successfully untrusted <0><green
 # <0> - Name of the user who has claimed the chunk.
 cant-interact-because-chunk-claimed: "<red>You may not interact here because this chunk has been claimed by <0>!"
 
+survival-scoreboard-title: "<dark_green>Survival"
+
 wilderness: "<dark_green>Wilderness"
 
 # <0> - Name of the claim owner.
