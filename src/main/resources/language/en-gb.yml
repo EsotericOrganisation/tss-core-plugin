@@ -145,3 +145,27 @@ player-claim: "<0>'s<yellow> claim"
 
 # <0> - The skill that has been levelled up.
 skill-level-up: "<green>You have levelled up your <0> skill!"
+
+combat-item-display-name: "<red>Combat"
+combat-item-description: "<grey>Level up by fighting mobs and defeating bosses!"
+
+mining-item-display-name: "<aqua>Mining"
+mining-item-description: "<grey>Level up by exploring caves and finding precious minerals!"
+
+foraging-item-display-name: "<gold>Foraging"
+foraging-item-description: "<grey>Level up by felling trees!"
+
+farming-item-display-name: "<yellow>Farming"
+farming-item-description: "<grey>Level up by farming crops!"
+
+enchanting-item-display-name: "<blue>Enchanting"
+enchanting-item-description: "<grey>Level up by enchanting items!"
+
+alchemy-item-display-name: "<green>Alchemy"
+alchemy-item-description: "<grey>Level up by "
+
+fishing-item-display-name: "<aqua>Fishing"
+fishing-item-description: "<grey>Level up by catching fish and sea monsters!"
+
+forging-item-display-name: "<dark_grey>Forging"
+forging-item-description: "<grey>Level up by combining items in anvils!"
