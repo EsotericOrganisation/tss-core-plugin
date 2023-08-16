@@ -21,6 +21,8 @@ public final class Rank {
 
   private FireworkType fireworkType;
 
+  private int initialSurvivalClaimChunks;
+
   public Rank() {
 
   }
@@ -63,5 +65,9 @@ public final class Rank {
 
   public FireworkType getFireworkType() {
 	return fireworkType;
+  }
+
+  public int getInitialSurvivalClaimChunks() {
+	return initialSurvivalClaimChunks;
   }
 }
