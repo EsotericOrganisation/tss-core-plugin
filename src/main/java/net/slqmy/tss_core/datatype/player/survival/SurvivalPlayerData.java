@@ -26,59 +26,68 @@ public class SurvivalPlayerData {
 
   }
 
-  public SurvivalPlayerData(final UUID playerUuid, @NotNull final TSSCorePlugin plugin) {
+  public SurvivalPlayerData(UUID playerUuid, @NotNull TSSCorePlugin plugin) {
 	this.playerUuid = playerUuid;
 
-	this.initialiseClaims(plugin);
-	this.initialiseSkills();
+	initialiseClaims(plugin);
+	initialiseSkills();
   }
 
-  private void initialiseClaims(@NotNull final TSSCorePlugin plugin) {
-	for (final String worldName : plugin.getSurvivalWorldNames()) {
-	  this.claims.put(worldName, new ArrayList<>());
+  public static int levelToExperience(int level) {
+	return 50 * level * level * level + 50 * level;
+  }
+
+  public static int experienceToLevel(int experience) {
+	double power = Math.pow(1.7320508075688772D * Math.sqrt(27.0D * Math.pow(experience, 2.0D) + 10000.0D) - 9.0D * experience, 1.0D / 3.0D);
+	return (int) Math.floor(Math.pow(10.0D, 2.0D / 3.0D) / (Math.pow(3.0D, 1.0D / 3.0D) * power) - power / Math.pow(30.0D, 2.0D / 3.0D));
+  }
+
+  private void initialiseClaims(@NotNull TSSCorePlugin plugin) {
+	for (String worldName : plugin.getSurvivalWorldNames()) {
+	  claims.put(worldName, new ArrayList<>());
 	}
   }
 
   private void initialiseSkills() {
-	for (final SkillType skillType : SkillType.values()) {
-	  this.skillLevels.put(skillType.name(), 0);
+	for (SkillType skillType : SkillType.values()) {
+	  skillLevels.put(skillType.name(), 0);
 	}
   }
 
   public Map<String, ArrayList<ClaimedChunk>> getClaims() {
-	return this.claims;
+	return claims;
   }
 
-  public void setClaims(final Map<String, ArrayList<ClaimedChunk>> claims) {
+  public void setClaims(Map<String, ArrayList<ClaimedChunk>> claims) {
 	this.claims = claims;
   }
 
   public Map<String, Integer> getSkillLevels() {
-	return this.skillLevels;
+	return skillLevels;
   }
 
-  public void setSkillLevels(final Map<String, Integer> skillLevels) {
+  public void setSkillLevels(Map<String, Integer> skillLevels) {
 	this.skillLevels = skillLevels;
   }
 
-  public void setPlayerUuid(final UUID playerUuid) {
+  public void setPlayerUuid(UUID playerUuid) {
 	this.playerUuid = playerUuid;
   }
 
-  public int getSkillExperience(@NotNull final SkillType skillType) {
-	return this.skillLevels.get(skillType.name());
+  public int getSkillExperience(@NotNull SkillType skillType) {
+	return skillLevels.get(skillType.name());
   }
 
-  public void incrementSkillExperience(@NotNull final SkillType skillType, final int increaseAmount) {
-	final int currentExp = this.skillLevels.get(skillType.name());
-	final int oldLevel = SurvivalPlayerData.experienceToLevel(currentExp);
+  public void incrementSkillExperience(@NotNull SkillType skillType, int increaseAmount) {
+	int currentExp = skillLevels.get(skillType.name());
+	int oldLevel = experienceToLevel(currentExp);
 
-	final int newExp = currentExp + increaseAmount;
-	this.skillLevels.put(skillType.name(), newExp);
+	int newExp = currentExp + increaseAmount;
+	skillLevels.put(skillType.name(), newExp);
 
-	final Player player = Bukkit.getPlayer(this.playerUuid);
+	Player player = Bukkit.getPlayer(playerUuid);
 
-	final PluginManager pluginManager = Bukkit.getPluginManager();
+	PluginManager pluginManager = Bukkit.getPluginManager();
 	pluginManager.callEvent(
 			new SkillExperienceGainEvent(
 					player,
@@ -88,7 +97,7 @@ public class SurvivalPlayerData {
 			)
 	);
 
-	final int newLevel = SurvivalPlayerData.experienceToLevel(newExp);
+	int newLevel = experienceToLevel(newExp);
 	if (oldLevel != newLevel) {
 	  pluginManager.callEvent(
 			  new SkillLevelUpEvent(
@@ -99,10 +108,5 @@ public class SurvivalPlayerData {
 			  )
 	  );
 	}
-  }
-
-  public static int experienceToLevel(final int experience) {
-	final double power = Math.pow(1.7320508075688772D * Math.sqrt(27.0D * Math.pow(experience, 2.0D) + 10000.0D) - 9.0D * experience, 1.0D / 3.0D);
-	return (int) Math.floor(Math.pow(10.0D, 2.0D / 3.0D) / (Math.pow(3.0D, 1.0D / 3.0D) * power) - power / Math.pow(30.0D, 2.0D / 3.0D));
   }
 }
