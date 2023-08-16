@@ -7,6 +7,9 @@ public enum Message {
   THE_SLIMY_SWAMP,
   NONEXISTENT_PLAYER,
   RANK_REQUIRED,
+  CLOSE,
+  INFO,
+  TIPS_AND_TRICKS,
 
   // - TSS-Core
   UNABLE_TO_LOAD_DATA,

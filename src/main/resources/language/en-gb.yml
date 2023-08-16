@@ -7,6 +7,9 @@
 the-slimy-swamp: "<green>The Slimy Swamp"
 nonexistent-player: "<red>That player does not exist!"
 rank-required: "<red>You must have the <0><red> rank or above to use this!"
+close: "<red>Close"
+info: "<aqua>? Info"
+tips-and-tricks: "<yellow>Tips and Tricks"
 
 ### TSS-Core
 
