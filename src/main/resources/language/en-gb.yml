@@ -123,6 +123,10 @@ cant-claim-here: "<red>You may not claim chunks here."
 not-enough-chunks: "<red>You can't claim more chunks!"
 chunk-claimed-successfully: "<green>The chunk was successfully claimed!"
 
+unclaim-chunk-location-all: "Unclaim all chunks."
+unclaim-chunk-location-connected: "Unclaim all chunks connected to the selected chunk."
+unclaim-chunk-location-chunk: "Unclaim only the selected chunk."
+
 chunk-not-claimed: "<red>This chunk hasn't been claimed yet!"
 not-your-chunk: "<red>You do not own this chunk!"
 claimed-too-recently: "<red>You have claimed this chunk too recently, please wait!"
@@ -132,11 +136,19 @@ trusted-player: "Trusted player"
 trusted-players: "Trusted players"
 unclaim: "<yellow>Unclaim"
 
+trust-player-location-all: "Trust the player in all of your claimed chunks."
+trust-player-location-connected: "Trust the player in all claimed chunks connected to your current chunk."
+trust-player-location-chunk: "Trust the player in just the selected chunk."
+
 cant-trust-yourself: "<red>You can't trust yourself!"
 player-already-trusted: "<red>That player is already trusted!"
 
 # <0> - The player that was trusted.
 player-successfully-trusted: "<green>You have successfully trusted <0><green>!"
+
+untrust-player-location-all: "Revoke trust from the player in all of your claimed chunks."
+untrust-player-location-connected: "Revoke trust from the player in all chunks connected to your current chunk."
+untrust-player-location-chunk: "Revoke trust from the player in just the selected chunk."
 
 cant-untrust-yourself: "<red>You can't untrust yourself!"
 
@@ -152,6 +164,9 @@ wilderness: "<dark_green>Wilderness"
 
 # <0> - Name of the claim owner.
 player-claim: "<0>'s<yellow> claim"
+
+cant-place-in-wilderness: "<red>This block cannot be placed in the wilderness!"
+cant-break-in-wilderness: "<red>This block cannot be broken in the wilderness!"
 
 # <0> - The name of the skill.
 start-of-skill-adventure: "<grey>This is the start of your <0> adventure!"
