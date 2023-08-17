@@ -220,3 +220,5 @@ cant-trade-with-yourself: "<red>You can't trade with yourself!"
 sent-trade-request: "<green>You have sent a trade request to <0><green>!"
 
 trading-gui-title: "Trading"
+you: "You"
+no-recent-messages: "<red>No one has messages you recently!"

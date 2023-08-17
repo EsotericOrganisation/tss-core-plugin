@@ -183,7 +183,12 @@ public enum Message {
 
   CANT_TRADE_WITH_YOURSELF,
   SENT_TRADE_REQUEST,
-  TRADING_GUI_TITLE;
+  TRADING_GUI_TITLE,
+
+  // TSS-Social
+  CANT_MESSAGE_YOURSELF,
+  YOU,
+  NO_RECENT_MESSAGES;
 
   private final String key;
 
