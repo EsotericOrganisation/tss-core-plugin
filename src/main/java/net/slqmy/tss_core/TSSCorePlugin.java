@@ -74,6 +74,7 @@ public final class TSSCorePlugin extends JavaPlugin {
 
 	pluginManager.registerEvents(new ConnectionListener(this), this);
 	pluginManager.registerEvents(new DimensionChangeListener(this), this);
+	pluginManager.registerEvents(new CustomGuiListener(this), this);
 
 	CommandAPIBukkitConfig commandConfig = new CommandAPIBukkitConfig(this)
 			.shouldHookPaperReload(true);
