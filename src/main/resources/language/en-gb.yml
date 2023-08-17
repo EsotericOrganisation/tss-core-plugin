@@ -213,3 +213,10 @@ forging-tips-tricks: ""
 
 # <0> - The skill that has been levelled up.
 skill-level-up: "<green>You have levelled up your <0> skill!"
+
+cant-trade-with-yourself: "<red>You can't trade with yourself!"
+
+# <0> - The player that they have sent a trade request to.
+sent-trade-request: "<green>You have sent a trade request to <0><green>!"
+
+trading-gui-title: "Trading"

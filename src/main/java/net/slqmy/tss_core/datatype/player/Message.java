@@ -179,7 +179,11 @@ public enum Message {
   FORGING_INFO,
   FORGING_TIPS_TRICKS,
 
-  SKILL_LEVEL_UP;
+  SKILL_LEVEL_UP,
+
+  CANT_TRADE_WITH_YOURSELF,
+  SENT_TRADE_REQUEST,
+  TRADING_GUI_TITLE;
 
   private final String key;
 
