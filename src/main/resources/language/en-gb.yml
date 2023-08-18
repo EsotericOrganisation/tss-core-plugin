@@ -222,3 +222,33 @@ sent-trade-request: "<green>You have sent a trade request to <0><green>!"
 trading-gui-title: "Trading"
 you: "You"
 no-recent-messages: "<red>No one has messages you recently!"
+
+cant-party-yourself: "<red>You can't party yourself!"
+
+# <0> - The player that was invited.
+
+invited-to-party: "<green>You have invited <0> <green>to your party!"
+
+no-party-invites: "<red>You have not been invited to any parties!"
+# <0> - The owner of the party.
+
+accept-party-invite: "<yellow>You have been invited to <0><yellow>'s party!"
+accept: "<yellow>ACCEPT"
+
+joined-party: "<green>You have joined the party!"
+# <0> - The player that joined the party.
+
+player-joined-party: "<0> <green>has joined the party!"
+not-in-party: "<red>You are not in a party!"
+player-already-invited: "<red>You have already invited that player!"
+not-your-party: "<red>You do not own this party!"
+cant-kick-yourself: "<red>You can't kick yourself!"
+player-not-in-party: "<red>That player is not in your party!"
+kicked-from-party: "<red>You have been kicked from the party!"
+already-in-party: "<red>You are already in a party!"
+left-party: "<green>You have left the party!"
+player-left: "<0><yellow> has left the party!"
+party-disbanded: "<red>The party has been disbanded!"
+
+# <0> - The name of the player that got kicked.
+successful-party-player-kick: "<0> <green>has been kicked from the party!"
