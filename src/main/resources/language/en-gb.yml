@@ -256,3 +256,7 @@ new-party-owner: "<0><green> is the new party owner as the old one has left!"
 
 # <0> - The name of the player that got kicked.
 successful-party-player-kick: "<0> <green>has been kicked from the party!"
+
+player-disconnected-from-party: "<0> <yellow>has left the party! They will be kicked in 5 minutes if they do not join back."
+player-kicked-by-disconnect: "<0> <yellow>has been removed from the party."
+player-has-rejoined: "<0> <green>has rejoined the party!"
