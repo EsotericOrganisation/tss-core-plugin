@@ -207,7 +207,9 @@ public enum Message {
   ALREADY_IN_PARTY,
   LEFT_PARTY,
   PLAYER_LEFT,
-  PARTY_DISBANDED;
+  PARTY_DISBANDED,
+  YOU_ARE_NEW_PARTY_OWNER,
+  NEW_PARTY_OWNER;
 
   private final String key;
 

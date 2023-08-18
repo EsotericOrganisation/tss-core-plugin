@@ -249,6 +249,10 @@ already-in-party: "<red>You are already in a party!"
 left-party: "<green>You have left the party!"
 player-left: "<0><yellow> has left the party!"
 party-disbanded: "<red>The party has been disbanded!"
+you-are-new-party-owner: "<yellow>You are the new party owner because the old owner has left!"
+
+# <0> - The name of the new party owner.
+new-party-owner: "<0><green> is the new party owner as the old one has left!"
 
 # <0> - The name of the player that got kicked.
 successful-party-player-kick: "<0> <green>has been kicked from the party!"
