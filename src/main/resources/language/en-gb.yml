@@ -212,7 +212,7 @@ forging-description: "<grey>Level up by combining items in anvils!"
 forging-info: ""
 forging-tips-tricks: ""
 
-# <0> - The skill that has been levelled up.
+# <0> - The skill that has been leveled up.
 skill-level-up: "<green>You have levelled up your <0> skill!"
 
 cant-trade-with-yourself: "<red>You can't trade with yourself!"
@@ -239,7 +239,9 @@ accept: "<yellow>ACCEPT"
 joined-party: "<green>You have joined the party!"
 # <0> - The player that joined the party.
 
+# <0> - The name of the player that has joined the party.
 player-joined-party: "<0> <green>has joined the party!"
+
 not-in-party: "<red>You are not in a party!"
 player-already-invited: "<red>You have already invited that player!"
 not-your-party: "<red>You do not own this party!"
@@ -248,7 +250,10 @@ player-not-in-party: "<red>That player is not in your party!"
 kicked-from-party: "<red>You have been kicked from the party!"
 already-in-party: "<red>You are already in a party!"
 left-party: "<green>You have left the party!"
+
+# <0> - The name of the player that has left.
 player-left: "<0><yellow> has left the party!"
+
 party-disbanded: "<red>The party has been disbanded!"
 you-are-new-party-owner: "<yellow>You are the new party owner because the old owner has left!"
 
