@@ -130,6 +130,7 @@ unclaim-chunk-location-chunk: "Unclaim only the selected chunk."
 chunk-not-claimed: "<red>This chunk hasn't been claimed yet!"
 not-your-chunk: "<red>You do not own this chunk!"
 claimed-too-recently: "<red>You have claimed this chunk too recently, please wait!"
+found-no-chunks: "<red>Couldn't find any chunks!"
 unclaimed-chunk: "<red>Successfully unclaimed this chunk!"
 
 trusted-player: "Trusted player"
