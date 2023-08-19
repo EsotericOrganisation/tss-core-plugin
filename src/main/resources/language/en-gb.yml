@@ -261,3 +261,10 @@ successful-party-player-kick: "<0> <green>has been kicked from the party!"
 player-disconnected-from-party: "<0> <yellow>has left the party! They will be kicked in 5 minutes if they do not join back."
 player-kicked-by-disconnect: "<0> <yellow>has been removed from the party."
 player-has-rejoined: "<0> <green>has rejoined the party!"
+
+all-chat-description: "All players will be able to see your chat messages."
+party-chat-description: "Only players in your party will be able to see your messages."
+message-chat-description: "Only the player you have last messaged will see your messages."
+
+chat-mode-already-selected: "<red>You already have this chat mode selected!"
+chat-mode-successfully-selected: "<green>Successfully set chat mode!"
