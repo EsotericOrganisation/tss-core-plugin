@@ -20,7 +20,12 @@ public class CustomGuiListener implements Listener {
 
   @EventHandler
   public void onCustomGuiInteract(@NotNull InventoryClickEvent event) {
-	ItemStack stack = event.getInventory().getContents()[0];
+	ItemStack[] items = event.getInventory().getContents();
+	ItemStack stack = null;
+	for (int i = 0; stack == null && i < items.length; i++) {
+	  stack = items[i];
+	}
+
 	if (stack == null) {
 	  return;
 	}

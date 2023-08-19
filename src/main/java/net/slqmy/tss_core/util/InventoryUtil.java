@@ -9,13 +9,19 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 public class InventoryUtil {
+
   public static void makeStatic(@NotNull Inventory inventory, TSSCorePlugin plugin) {
 	ItemStack[] items = inventory.getContents();
-	if (items.length == 0) {
+
+	ItemStack itemStack = null;
+	for (int i = 0; itemStack == null && i < items.length; i++) {
+	  itemStack = items[i];
+	}
+
+	if (itemStack == null) {
 	  throw new IndexOutOfBoundsException("Inventory must contain at least one item!");
 	}
 
-	ItemStack itemStack = inventory.getContents()[0];
 	ItemMeta meta = itemStack.getItemMeta();
 	meta.getPersistentDataContainer().set(new NamespacedKey(plugin, "is_custom_gui"), PersistentDataType.BOOLEAN, true);
 	itemStack.setItemMeta(meta);
