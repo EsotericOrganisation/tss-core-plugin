@@ -40,7 +40,7 @@ public final class Rank {
   }
 
   public @NotNull TextComponent getNamePrefix() {
-	if (namePrefix == null || namePrefix.equals("")) {
+	if (namePrefix == null || "".equals(namePrefix)) {
 	  return Component.empty();
 	}
 
@@ -48,7 +48,7 @@ public final class Rank {
   }
 
   public @NotNull TextComponent getNameSuffix() {
-	if (nameSuffix == null || nameSuffix.equals("")) {
+	if (nameSuffix == null || "".equals(nameSuffix)) {
 	  return Component.empty();
 	}
 

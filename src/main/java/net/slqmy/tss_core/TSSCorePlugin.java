@@ -72,7 +72,6 @@ public final class TSSCorePlugin extends JavaPlugin {
 	packetManager = new PacketManager(this);
 
 	PluginManager pluginManager = Bukkit.getPluginManager();
-
 	pluginManager.registerEvents(new ConnectionListener(this), this);
 	pluginManager.registerEvents(new DimensionChangeListener(this), this);
 	pluginManager.registerEvents(new CustomGuiListener(this), this);
