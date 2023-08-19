@@ -3,8 +3,6 @@ package net.slqmy.tss_core.manager;
 import io.netty.channel.*;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.InteractionHand;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.datatype.npc.NPC;
@@ -40,8 +38,7 @@ public class PacketManager {
 	  }
 	};
 
-	Connection connection = getPlayerConnection(player);
-	ChannelPipeline pipeline = connection.channel.pipeline();
+	ChannelPipeline pipeline = NMSUtil.getServerPlayer(player).connection.connection.channel.pipeline();
 
 	pipeline.addBefore(
 			"packet_handler",
@@ -51,7 +48,7 @@ public class PacketManager {
   }
 
   public void ejectPlayer(@NotNull Player player) {
-	Connection connection = getPlayerConnection(player);
+	Connection connection = NMSUtil.getServerPlayer(player).connection.connection;
 	ChannelPipeline pipeline = connection.channel.pipeline();
 
 	Channel channel = connection.channel;
@@ -59,19 +56,6 @@ public class PacketManager {
 	  pipeline.remove(player.getName());
 	  return null;
 	});
-  }
-
-  private Connection getPlayerConnection(@NotNull Player player) {
-	ServerPlayer serverPlayer = NMSUtil.getServerPlayer(player);
-	assert serverPlayer != null;
-
-	ServerGamePacketListenerImpl serverPlayerConnection = (ServerGamePacketListenerImpl) ReflectUtil.getFieldValue(serverPlayer, "c");
-	assert serverPlayerConnection != null;
-
-	return (Connection) ReflectUtil.getFieldValue(
-			serverPlayerConnection,
-			"h"
-	);
   }
 
   private void handleServerboundInteractPacket(@NotNull ServerboundInteractPacket packet, Player player) {
