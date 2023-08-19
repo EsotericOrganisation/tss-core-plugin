@@ -1,5 +1,6 @@
 package net.slqmy.tss_core.util;
 
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,6 +15,12 @@ public class NMSUtil {
 
   public static Class<?> getNMSClass(String nmsClassName) {
 	return ReflectUtil.getClassByName(NMS_CLASS_PREFIX + nmsClassName);
+  }
+
+  public static void sendPacket(Player player, Packet<?> packet) {
+	getServerPlayer(player).connection.connection.send(
+			packet
+	);
   }
 
   public static @Nullable ServerPlayer getServerPlayer(Player player) {
