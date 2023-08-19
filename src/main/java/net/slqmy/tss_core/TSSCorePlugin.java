@@ -4,6 +4,7 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import net.slqmy.tss_core.database.MongoDB;
 import net.slqmy.tss_core.event.listener.ConnectionListener;
+import net.slqmy.tss_core.event.listener.CustomGuiListener;
 import net.slqmy.tss_core.event.listener.DimensionChangeListener;
 import net.slqmy.tss_core.manager.*;
 import org.bukkit.Bukkit;
