@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.purpurmc.purpur", "purpur-api", "1.20.1-R0.1-SNAPSHOT")
+    compileOnly("org.purpurmc.purpur", "purpur-api", "1.21-R0.1-SNAPSHOT")
 
     implementation("org.mongodb", "mongodb-driver-sync", "4.10.2")
 
@@ -32,7 +32,7 @@ dependencies {
 
     implementation("net.dv8tion", "JDA", "5.0.0-beta.13")
 
-    paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -60,7 +60,7 @@ tasks {
                 "name" to project.name,
                 "version" to project.version,
                 "description" to project.description,
-                "apiVersion" to "1.20"
+                "apiVersion" to "1.21"
         )
 
         inputs.properties(props)
@@ -71,7 +71,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.20.1")
+        minecraftVersion("1.21")
     }
 
     shadowJar {
