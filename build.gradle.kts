@@ -18,7 +18,7 @@ java {
 repositories {
     mavenCentral()
 
-    maven("https://repo.purpurmc.org/snapshots")
+    maven("https://repo.purpurmc.org/#/snapshots")
     maven("https://repo.codemc.org/repository/maven-public/")
 }
 
