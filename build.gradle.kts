@@ -30,7 +30,7 @@ dependencies {
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.0.3")
     implementation("cloud.commandframework", "cloud-paper", "1.8.3")
 
-    implementation("net.dv8tion", "JDA", "5.0.0-beta.13")
+    implementation("net.dv8tion", "JDA", "5.0.0")
 
     paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
 }
