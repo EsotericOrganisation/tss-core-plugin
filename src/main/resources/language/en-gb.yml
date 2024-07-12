@@ -267,8 +267,16 @@ player-disconnected-from-party: "<0> <yellow>has left the party! They will be ki
 player-kicked-by-disconnect: "<0> <yellow>has been removed from the party."
 player-has-rejoined: "<0> <green>has rejoined the party!"
 
+all-chat: "All chat"
+all-chat-short-name: "a"
 all-chat-description: "All players will be able to see your chat messages."
+
+party-chat: "Party chat"
+party-chat-short-name: "p"
 party-chat-description: "Only players in your party will be able to see your messages."
+
+message-chat: "Message chat"
+message-chat-short-name: "m"
 message-chat-description: "Only the player you have last messaged will see your messages."
 
 chat-mode-already-selected: "<red>You already have this chat mode selected!"
