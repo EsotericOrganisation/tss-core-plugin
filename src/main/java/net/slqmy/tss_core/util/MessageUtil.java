@@ -92,13 +92,9 @@ public class MessageUtil {
   public static @NotNull TextComponent createCompactArray(@NotNull List<?> list) {
 	TextComponent component = getLeftSquareBracket();
 
-	Object previousElement = null;
-
 	for (int i = 0; i < list.size(); i++) {
 	  Object element = list.get(i);
 	  component = component.append(format(element)).append(getComma()).append(Component.space());
-
-	  previousElement = element;
 	}
 
 	return component;
