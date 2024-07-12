@@ -9,6 +9,10 @@ import net.slqmy.tss_core.datatype.npc.NPC;
 import net.slqmy.tss_core.event.custom_event.NPCClickEvent;
 import net.slqmy.tss_core.util.NMSUtil;
 import net.slqmy.tss_core.util.ReflectUtil;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -60,13 +64,38 @@ public class PacketManager {
 
   private void handleServerboundInteractPacket(@NotNull ServerboundInteractPacket packet, Player player) {
 	Integer entityID = packet.getEntityId();
-	ServerboundInteractPacket.ActionType actionType = packet.getActionType();
 
-	if (actionType == ServerboundInteractPacket.ActionType.INTERACT_AT) {
+	Object action = ReflectUtil.getFieldValue(packet, "c");
+
+	Method getTypeMethod;
+	Object actionType = null;
+
+	getTypeMethod = ReflectUtil.getAccessibleMethod(action, "a");
+	try {
+		actionType = getTypeMethod.invoke(action);
+	} catch (IllegalAccessException | InvocationTargetException exception) {
+		exception.printStackTrace();
+	}
+
+	Class<?>[] classes = ServerboundInteractPacket.class.getDeclaredClasses();
+
+	Class<?> actionTypeEnumClass = null;
+
+	for (Class<?> classVariable : classes) {
+		if (classVariable.getSimpleName().equals("ActionType") && classVariable.isEnum()) {
+			actionTypeEnumClass = classVariable;
+			break;
+		}
+	}
+
+	Object[] enumConstants = actionTypeEnumClass.getEnumConstants();
+
+	Object interactAtConstant = enumConstants[2];
+
+	if (actionType == interactAtConstant) {
 	  return;
 	}
 
-	Object action = ReflectUtil.getFieldValue(packet, "b");
 	assert action != null;
 
 	InteractionHand hand = (InteractionHand) ReflectUtil.getFieldValue(action, "a", false);
