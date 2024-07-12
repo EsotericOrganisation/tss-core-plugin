@@ -1,13 +1,9 @@
 package net.slqmy.tss_core.datatype.player;
 
-import com.google.common.collect.Multimap;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.manager.MessageManager;
-import net.slqmy.tss_core.util.DebugUtil;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
