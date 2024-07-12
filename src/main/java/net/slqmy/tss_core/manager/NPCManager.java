@@ -2,14 +2,19 @@ package net.slqmy.tss_core.manager;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+
+import net.minecraft.locale.Language;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.ChatVisiblity;
 import net.minecraft.world.phys.Vec3;
 import net.slqmy.tss_core.TSSCorePlugin;
 import net.slqmy.tss_core.datatype.npc.NPC;
@@ -71,7 +76,8 @@ public class NPCManager {
 	ServerPlayer npcPlayer = new ServerPlayer(
 			server,
 			(ServerLevel) NMSUtil.invokeGetHandle(location.getWorld()),
-			npcProfile
+			npcProfile,
+			new ClientInformation(Language.DEFAULT, 12, ChatVisiblity.FULL, false, 0, HumanoidArm.RIGHT, false, false)
 	);
 
 	npcPlayer.setPos(
@@ -113,7 +119,7 @@ public class NPCManager {
 	  connection.send(new ClientboundSetEntityDataPacket(nmsEntity.getId(), Collections.singletonList(SynchedEntityData.DataValue.create(
 			  new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 125)
 	  )));
-	  connection.send(new ClientboundAddPlayerPacket(nmsEntity));
+	  connection.send(new ClientboundAddEntityPacket(nmsEntity));
 
 	  new BukkitRunnable() {
 
