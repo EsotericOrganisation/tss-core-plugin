@@ -1,10 +1,12 @@
+import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
+
 plugins {
-    java
-    application
+    `java-library`
 
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.papermc.paperweight.userdev") version "1.7.1"
-    id("xyz.jpenilla.run-paper") version "2.1.0"
+    id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.1.1"
+    id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 group = "net.slqmy"
@@ -15,17 +17,7 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
-repositories {
-    mavenCentral()
-
-    maven("https://repo.purpurmc.org/#/snapshots")
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.codemc.org/repository/maven-public/")
-}
-
 dependencies {
-    compileOnly("org.purpurmc.purpur", "purpur-api", "1.21-R0.1-SNAPSHOT")
-
     implementation("org.mongodb", "mongodb-driver-sync", "5.1.1")
 
     implementation("dev.jorel", "commandapi-bukkit-shade", "9.5.0")
@@ -33,7 +25,7 @@ dependencies {
 
     implementation("net.dv8tion", "JDA", "5.0.0")
 
-    paperweight.paperDevBundle("1.21-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
 }
 
 tasks {
@@ -41,49 +33,18 @@ tasks {
         dependsOn(shadowJar)
     }
 
-    assemble {
-        dependsOn(reobfJar)
-    }
-
     compileJava {
-        options.encoding = Charsets.UTF_8.name()
         options.release.set(21)
     }
 
     javadoc {
         options.encoding = Charsets.UTF_8.name()
     }
-
-    processResources {
-        filteringCharset = Charsets.UTF_8.name()
-
-        val props = mapOf(
-                "name" to project.name,
-                "version" to project.version,
-                "description" to project.description,
-                "apiVersion" to "1.21"
-        )
-
-        inputs.properties(props)
-
-        filesMatching("plugin.yml") {
-            expand(props)
-        }
-    }
-
-    runServer {
-        minecraftVersion("1.21")
-    }
-
-    shadowJar {
-        fun reloc(pkg: String) = relocate(pkg, "net.slqmy.tss_core.shaded.$pkg")
-
-        reloc("cloud.commandframework")
-        reloc("io.leangen.geantyref")
-        reloc("net.dv8tion")
-    }
 }
 
-application {
-    mainClass.set("TSSCorePlugin")
+bukkitPluginYaml {
+  main = "net.slqmy.tss_core.TSSCorePlugin"
+  load = BukkitPluginYaml.PluginLoadOrder.STARTUP
+  authors.add("Slqmy")
+  apiVersion = "1.21"
 }
