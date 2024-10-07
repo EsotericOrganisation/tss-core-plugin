@@ -27,7 +27,7 @@ public class MessageManager {
 
     private final TSSCorePlugin plugin;
 
-    private final Language defualtLanguage;
+    private final Language defaultLanguage;
 
     private final HashMap<Language, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>>> languageData = new HashMap<>();
 
@@ -51,12 +51,12 @@ public class MessageManager {
         String defaultLanguageString = plugin.getConfig().getString("default-language");
         assert defaultLanguageString != null;
 
-        defualtLanguage = Language.valueOf(defaultLanguageString.toUpperCase().replace('-', '_'));
+        defaultLanguage = Language.valueOf(defaultLanguageString.toUpperCase().replace('-', '_'));
     }
 
     private String getRawMessage(Message messageKey, Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data) {
         if (data == null) {
-            data = languageData.get(defualtLanguage);
+            data = languageData.get(defaultLanguage);
         }
 
         ConcurrentMap<Message, String> messageMap = data.getSecond().asMap();
@@ -68,7 +68,7 @@ public class MessageManager {
             String key = messageKey.getKey();
             message = data.getFirst().getString(key);
             if (message == null) {
-                data = languageData.get(defualtLanguage);
+                data = languageData.get(defaultLanguage);
 
                 messageMap = data.getSecond().asMap();
                 message = messageMap.get(messageKey);
@@ -87,7 +87,7 @@ public class MessageManager {
         Triplet<YamlConfiguration, Cache<Message, String>, Cache<Message, TextComponent>> data = languageData.get(language);
 
         if (data == null) {
-            data = languageData.get(defualtLanguage);
+            data = languageData.get(defaultLanguage);
         }
 
         if (placeholderValues.length == 0) {
@@ -129,7 +129,7 @@ public class MessageManager {
             try {
                 playerLanguage = Language.getLanguage(player.locale().toLanguageTag());
             } catch (IllegalArgumentException illegalArgumentException) {
-                playerLanguage = defualtLanguage;
+                playerLanguage = defaultLanguage;
             }
         }
 

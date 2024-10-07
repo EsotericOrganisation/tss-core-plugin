@@ -1,8 +1,25 @@
 {
   "java.compile.nullAnalysis.mode": "automatic",
   "cSpell.words": [
+    "blanzingly",
+    "BLURPLE",
     "bson",
-    "Bukkit"
+    "Bukkit",
+    "Clientbound",
+    "Gson",
+    "minecraft",
+    "mongodb",
+    "npcs",
+    "Npcs",
+    "pojo",
+    "Respawn",
+    "Serverbound",
+    "slqmy",
+    "Slqmy",
+    "uece",
+    "unequip",
+    "UNEQUIP",
+    "Visiblity"
   ],
   "java.configuration.updateBuildConfiguration": "automatic"
 }
