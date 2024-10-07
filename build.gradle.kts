@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "org.esoteric_organisation"
-version = "0.1.3"
+version = "0.1.4"
 description = "The core plugin of The Slimy Swamp Minecraft server."
 
 val projectNameString = rootProject.name
@@ -22,8 +22,12 @@ val projectGroupString = group.toString()
 val projectVersionString = version.toString()
 
 val javaVersion = 21
+val javaVersionEnumMember = JavaVersion.valueOf("VERSION_$javaVersion")
 
 java {
+    sourceCompatibility = javaVersionEnumMember
+    targetCompatibility = javaVersionEnumMember
+
     toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
 }
 
