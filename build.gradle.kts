@@ -34,7 +34,7 @@ java {
 dependencies {
     implementation("org.mongodb", "mongodb-driver-sync", "5.1.1")
 
-    implementation("dev.jorel", "commandapi-bukkit-shade", "9.5.2")
+    implementation("dev.jorel", "commandapi-bukkit-shade-mojang-mapped", "9.5.2")
     implementation("cloud.commandframework", "cloud-paper", "1.8.4")
 
     implementation("net.dv8tion", "JDA", "5.0.0")
