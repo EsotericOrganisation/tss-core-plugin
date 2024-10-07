@@ -9,7 +9,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
-group = "net.slqmy"
+group = "org.esoteric_organisation"
 version = "0.1"
 description = "The core plugin of The Slimy Swamp Minecraft server. This plugin manages the connection to the database, player profiles and utility methods."
 
@@ -43,8 +43,8 @@ tasks {
 }
 
 bukkitPluginYaml {
-  main = "net.slqmy.tss_core.TSSCorePlugin"
+  main = "org.esoteric_organisation.tss_core_plugin.TSSCorePlugin"
   load = BukkitPluginYaml.PluginLoadOrder.STARTUP
-  authors.add("Slqmy")
+  authors.addAll("Esoteric Organisation", "Esoteric Enderman")
   apiVersion = "1.21"
 }
