@@ -1,15 +1,15 @@
 package org.esoteric_organisation.tss_core_plugin.database;
 
 public enum DatabaseName {
-  PLAYERS;
+    PLAYERS;
 
-  private final String name;
+    private final String name;
 
-  DatabaseName() {
-	name = name().toLowerCase();
-  }
+    DatabaseName() {
+        name = name().toLowerCase();
+    }
 
-  public String getName() {
-	return name;
-  }
+    public String getName() {
+        return name;
+    }
 }

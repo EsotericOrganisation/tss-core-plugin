@@ -1,49 +1,49 @@
 package org.esoteric_organisation.tss_core_plugin.event.custom_event;
 
-import org.esoteric_organisation.tss_core_plugin.datatype.player.survival.SkillType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.esoteric_organisation.tss_core_plugin.datatype.player.survival.SkillType;
 import org.jetbrains.annotations.NotNull;
 
 public class SkillLevelUpEvent extends Event {
 
-  private static final HandlerList HANDLERS = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
 
-  private final Player player;
-  private final SkillType skillType;
-  private final int oldLevel;
-  private final int newLevel;
+    private final Player player;
+    private final SkillType skillType;
+    private final int oldLevel;
+    private final int newLevel;
 
-  public SkillLevelUpEvent(Player player, SkillType skillType, int oldLevel, int newLevel) {
-	this.player = player;
-	this.skillType = skillType;
-	this.oldLevel = oldLevel;
-	this.newLevel = newLevel;
-  }
+    public SkillLevelUpEvent(Player player, SkillType skillType, int oldLevel, int newLevel) {
+        this.player = player;
+        this.skillType = skillType;
+        this.oldLevel = oldLevel;
+        this.newLevel = newLevel;
+    }
 
-  public Player getPlayer() {
-	return player;
-  }
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 
-  public SkillType getSkillType() {
-	return skillType;
-  }
+    public Player getPlayer() {
+        return player;
+    }
 
-  public int getOldLevel() {
-	return oldLevel;
-  }
+    public SkillType getSkillType() {
+        return skillType;
+    }
 
-  public int getNewLevel() {
-	return newLevel;
-  }
+    public int getOldLevel() {
+        return oldLevel;
+    }
 
-  public static HandlerList getHandlerList() {
-	return HANDLERS;
-  }
+    public int getNewLevel() {
+        return newLevel;
+    }
 
-  @Override
-  public @NotNull HandlerList getHandlers() {
-	return HANDLERS;
-  }
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 }

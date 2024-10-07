@@ -4,43 +4,43 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class ClaimedChunk {
-  private int x;
-  private int z;
+    private int x;
+    private int z;
 
-  private ArrayList<UUID> trustedPlayers;
+    private ArrayList<UUID> trustedPlayers;
 
-  public ClaimedChunk() {
+    public ClaimedChunk() {
 
-  }
+    }
 
-  public ClaimedChunk(int x, int z, ArrayList<UUID> trustedPlayers) {
-	this.x = x;
-	this.z = z;
+    public ClaimedChunk(int x, int z, ArrayList<UUID> trustedPlayers) {
+        this.x = x;
+        this.z = z;
 
-	this.trustedPlayers = trustedPlayers;
-  }
+        this.trustedPlayers = trustedPlayers;
+    }
 
-  public int getX() {
-	return x;
-  }
+    public int getX() {
+        return x;
+    }
 
-  public int getZ() {
-	return z;
-  }
+    public void setX(int x) {
+        this.x = x;
+    }
 
-  public ArrayList<UUID> getTrustedPlayers() {
-	return trustedPlayers;
-  }
+    public int getZ() {
+        return z;
+    }
 
-  public void setX(int x) {
-	this.x = x;
-  }
+    public void setZ(int z) {
+        this.z = z;
+    }
 
-  public void setZ(int z) {
-	this.z = z;
-  }
+    public ArrayList<UUID> getTrustedPlayers() {
+        return trustedPlayers;
+    }
 
-  public void setTrustedPlayers(ArrayList<UUID> trustedPlayers) {
-	this.trustedPlayers = trustedPlayers;
-  }
+    public void setTrustedPlayers(ArrayList<UUID> trustedPlayers) {
+        this.trustedPlayers = trustedPlayers;
+    }
 }

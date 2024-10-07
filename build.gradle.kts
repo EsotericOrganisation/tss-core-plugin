@@ -43,8 +43,8 @@ tasks {
 }
 
 bukkitPluginYaml {
-  main = "org.esoteric_organisation.tss_core_plugin.TSSCorePlugin"
-  load = BukkitPluginYaml.PluginLoadOrder.STARTUP
-  authors.addAll("Esoteric Organisation", "Esoteric Enderman")
-  apiVersion = "1.21"
+    main = "org.esoteric_organisation.tss_core_plugin.TSSCorePlugin"
+    load = BukkitPluginYaml.PluginLoadOrder.STARTUP
+    authors.addAll("Esoteric Organisation", "Esoteric Enderman")
+    apiVersion = "1.21"
 }
