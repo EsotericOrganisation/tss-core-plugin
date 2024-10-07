@@ -2,6 +2,7 @@ package org.esoteric_organisation.tss_core_plugin.manager;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.minecraft.core.BlockPos;
 import net.minecraft.locale.Language;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -118,7 +119,7 @@ public class NPCManager {
             connection.send(new ClientboundSetEntityDataPacket(nmsEntity.getId(), Collections.singletonList(SynchedEntityData.DataValue.create(
                     new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 125)
             )));
-            connection.send(new ClientboundAddEntityPacket(nmsEntity));
+            connection.send(new ClientboundAddEntityPacket(nmsEntity, 0, new BlockPos((int) npc.getSimpleLocation().asBukkitLocation().getX(), (int) npc.getSimpleLocation().asBukkitLocation().getY(), (int) npc.getSimpleLocation().asBukkitLocation().getZ())));
 
             new BukkitRunnable() {
 
