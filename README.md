@@ -1,4 +1,4 @@
-# TSS Core
+# TSS Core Plugin
 
 > The core plugin
 > of [The Slimy Swamp](https://github.com/EsotericOrganisation/tss-website?tab=readme-ov-file#what-is-the-slimy-swamp)
