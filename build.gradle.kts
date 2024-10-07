@@ -11,7 +11,7 @@ plugins {
 
 group = "org.esoteric_organisation"
 version = "0.1"
-description = "The core plugin of The Slimy Swamp Minecraft server. This plugin manages the connection to the database, player profiles and utility methods."
+description = "The core plugin of The Slimy Swamp Minecraft server."
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
