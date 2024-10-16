@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "org.esoteric"
-version = "0.1.6"
+version = "0.2.0"
 description = "The core plugin of The Slimy Swamp Minecraft server."
 
 val projectNameString = rootProject.name
