@@ -12,7 +12,7 @@ plugins {
     id("io.github.goooler.shadow") version "8.1.7"
 }
 
-group = "org.esoteric_organisation"
+group = "org.esoteric"
 version = "0.1.6"
 description = "The core plugin of The Slimy Swamp Minecraft server."
 
@@ -61,10 +61,14 @@ tasks {
 }
 
 bukkitPluginYaml {
-    main = "org.esoteric_organisation.tss_core_plugin.TSSCorePlugin"
-    load = BukkitPluginYaml.PluginLoadOrder.STARTUP
+    name = "TSSCore"
+    description = project.description
     authors.addAll("Esoteric Organisation", "Esoteric Enderman")
+
+    version = projectVersionString
     apiVersion = "1.21"
+    main = "${project.group}.tss.minecraft.plugins.core.${name.get()}Plugin"
+    load = BukkitPluginYaml.PluginLoadOrder.STARTUP
 }
 
 publishing {
