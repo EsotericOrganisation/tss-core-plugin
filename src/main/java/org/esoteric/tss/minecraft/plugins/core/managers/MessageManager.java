@@ -35,7 +35,7 @@ public class MessageManager {
         this.plugin = plugin;
 
         for (Language language : Language.values()) {
-            File languageFile = plugin.getFileManager().initiateYamlFile("language/" + language.getLanguageKey(), true);
+            File languageFile = plugin.getFileManager().initiateYamlFile("languages/" + language.getLanguageKey(), true);
             YamlConfiguration languageConfig = YamlConfiguration.loadConfiguration(languageFile);
 
             languageData.put(
